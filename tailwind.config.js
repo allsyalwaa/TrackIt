@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#7AA500",
+        secondary: "#356B00",
+      },
+    },
     container: {
       padding: {
         DEFAULT: "1rem",
