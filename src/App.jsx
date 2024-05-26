@@ -6,6 +6,7 @@ import LogIn from "./pages/LogIn";
 import Dashboard from "./pages/Dashboard";
 import Alarm from "./layout/Alarm";
 import MoneyCalculator from "./layout/MoneyCalculator";
+import Notes from "./layout/Notes";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/alarm" element={<Alarm />} />
         <Route path="/money-calculator" element={<MoneyCalculator />} />
+        <Route path="/notes" element={<Notes />} />
       </Routes>
     </BrowserRouter>
   );
