@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../assets/illustration-logo1.svg";
 import Profile from "../assets/profile.svg";
+import Profile1 from "../assets/illustration-profile.svg";
 
-export default function Alarm() {
+export default function Profiles() {
   return (
     <>
       <div className="flex h-screen ">
@@ -132,97 +133,48 @@ export default function Alarm() {
 
         {/* main content */}
         <div className="flex-1 bg-white p-8 ">
-          <div className=" flex flex-col items-center justify-center gap-6">
-            <h1 className="text-2xl font-bold text-primary">
-              Thursday, May 23, 2024
-            </h1>
-            <h1 className="text-7xl font-bold text-secondary">7:57:54 PM</h1>
+          <div className="text-center text-3xl font-bold text-secondary">
+            My Profile
           </div>
-
-          <form className="mt-6" action="">
-            <h2 className="text-lg font-medium text-primary">Set alarm time</h2>
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <label className="text-sm text-primary" htmlFor="hours">
-                  Hours
-                </label>
-                <div className="mt-2 rounded-lg border-[1.5px] border-primary px-2 py-3">
-                  <select
-                    className="mx-auto text-lg font-bold text-secondary"
-                    name="hours"
-                    id="hours"
-                  >
-                    <option value="">6 PM</option>
-                    <option value="">7 PM</option>
-                    <option value="">8 PM</option>
-                    <option value="">9 PM</option>
-                    <option value="">10 PM</option>
-                    <option value="">11 PM</option>
-                    <option value="">12 PM</option>
-                    <option value="">1 PM</option>
-                    <option value="">2 PM</option>
-                    <option value="">3 PM</option>
-                    <option value="">4 PM</option>
-                    <option value="">5 PM</option>
-                    <option value="">6 AM</option>
-                    <option value="">7 AM</option>
-                    <option value="">8 AM</option>
-                    <option value="">9 AM</option>
-                    <option value="">10 AM</option>
-                    <option value="">11 AM</option>
-                    <option value="">12 AM</option>
-                    <option value="">1 AM</option>
-                    <option value="">2 AM</option>
-                    <option value="">3 AM</option>
-                    <option value="">4 AM</option>
-                    <option value="">5 AM</option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label className="text-sm text-primary" htmlFor="minutes">
-                  Minutes
-                </label>
-                <div className="mt-2 rounded-lg border-[1.5px] border-primary px-2 py-3">
-                  <select
-                    className="mx-auto text-lg font-bold text-secondary"
-                    name="minutes"
-                    id="minutes"
-                  >
-                    <option value="">00</option>
-                    <option value="">05</option>
-                    <option value="">10</option>
-                    <option value="">15</option>
-                    <option value="">20</option>
-                    <option value="">25</option>
-                    <option value="">30</option>
-                    <option value="">35</option>
-                    <option value="">40</option>
-                    <option value="">45</option>
-                    <option value="">50</option>
-                    <option value="">55</option>
-                  </select>
-                </div>
-              </div>
+          <hr className="mt-4 border-t border-primary/50" />
+          <div className="mt-6 flex flex-col items-center justify-center">
+            <img className="flex h-20 items-center" src={Profile1} alt="" />
+            <div className="mt-2 flex items-center gap-2 text-primary/50">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1em"
+                height="1em"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M11 16V7.85l-2.6 2.6L7 9l5-5l5 5l-1.4 1.45l-2.6-2.6V16zm-5 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"
+                />
+              </svg>
+              <p className="text-xs text-primary/50">upload</p>
             </div>
-            <input
-              className="mt-6 w-full rounded-lg border-[1.5px] border-primary px-2 py-3 placeholder-primary/50"
-              type="text"
-              placeholder="Alarm name"
-            />
 
-            <button className="mt-6 w-full rounded-lg bg-primary py-3 font-semibold text-white">
-              Set Alarm
-            </button>
-          </form>
-          <hr className="mt-6 border-t border-primary/50" />
-
-          <div className="mx-auto flex justify-between rounded-lg border-[1.5px] border-primary px-4 py-3">
-            <h1 className="text-lg font-semibold text-primary">Alarm name</h1>
-            <h1 className="text-3xl font-bold text-secondary">06.00 PM</h1>
-            <h1 className="text-lg font-semibold text-primary">
-              Friday, May 24
-            </h1>
+            <form className="mt-4 flex w-2/5 flex-col justify-start" action="">
+              <label className="text-lg text-primary" htmlFor="">
+                Email
+              </label>
+              <input
+                className="mt-2  rounded-lg border-[1.5px] border-primary/50 px-4 py-2 placeholder-primary/50"
+                type="email"
+              />
+              <label className="mt-4 text-lg text-primary" htmlFor="">
+                Password
+              </label>
+              <input
+                className="mt-2  rounded-lg border-[1.5px] border-primary/50 px-4 py-2 placeholder-primary/50"
+                type="password"
+              />
+              <div className="mt-2 flex justify-end">
+                <NavLink to="/" className="text-xs text-primary underline">
+                  Change password
+                </NavLink>
+              </div>
+            </form>
           </div>
         </div>
       </div>

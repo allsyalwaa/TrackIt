@@ -9,6 +9,7 @@ import MoneyCalculator from "./layout/MoneyCalculator";
 import Notes from "./layout/Notes";
 import Reminders from "./layout/Reminders";
 import Tasks from "./layout/Tasks";
+import Profile from "./layout/Profile";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/notes" element={<Notes />} />
         <Route path="/reminders" element={<Reminders />} />
         <Route path="/tasks" element={<Tasks />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
