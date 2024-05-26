@@ -8,6 +8,7 @@ import Alarm from "./layout/Alarm";
 import MoneyCalculator from "./layout/MoneyCalculator";
 import Notes from "./layout/Notes";
 import Reminders from "./layout/Reminders";
+import Tasks from "./layout/Tasks";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/money-calculator" element={<MoneyCalculator />} />
         <Route path="/notes" element={<Notes />} />
         <Route path="/reminders" element={<Reminders />} />
+        <Route path="/tasks" element={<Tasks />} />
       </Routes>
     </BrowserRouter>
   );
