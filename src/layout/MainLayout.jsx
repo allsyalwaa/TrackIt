@@ -3,6 +3,7 @@ import Logo from "../assets/illustration-logo.svg";
 import Image1 from "../assets/illustration-task.svg";
 import Image2 from "../assets/illustration-dashboard.svg";
 import Footer from "../components/section/Footer";
+import { NavLink } from "react-router-dom";
 
 export default function MainLayout({ children }) {
   return (
@@ -63,12 +64,12 @@ export default function MainLayout({ children }) {
 
             <form className="flex flex-col" action="">
               <input
-                className="mt-4 w-2/3 rounded-full border-[1.5px] border-primary/50 px-5 py-3 placeholder-primary"
+                className="mt-4 w-2/3 rounded-full border-[1.5px] border-primary/50 px-5 py-3 placeholder-primary/50"
                 type="email"
                 placeholder="Enter your email"
               />
               <input
-                className="mt-4 w-2/3 rounded-full border-[1.5px] border-primary/50 px-5 py-3 placeholder-primary"
+                className="mt-4 w-2/3 rounded-full border-[1.5px] border-primary/50 px-5 py-3 placeholder-primary/50"
                 type="password"
                 placeholder="Create a password"
               />
@@ -78,8 +79,19 @@ export default function MainLayout({ children }) {
               </button>
               <p className="mt-2 w-2/3 text-xs font-medium text-black/50">
                 By signing up, you are indicating that you have read and agree
-                to the <span className="text-primary">Terms of Use</span> and{" "}
-                <span className="text-primary">Privacy Policy</span>.
+                to the{" "}
+                <span className="text-primary">
+                  <NavLink to="/" className="text-xs font-medium text-primary">
+                    Terms of Use
+                  </NavLink>
+                </span>{" "}
+                and{" "}
+                <span className="text-primary">
+                  <NavLink to="/" className="text-xs font-medium text-primary">
+                    Privacy Policy
+                  </NavLink>
+                </span>
+                .
               </p>
             </form>
           </div>
@@ -120,7 +132,7 @@ export default function MainLayout({ children }) {
             <div className="flex items-center gap-4">
               <div className="size-6 rounded-full bg-primary"></div>
               <p className="w-2/3 text-lg font-medium text-primary">
-                The peace of mind that comes with knowing you’re always on top
+                The peace of mind that comes with knowing you're always on top
                 of your tasks and schedules.
               </p>
             </div>
