@@ -1,5 +1,5 @@
 import DashboardLayout from "../layout/DashboardLayout";
 
-export default function Home() {
+export default function Dashboard() {
   return <DashboardLayout></DashboardLayout>;
 }

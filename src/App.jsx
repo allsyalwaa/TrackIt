@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import Dashboard from "./pages/Dashboard";
+import Alarm from "./layout/Alarm";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/log-in" element={<LogIn />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/alarm" element={<Alarm />} />
       </Routes>
     </BrowserRouter>
   );
