@@ -9,7 +9,7 @@ export default function Navbar() {
         <div className=" flex h-16 items-center justify-between ">
           <img className="h-10" src={Logo} alt="TrackIt" />
 
-          <ul className="text-secondary flex items-center gap-6">
+          <ul className="flex items-center gap-6 text-secondary">
             <li className="text-sm font-medium">
               <NavLink to="/">About Us</NavLink>
             </li>
@@ -20,7 +20,7 @@ export default function Navbar() {
               </NavLink>
 
               <NavLink to="/">
-                <Button>Sign Up</Button>
+                <Button variant="secondary">Sign Up</Button>
               </NavLink>
             </li>
           </ul>
