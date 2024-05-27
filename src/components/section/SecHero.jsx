@@ -1,6 +1,6 @@
 import Logo from "../../assets/illustration-logo.svg";
 import Image1 from "../../assets/illustration-task.svg";
-import Login from "../ui/Login";
+import Signup from "../ui/Signup";
 
 export default function SecHero() {
   return (
@@ -19,7 +19,7 @@ export default function SecHero() {
       </div>
 
       <div className="mx-auto mt-8 grid max-w-screen-md grid-cols-2 gap-36">
-        <Login />
+        <Signup />
         <div>
           <img className="w-full" src={Image1} alt="illustration-task" />
         </div>

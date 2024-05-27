@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import ButtonGoogle from "./ButtonGoogle";
 import Button from "./Button";
 
-export default function Login() {
+export default function Signup() {
   return (
     <div>
       {/* ui login */}
