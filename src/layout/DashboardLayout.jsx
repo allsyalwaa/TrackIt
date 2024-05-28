@@ -1,23 +1,18 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../assets/illustration-logo1.svg";
 import Profile from "../assets/profile.svg";
-import Alarm from "../assets/alarm.svg";
-import Calender from "../assets/calender.svg";
-import MoneyCalculator from "../assets/money-calculator.svg";
-import Notes from "../assets/notes.svg";
-import Reminders from "../assets/reminders.svg";
-import Tasks from "../assets/tasks.svg";
 
 export default function DashboardLayout() {
   return (
     <>
-      <div className="flex h-screen ">
-        {/* sidebar */}
-        <div className="h-screen w-60 bg-primary px-10 py-6">
+      <div className="flex min-h-screen ">
+        <div className="relative w-60 bg-primary px-10 py-6">
           <img className="h-10" src={Logo} alt="" />
-
           <div className=" mt-8 flex flex-col gap-4 text-white">
-            <div className="flex items-center gap-3 text-sm font-medium">
+            <NavLink
+              to="/dashboard"
+              className="flex items-center gap-3 text-sm font-medium"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -29,9 +24,13 @@ export default function DashboardLayout() {
                   d="M13 9V3h8v6zM3 13V3h8v10zm10 8V11h8v10zM3 21v-6h8v6z"
                 />
               </svg>
-              <NavLink to="/dashboard">Dashboard</NavLink>
-            </div>
-            <div className="flex items-center gap-3 text-sm font-medium">
+
+              <p>Dashboard</p>
+            </NavLink>
+            <NavLink
+              to="/alarm"
+              className="flex items-center gap-3 text-sm font-medium"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -43,9 +42,12 @@ export default function DashboardLayout() {
                   d="M12 22q-1.875 0-3.512-.712t-2.85-1.925t-1.925-2.85T3 13t.713-3.512t1.924-2.85t2.85-1.925T12 4t3.513.713t2.85 1.925t1.925 2.85T21 13t-.712 3.513t-1.925 2.85t-2.85 1.925T12 22m2.8-4.8l1.4-1.4l-3.2-3.2V8h-2v5.4zM5.6 2.35L7 3.75L2.75 8l-1.4-1.4zm12.8 0l4.25 4.25l-1.4 1.4L17 3.75z"
                 />
               </svg>
-              <NavLink to="/alarm">Alarm</NavLink>
-            </div>
-            <div className="flex items-center gap-3 text-sm font-medium">
+              <p>Alarm</p>
+            </NavLink>
+            <NavLink
+              to="/calender"
+              className="flex items-center gap-3 text-sm font-medium"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -57,9 +59,12 @@ export default function DashboardLayout() {
                   d="M2 19c0 1.7 1.3 3 3 3h14c1.7 0 3-1.3 3-3v-8H2zM19 4h-2V3c0-.6-.4-1-1-1s-1 .4-1 1v1H9V3c0-.6-.4-1-1-1s-1 .4-1 1v1H5C3.3 4 2 5.3 2 7v2h20V7c0-1.7-1.3-3-3-3"
                 />
               </svg>
-              <NavLink to="/calender">Calender</NavLink>
-            </div>
-            <div className="flex items-center gap-3 text-sm font-medium">
+              <p>Calender</p>
+            </NavLink>
+            <NavLink
+              to="/money-calculator"
+              className="flex items-center gap-3 text-sm font-medium"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -73,9 +78,12 @@ export default function DashboardLayout() {
                   clipRule="evenodd"
                 />
               </svg>
-              <NavLink to="/money-calculator">Money Calculator</NavLink>
-            </div>
-            <div className="flex items-center gap-3 text-sm font-medium">
+              <p>Money Calculator</p>
+            </NavLink>
+            <NavLink
+              to="/notes"
+              className="flex items-center gap-3 text-sm font-medium"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -87,9 +95,12 @@ export default function DashboardLayout() {
                   d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"
                 />
               </svg>
-              <NavLink to="/notes">Notes</NavLink>
-            </div>
-            <div className="flex items-center gap-3 text-sm font-medium">
+              <p>Notes</p>
+            </NavLink>
+            <NavLink
+              to="/reminders"
+              className="flex items-center gap-3 text-sm font-medium"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -101,9 +112,12 @@ export default function DashboardLayout() {
                   d="M440.08 341.31c-1.66-2-3.29-4-4.89-5.93c-22-26.61-35.31-42.67-35.31-118c0-39-9.33-71-27.72-95c-13.56-17.73-31.89-31.18-56.05-41.12a3 3 0 0 1-.82-.67C306.6 51.49 282.82 32 256 32s-50.59 19.49-59.28 48.56a3.1 3.1 0 0 1-.81.65c-56.38 23.21-83.78 67.74-83.78 136.14c0 75.36-13.29 91.42-35.31 118c-1.6 1.93-3.23 3.89-4.89 5.93a35.16 35.16 0 0 0-4.65 37.62c6.17 13 19.32 21.07 34.33 21.07H410.5c14.94 0 28-8.06 34.19-21a35.17 35.17 0 0 0-4.61-37.66M256 480a80.06 80.06 0 0 0 70.44-42.13a4 4 0 0 0-3.54-5.87H189.12a4 4 0 0 0-3.55 5.87A80.06 80.06 0 0 0 256 480"
                 />
               </svg>
-              <NavLink to="/reminders">Reminders</NavLink>
-            </div>
-            <div className="flex items-center gap-3 text-sm font-medium">
+              <p>Reminders</p>
+            </NavLink>
+            <NavLink
+              to="/tasks"
+              className="flex items-center gap-3 text-sm font-medium"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -118,79 +132,19 @@ export default function DashboardLayout() {
                   />
                 </g>
               </svg>
-              <NavLink to="/tasks">Tasks</NavLink>
-            </div>
+              <p>Tasks</p>
+            </NavLink>
           </div>
 
+          {/* menu profile */}
           <div className="absolute bottom-6">
-            <div className="mt-4 flex size-40 items-end">
+            <div className="mt-4 flex h-0 w-40 items-end">
               <div className="flex-grow border-t border-white"></div>
             </div>
-            <div className="mt-4 flex items-center gap-4">
+            <NavLink to="/profile" className="mt-4 flex items-center gap-4">
               <img className="h-8" src={Profile} alt="" />
-
-              <NavLink to="/profile" className="text-sm font-medium text-white">
-                username
-              </NavLink>
-            </div>
-          </div>
-        </div>
-
-        {/* main content */}
-
-        <div className="flex-1 bg-white p-8 ">
-          <h1 className="text-3xl font-bold text-secondary">
-            Hello, username!
-          </h1>
-          <h2 className="mt-2 text-lg text-primary">
-            How can TrackIt assist you today?
-          </h2>
-
-          <div className="mt-4 grid grid-cols-3 gap-6">
-            <div className="flex flex-col items-center justify-center gap-3 rounded-lg border-[1.5px] border-primary p-3">
-              <h3 className="text-xl font-bold text-primary">Alarm</h3>
-              <img className="h-20" src={Alarm} alt="" />
-              <p className="text-center text-sm font-medium text-primary/50">
-                Set timely reminders for important tasks and events.
-              </p>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-3 rounded-lg border-[1.5px] border-primary p-3">
-              <h3 className="text-xl font-bold text-primary">Calender</h3>
-              <img className="h-20" src={Calender} alt="" />
-              <p className="text-center text-sm font-medium text-primary/50">
-                Schedule and manage your events and deadlines.
-              </p>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-3 rounded-lg border-[1.5px] border-primary p-3">
-              <h3 className="text-xl font-bold text-primary">
-                Money Calculator
-              </h3>
-              <img className="h-20" src={MoneyCalculator} alt="" />
-              <p className="text-center text-sm font-medium text-primary/50">
-                Track expenses and plan your budget easily.
-              </p>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-3 rounded-lg border-[1.5px] border-primary p-3">
-              <h3 className="text-xl font-bold text-primary">Notes</h3>
-              <img className="h-20" src={Notes} alt="" />
-              <p className="text-center text-sm font-medium text-primary/50">
-                Store and organize your notes and ideas.
-              </p>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-3 rounded-lg border-[1.5px] border-primary p-3">
-              <h3 className="text-xl font-bold text-primary">Reminders</h3>
-              <img className="h-20" src={Reminders} alt="" />
-              <p className="text-center text-sm font-medium text-primary/50">
-                Get notifications for your important tasks.
-              </p>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-3 rounded-lg border-[1.5px] border-primary p-3">
-              <h3 className="text-xl font-bold text-primary">Tasks</h3>
-              <img className="h-20" src={Tasks} alt="" />
-              <p className="text-center text-sm font-medium text-primary/50">
-                Create and manage your to-do lists efficiently.
-              </p>
-            </div>
+              <p className="text-sm font-medium text-white">username</p>
+            </NavLink>
           </div>
         </div>
       </div>
