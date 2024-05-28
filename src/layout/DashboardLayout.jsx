@@ -2,11 +2,11 @@ import { NavLink } from "react-router-dom";
 import Logo from "../assets/illustration-logo1.svg";
 import Profile from "../assets/profile.svg";
 
-export default function DashboardLayout() {
+export default function DashboardLayout({ children }) {
   return (
     <>
       <div className="flex min-h-screen ">
-        <div className="relative w-60 bg-primary px-10 py-6">
+        <nav className="relative w-60 bg-primary px-10 py-6">
           <img className="h-10" src={Logo} alt="" />
           <div className=" mt-8 flex flex-col gap-4 text-white">
             <NavLink
@@ -146,6 +146,10 @@ export default function DashboardLayout() {
               <p className="text-sm font-medium text-white">username</p>
             </NavLink>
           </div>
+        </nav>
+
+        <div className="container mx-auto flex p-8">
+          <main>{children}</main>
         </div>
       </div>
     </>
