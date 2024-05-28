@@ -16,7 +16,7 @@ export default function About() {
         Your TrackIt account provides you access to all these features and more:
       </p>
 
-      <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-8 ">
+      <div className="mt-6 grid gap-x-8 gap-y-8 md:grid-cols-2 ">
         <CardAbout
           text="A user-friendly interface designed for you, not for tech experts,
             ensuring ease and simplicity."
