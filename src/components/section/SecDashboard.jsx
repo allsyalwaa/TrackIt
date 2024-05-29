@@ -15,33 +15,39 @@ export default function SecDashboard() {
         How can TrackIt assist you today?
       </h2>
 
-      <div className="mt-4 grid grid-cols-3 gap-6">
+      <div className="mt-4 grid gap-6 md:grid-cols-3">
         <CardDashboard
+          link={"/alarm"}
           text1="Alarm"
           text2="Set timely reminders for important tasks and events."
           image={Alarm}
         ></CardDashboard>
         <CardDashboard
+          link={"/calender"}
           text1="Calender"
           text2="Schedule and manage your events and deadlines."
           image={Calender}
         ></CardDashboard>
         <CardDashboard
+          link={"/money-calculator"}
           text1="Money Calculator"
           text2="Track expenses and plan your budget easily."
           image={MoneyCalculator}
         ></CardDashboard>
         <CardDashboard
+          link={"/notes"}
           text1="Notes"
           text2="Store and organize your notes and ideas."
           image={Notes}
         ></CardDashboard>
         <CardDashboard
+          link={"/reminders"}
           text1="Reminders"
           text2="Get notifications for your important tasks."
           image={Reminders}
         ></CardDashboard>
         <CardDashboard
+          link={"/tasks"}
           text1="Tasks"
           text2="Create and manage your to-do lists efficiently."
           image={Tasks}
