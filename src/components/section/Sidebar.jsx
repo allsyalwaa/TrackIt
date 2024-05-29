@@ -6,10 +6,18 @@ import { useState, useEffect, useRef } from "react";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const sidebarRef = useRef(null);
+  const profileMenuRef = useRef(null);
   const handleClickOutside = (event) => {
     if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
       setIsOpen(false);
+    }
+    if (
+      profileMenuRef.current &&
+      !profileMenuRef.current.contains(event.target)
+    ) {
+      setIsProfileMenuOpen(false);
     }
   };
   useEffect(() => {
@@ -23,12 +31,12 @@ export default function Sidebar() {
     <nav
       ref={sidebarRef}
       className={`fixed z-20 bg-primary py-6 md:relative md:px-10 ${
-        isOpen ? "w-56 px-10" : "relative w-12"
+        isOpen ? "fixed w-56 px-10" : "relative w-12"
       } h-full md:w-72`}
     >
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`flex items-center justify-center px-3 text-white md:hidden ${isOpen ? "hidden" : "absolute"}`}
+        className={`relative flex items-center justify-center px-3 text-white md:hidden ${isOpen ? "hidden" : "absolute"}`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +50,6 @@ export default function Sidebar() {
           />
         </svg>
       </button>
-
       <img
         className={`md:block md:h-10 ${isOpen ? "block" : "hidden"}`}
         src={Logo}
@@ -177,18 +184,65 @@ export default function Sidebar() {
           <p>Tasks</p>
         </NavLink>
       </div>
-
       {/* menu profile */}
       <div
+        ref={profileMenuRef}
         className={`absolute bottom-6 w-full ${isOpen ? "block" : "hidden"} md:block`}
       >
         <div className="mt-4 flex h-0 w-40 items-end">
           <div className="flex-grow border-t border-white"></div>
         </div>
-        <NavLink to="/profile" className="mt-4 flex items-center gap-4">
+        <button
+          onClick={() => setIsProfileMenuOpen((prev) => !prev)}
+          className="mt-4 flex items-center gap-4"
+        >
           <img className="h-8" src={Profile} alt="" />
           <p className="text-sm font-medium text-white">username</p>
-        </NavLink>
+        </button>
+      </div>
+      {/* menu log out */}
+      <div
+        className={`absolute bottom-[72px] left-0 w-full bg-white
+       px-10 py-6 ${isProfileMenuOpen ? "block" : "hidden"}`}
+      >
+        <div className=" flex flex-col gap-4 text-secondary">
+          <NavLink
+            to="/profile"
+            className="flex items-center gap-3 text-sm font-medium"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M14.5 23q-.625 0-1.062-.437T13 21.5v-7q0-.625.438-1.062T14.5 13h7q.625 0 1.063.438T23 14.5v7q0 .625-.437 1.063T21.5 23zm0-1.5h7v-.8q-.625-.775-1.525-1.237T18 19t-1.975.463T14.5 20.7zM18 18q.625 0 1.063-.437T19.5 16.5t-.437-1.062T18 15t-1.062.438T16.5 16.5t.438 1.063T18 18m-8.75 4l-.4-3.2q-.325-.125-.612-.3t-.563-.375L4.7 19.375l-2.75-4.75l2.575-1.95Q4.5 12.5 4.5 12.338v-.675q0-.163.025-.338L1.95 9.375l2.75-4.75l2.975 1.25q.275-.2.575-.375t.6-.3l.4-3.2h5.5l.4 3.2q.325.125.613.3t.562.375l2.975-1.25l2.75 4.75L19.925 11H15.4q-.35-1.075-1.25-1.787t-2.1-.713q-1.45 0-2.475 1.025T8.55 12q0 1.2.675 2.1T11 15.35V22z"
+              />
+            </svg>
+
+            <p>Account Setting</p>
+          </NavLink>
+          <NavLink
+            to="/"
+            className="flex items-center gap-3 text-sm font-medium"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="m17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5M4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4z"
+              />
+            </svg>
+
+            <p>Log Out</p>
+          </NavLink>
+        </div>
       </div>
     </nav>
   );
