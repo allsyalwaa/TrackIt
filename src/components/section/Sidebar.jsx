@@ -23,7 +23,7 @@ export default function Sidebar() {
     <nav
       ref={sidebarRef}
       className={`fixed z-20 bg-primary py-6 md:relative md:px-10 ${
-        isOpen ? "w-56 px-10" : "w-12"
+        isOpen ? "w-56 px-10" : "relative w-12"
       } h-full md:w-72 `}
     >
       <button
