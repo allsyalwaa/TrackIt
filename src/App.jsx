@@ -5,6 +5,7 @@ import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import Dashboard from "./pages/Dashboard";
 import Alarm from "./pages/Alarm";
+import Calendar from "./pages/Calendar";
 import MoneyCalculator from "./pages/MoneyCalculator";
 import Notes from "./pages/Notes";
 import Reminders from "./pages/Reminders";
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/log-in" element={<LogIn />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/alarm" element={<Alarm />} />
+        <Route path="/calendar" element={<Calendar />} />
         <Route path="/money-calculator" element={<MoneyCalculator />} />
         <Route path="/notes" element={<Notes />} />
         <Route path="/reminders" element={<Reminders />} />

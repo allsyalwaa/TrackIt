@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom FullCalendar styling with Tailwind */
+.fc {
+  @apply flex h-screen bg-white text-secondary;
+}
+.fc .fc-toolbar {
+  @apply flex justify-start;
+}
+.fc .fc-daygrid-day-frame {
+  @apply relative items-center justify-center border border-primary;
+}
+
+.fc .fc-daygrid-day-top {
+  @apply items-center justify-center;
+}
+
+.fc .fc-toolbar-title {
+  @apply text-xl font-bold text-primary;
+}
+
+.fc .fc-button-primary {
+  @apply border-white bg-white text-primary;
+}
+
+.fc .fc-button-primary:hover {
+  @apply border-green-300 bg-secondary;
+}
+
+.fc .fc-day-today {
+  @apply bg-secondary;
+}
+.fc .fc-daygrid-day-number {
+  @apply font-bold;
+}

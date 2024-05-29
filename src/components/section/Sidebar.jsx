@@ -43,7 +43,7 @@ export default function Sidebar() {
           <p>Alarm</p>
         </NavLink>
         <NavLink
-          to="/calender"
+          to="/calendar"
           className="flex items-center gap-3 text-sm font-medium"
         >
           <svg
