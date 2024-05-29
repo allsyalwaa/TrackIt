@@ -1,13 +1,16 @@
 export default function CardTransactions({ text1, text2, money }) {
   return (
     <div className="rounded-lg border-[1.5px] border-primary/50 p-2">
-      <div className="grid grid-cols-2 items-center justify-between">
-        <div>
+      <div className="mx-auto  grid grid-cols-2 items-center md:justify-between">
+        <div className="flex flex-col gap-1 md:gap-0">
           <h1 className="text-sm font-medium text-primary">{text1}</h1>
-          <p className="mt-2 text-xs font-medium text-primary/50">{text2}</p>
+          <p className="text-xs font-medium text-primary/50 md:mt-2">{text2}</p>
+          <h1 className="flex font-medium text-secondary md:hidden">
+            Rp {money},00
+          </h1>
         </div>
         <div className="flex justify-end gap-3">
-          <h1 className="flex justify-end font-medium text-secondary">
+          <h1 className="hidden justify-end font-medium text-secondary md:flex">
             Rp {money},00
           </h1>
           <div className="text-primary">
