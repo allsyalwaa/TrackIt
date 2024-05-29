@@ -1,9 +1,15 @@
-export default function CardDashboard({ text1, text2, image }) {
+import { NavLink } from "react-router-dom";
+
+export default function CardDashboard({ link, text1, text2, image }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 rounded-lg border-[1.5px] border-primary p-3">
-      <h3 className="text-xl font-bold text-primary">{text1}</h3>
-      {<img className="h-20" src={image} alt="" />}
-      <p className="text-center text-sm font-medium text-primary/50">{text2}</p>
-    </div>
+    <NavLink to={link}>
+      <div className="flex h-full flex-col items-center justify-center gap-3 rounded-lg border-[1.5px] border-primary p-3">
+        <h3 className="text-xl font-bold text-primary">{text1}</h3>
+        {<img className="h-20" src={image} alt="" />}
+        <p className="text-center text-sm font-medium text-primary/50">
+          {text2}
+        </p>
+      </div>
+    </NavLink>
   );
 }
