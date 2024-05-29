@@ -24,7 +24,7 @@ export default function Sidebar() {
       ref={sidebarRef}
       className={`fixed z-20 bg-primary py-6 md:relative md:px-10 ${
         isOpen ? "w-56 px-10" : "relative w-12"
-      } h-full md:w-72 `}
+      } h-full md:w-72`}
     >
       <button
         onClick={() => setIsOpen((prev) => !prev)}
@@ -101,7 +101,7 @@ export default function Sidebar() {
               d="M2 19c0 1.7 1.3 3 3 3h14c1.7 0 3-1.3 3-3v-8H2zM19 4h-2V3c0-.6-.4-1-1-1s-1 .4-1 1v1H9V3c0-.6-.4-1-1-1s-1 .4-1 1v1H5C3.3 4 2 5.3 2 7v2h20V7c0-1.7-1.3-3-3-3"
             />
           </svg>
-          <p>Calender</p>
+          <p>Calendar</p>
         </NavLink>
         <NavLink
           to="/money-calculator"

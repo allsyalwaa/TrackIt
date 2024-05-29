@@ -23,7 +23,7 @@ export default function SecDashboard() {
           image={Alarm}
         ></CardDashboard>
         <CardDashboard
-          link={"/calender"}
+          link={"/calendar"}
           text1="Calender"
           text2="Schedule and manage your events and deadlines."
           image={Calender}
