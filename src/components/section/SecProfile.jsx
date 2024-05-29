@@ -1,7 +1,18 @@
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
 import Profile1 from "../../assets/illustration-profile.svg";
+import ChangePassword from "../ui/ChangePassword";
 
 export default function SecProfile() {
+  const [isPasswordPopupOpen, setIsPasswordPopupOpen] = useState(false);
+
+  const handleOpenPasswordPopup = () => {
+    setIsPasswordPopupOpen(true);
+  };
+
+  const handleClosePasswordPopup = () => {
+    setIsPasswordPopupOpen(false);
+  };
+
   return (
     <section>
       <div className="text-center text-3xl font-bold text-secondary">
@@ -44,12 +55,19 @@ export default function SecProfile() {
             type="password"
           />
           <div className="mt-2 flex justify-end">
-            <NavLink to="/" className="text-xs text-primary underline">
+            <button
+              type="button"
+              onClick={handleOpenPasswordPopup}
+              className="text-xs text-primary underline"
+            >
               Change password
-            </NavLink>
+            </button>
           </div>
         </form>
       </div>
+      {isPasswordPopupOpen && (
+        <ChangePassword onClose={handleClosePasswordPopup} />
+      )}
     </section>
   );
 }
