@@ -3,7 +3,7 @@ import Profile1 from "../../assets/illustration-profile.svg";
 
 export default function SecProfile() {
   return (
-    <section className="flex-1 bg-white p-8 ">
+    <section>
       <div className="text-center text-3xl font-bold text-secondary">
         My Profile
       </div>
@@ -25,19 +25,22 @@ export default function SecProfile() {
           <p className="text-xs text-primary/50">upload</p>
         </div>
 
-        <form className="mt-4 flex w-2/5 flex-col justify-start" action="">
-          <label className="text-lg text-primary" htmlFor="">
+        <form
+          className="mt-4 flex w-full flex-col justify-start md:w-2/5"
+          action=""
+        >
+          <label className="text-sm text-primary md:text-lg" htmlFor="">
             Email
           </label>
           <input
-            className="mt-2  rounded-lg border-[1.5px] border-primary/50 px-4 py-2 placeholder-primary/50"
+            className="mt-2  rounded-lg border-[1.5px] border-primary/50 px-4 py-0.5 placeholder-primary/50 md:py-2"
             type="email"
           />
-          <label className="mt-4 text-lg text-primary" htmlFor="">
+          <label className="mt-4 text-sm text-primary md:text-lg" htmlFor="">
             Password
           </label>
           <input
-            className="mt-2  rounded-lg border-[1.5px] border-primary/50 px-4 py-2 placeholder-primary/50"
+            className="mt-2  rounded-lg border-[1.5px] border-primary/50 px-4 py-0.5 placeholder-primary/50 md:py-2"
             type="password"
           />
           <div className="mt-2 flex justify-end">
