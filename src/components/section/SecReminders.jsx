@@ -1,7 +1,19 @@
+import AddReminder from "../ui/AddReminder";
 import ButtonPlus from "../ui/ButtonPlus";
 import CardReminders from "../ui/CardReminders";
 
+import { useState } from "react";
+
 export default function SecReminders() {
+  const [isReminderPopupOpen, setIsReminderPopupOpen] = useState(false);
+
+  const handleOpenReminderPopup = () => {
+    setIsReminderPopupOpen(true);
+  };
+
+  const handleCloseReminderPopup = () => {
+    setIsReminderPopupOpen(false);
+  };
   return (
     <section>
       <div className="text-3xl font-bold text-secondary">My Reminders</div>
@@ -12,9 +24,16 @@ export default function SecReminders() {
         <CardReminders text="Reminder name" time="06.00 PM" />
         <CardReminders text="Reminder name" time="06.00 PM" />
       </div>
-      <div className="absolute bottom-8 right-8">
+      <button
+        onClick={handleOpenReminderPopup}
+        className="absolute bottom-8 right-8"
+      >
         <ButtonPlus />
-      </div>
+      </button>
+
+      {isReminderPopupOpen && (
+        <AddReminder onClose={handleCloseReminderPopup} />
+      )}
     </section>
   );
 }
