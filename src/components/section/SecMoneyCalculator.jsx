@@ -1,10 +1,31 @@
 import Chart from "../../assets/chart.svg";
+import AddBalance from "../ui/AddBalance";
+import AddTransaction from "../ui/AddTransaction";
 import ButtonPlus from "../ui/ButtonPlus";
 import CardBalance from "../ui/CardBalance";
 import CardFinancial from "../ui/CardFinancial";
 import CardTransactions from "../ui/CardTransactions";
 
+import { useState } from "react";
+
 export default function SecMoneyCalculator() {
+  const [isBalancePopupOpen, setIsBalancePopupOpen] = useState(false);
+  const [isTransactionPopupOpen, setIsTransactionPopupOpen] = useState(false);
+
+  const handleOpenBalancePopup = () => {
+    setIsBalancePopupOpen(true);
+  };
+  const handleOpenTransactionPopup = () => {
+    setIsTransactionPopupOpen(true);
+  };
+
+  const handleCloseBalancePopup = () => {
+    setIsBalancePopupOpen(false);
+  };
+  const handleCloseTransactionPopup = () => {
+    setIsTransactionPopupOpen(false);
+  };
+
   return (
     <section>
       <div className="grid gap-3 md:grid-cols-2">
@@ -32,9 +53,15 @@ export default function SecMoneyCalculator() {
           <CardBalance text="Balance name" money="5.000.000" />
           <CardBalance text="Balance name" money="5.000.000" />
 
-          <div className="mt-3 flex justify-end md:absolute md:bottom-4 md:right-4">
+          <button
+            onClick={handleOpenBalancePopup}
+            className="mt-3 flex justify-end md:absolute md:bottom-4 md:right-4"
+          >
             <ButtonPlus />
-          </div>
+          </button>
+          {isBalancePopupOpen && (
+            <AddBalance onClose={handleCloseBalancePopup} />
+          )}
         </div>
       </div>
 
@@ -57,9 +84,15 @@ export default function SecMoneyCalculator() {
             money="5.000.000"
           />
 
-          <div className="flex justify-end md:absolute md:bottom-4 md:right-4">
+          <button
+            onClick={handleOpenTransactionPopup}
+            className="flex justify-end md:absolute md:bottom-4 md:right-4"
+          >
             <ButtonPlus />
-          </div>
+          </button>
+          {isTransactionPopupOpen && (
+            <AddTransaction onClose={handleCloseTransactionPopup} />
+          )}
         </div>
       </div>
     </section>
