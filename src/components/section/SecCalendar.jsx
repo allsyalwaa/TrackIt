@@ -1,6 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import "../../index.css";
+import AddEvent from "../ui/AddEvent";
 
 const events = [{ title: "Title", start: "2024-05-02" }];
 
@@ -19,6 +20,7 @@ export default function SecCalendar() {
         }}
         eventContent={renderEventContent}
       />
+      <AddEvent />
     </div>
   );
 }
