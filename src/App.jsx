@@ -5,7 +5,7 @@ import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import Dashboard from "./pages/Dashboard";
 import Alarm from "./pages/Alarm";
-import MoneyCalculator from "./layout/MoneyCalculator";
+import MoneyCalculator from "./pages/MoneyCalculator";
 import Notes from "./layout/Notes";
 import Reminders from "./layout/Reminders";
 import Tasks from "./layout/Tasks";
