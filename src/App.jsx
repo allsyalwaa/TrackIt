@@ -7,7 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Alarm from "./pages/Alarm";
 import MoneyCalculator from "./pages/MoneyCalculator";
 import Notes from "./pages/Notes";
-import Reminders from "./layout/Reminders";
+import Reminders from "./pages/Reminders";
 import Tasks from "./layout/Tasks";
 import Profile from "./layout/Profile";
 
