@@ -1,7 +1,20 @@
+import AddNotes from "../ui/AddNotes";
 import ButtonPlus from "../ui/ButtonPlus";
 import CardNotes from "../ui/CardNotes";
 
+import { useState } from "react";
+
 export default function SecNotes() {
+  const [isNotePopupOpen, setIsNotePopupOpen] = useState(false);
+
+  const handleOpenNotePopup = () => {
+    setIsNotePopupOpen(true);
+  };
+
+  const handleCloseNotePopup = () => {
+    setIsNotePopupOpen(false);
+  };
+
   return (
     <section>
       <div className="text-3xl font-bold text-secondary">My Notes</div>
@@ -18,9 +31,14 @@ export default function SecNotes() {
           text3="Description"
         />
       </div>
-      <div className="absolute bottom-8 right-8">
+      <button
+        onClick={handleOpenNotePopup}
+        className="absolute bottom-8 right-8"
+      >
         <ButtonPlus />
-      </div>
+      </button>
+
+      {isNotePopupOpen && <AddNotes onClose={handleCloseNotePopup} />}
     </section>
   );
 }
