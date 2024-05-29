@@ -2,11 +2,55 @@ import { NavLink } from "react-router-dom";
 import Logo from "../../assets/illustration-logo1.svg";
 import Profile from "../../assets/profile.svg";
 
+import { useState, useEffect, useRef } from "react";
+
 export default function Sidebar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const sidebarRef = useRef(null);
+  const handleClickOutside = (event) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <nav className="relative w-72 bg-primary px-10 py-6">
-      <img className="h-10" src={Logo} alt="" />
-      <div className=" mt-8 flex w-full flex-col gap-4 text-white">
+    <nav
+      ref={sidebarRef}
+      className={`fixed z-20 bg-primary py-6 md:relative md:px-10 ${
+        isOpen ? "w-56 px-10" : "w-12"
+      } h-full md:w-72 `}
+    >
+      <button
+        onClick={() => setIsOpen((prev) => !prev)}
+        className={`flex items-center justify-center px-3 text-white md:hidden ${isOpen ? "hidden" : "absolute"}`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="1.5em"
+          height="1.5em"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1m0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1M3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1"
+          />
+        </svg>
+      </button>
+
+      <img
+        className={`md:block md:h-10 ${isOpen ? "block" : "hidden"}`}
+        src={Logo}
+        alt=""
+      />
+      <div
+        className={`mt-8  w-full flex-col gap-4 text-white md:flex ${isOpen ? "flex" : "hidden"}`}
+      >
         <NavLink
           to="/dashboard"
           className="flex items-center gap-3 text-sm font-medium"
@@ -135,7 +179,9 @@ export default function Sidebar() {
       </div>
 
       {/* menu profile */}
-      <div className="absolute bottom-6">
+      <div
+        className={`absolute bottom-6 w-full ${isOpen ? "block" : "hidden"} md:block`}
+      >
         <div className="mt-4 flex h-0 w-40 items-end">
           <div className="flex-grow border-t border-white"></div>
         </div>
