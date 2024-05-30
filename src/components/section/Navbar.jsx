@@ -22,7 +22,9 @@ export default function Navbar() {
     <nav className="shadow">
       <div className="container fixed left-0 right-0 top-0 bg-white">
         <div className=" flex h-16 items-center justify-between ">
-          <img className="h-10" src={Logo} alt="TrackIt" />
+          <NavLink to="/">
+            <img className="h-10" src={Logo} alt="TrackIt" />
+          </NavLink>
 
           <ul
             ref={sidebarRef}
