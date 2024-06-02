@@ -5,9 +5,9 @@ export default function DashboardLayout({ children }) {
     <>
       <div className="flex h-screen ">
         <Sidebar />
-        <div className="container mx-auto flex w-full flex-col p-8">
-          <main>{children}</main>
-        </div>
+        <main className="container mx-auto flex w-full flex-col overflow-y-auto p-8 ">
+          {children}
+        </main>
       </div>
     </>
   );
