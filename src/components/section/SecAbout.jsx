@@ -3,7 +3,7 @@ import CardAbout from "../ui/CardAbout";
 
 export default function About() {
   return (
-    <section className="container my-12">
+    <section id="about" className="container my-12">
       <div className="flex items-center justify-center">
         <img className="mt-20 w-2/3" src={Image2} alt="" />
       </div>
