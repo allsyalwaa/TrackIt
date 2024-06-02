@@ -51,14 +51,14 @@ export default function Navbar() {
             </li>
             <li>
               <NavLink to="/login">
-                <Button variant={width <= 768 ? "primary" : "white"}>
+                <Button variant={width < 768 ? "primary" : "white"}>
                   Log In
                 </Button>
               </NavLink>
             </li>
             <li>
               <NavLink to="/sign-up">
-                <Button variant={width <= 768 ? "primary" : "secondary"}>
+                <Button variant={width < 768 ? "primary" : "secondary"}>
                   Sign Up
                 </Button>
               </NavLink>
