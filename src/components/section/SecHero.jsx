@@ -19,7 +19,7 @@ export default function SecHero() {
       </div>
 
       <div className="mx-auto mt-8 grid max-w-screen-md gap-12 md:grid-cols-2 md:gap-36">
-        <div className="order-2 mx-auto w-2/3 md:order-1 md:w-full">
+        <div className="order-2 mx-auto sm:w-2/3 md:order-1 md:w-full">
           <Signup />
         </div>
         <div className="order-1 flex justify-center md:order-2">
