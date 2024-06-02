@@ -7,12 +7,13 @@ const events = [{ title: "Title", start: "2024-05-02" }];
 
 export default function SecCalendar() {
   return (
-    <div className="grid">
+    <div className="h-full">
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         weekends={true}
         events={events}
+        height="100%"
         headerToolbar={{
           left: "today",
           center: "prev,next",
@@ -20,7 +21,7 @@ export default function SecCalendar() {
         }}
         eventContent={renderEventContent}
       />
-      <AddEvent />
+      {/* <AddEvent /> */}
     </div>
   );
 }
