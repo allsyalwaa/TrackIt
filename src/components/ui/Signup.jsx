@@ -18,12 +18,12 @@ export default function Signup() {
 
         <form className="flex flex-col" action="">
           <input
-            className="mt-4 rounded-full border-[1.5px] border-primary/50 px-5 py-3 placeholder-primary/50"
+            className="mt-4 rounded-full border-[1.5px] border-primary/50 px-5 py-3 text-sm placeholder-primary/50 md:text-base"
             type="email"
             placeholder="Enter your email"
           />
           <input
-            className="mt-4 rounded-full border-[1.5px] border-primary/50 px-5 py-3 placeholder-primary/50"
+            className="mt-4 rounded-full border-[1.5px] border-primary/50 px-5 py-3 text-sm placeholder-primary/50 md:text-base"
             type="password"
             placeholder="Create a password"
           />
