@@ -53,12 +53,11 @@ export default function SecMoneyCalculator() {
           <CardBalance text="Balance name" money="5.000.000" />
           <CardBalance text="Balance name" money="5.000.000" />
 
-          <button
+          <ButtonPlus
             onClick={handleOpenBalancePopup}
-            className="mt-3 flex justify-end md:absolute md:bottom-4 md:right-4"
-          >
-            <ButtonPlus />
-          </button>
+            className={"ml-auto mt-4"}
+          />
+
           {isBalancePopupOpen && (
             <AddBalance onClose={handleCloseBalancePopup} />
           )}
@@ -84,12 +83,10 @@ export default function SecMoneyCalculator() {
             money="5.000.000"
           />
 
-          <button
+          <ButtonPlus
             onClick={handleOpenTransactionPopup}
-            className="flex justify-end md:absolute md:bottom-4 md:right-4"
-          >
-            <ButtonPlus />
-          </button>
+            className="ml-auto"
+          />
           {isTransactionPopupOpen && (
             <AddTransaction onClose={handleCloseTransactionPopup} />
           )}
