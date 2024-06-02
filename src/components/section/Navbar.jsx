@@ -19,8 +19,8 @@ export default function Navbar() {
     };
   }, []);
   return (
-    <nav className="shadow">
-      <div className="container fixed left-0 right-0 top-0 bg-white">
+    <nav className="fixed w-full bg-white shadow ">
+      <div className="container  left-0 right-0 top-0">
         <div className=" flex h-16 items-center justify-between ">
           <NavLink to="/">
             <img className="h-10" src={Logo} alt="TrackIt" />
@@ -33,7 +33,7 @@ export default function Navbar() {
             <li
               className={`text-sm font-medium ${isOpen ? "hidden" : "block"}`}
             >
-              <NavLink to="/">About Us</NavLink>
+              <a href="#about">About Us</a>
             </li>
             <li className={`${isOpen ? "block" : "hidden"}`}>
               <NavLink to="/">
