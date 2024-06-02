@@ -18,6 +18,21 @@ export default function Navbar() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <nav className="fixed w-full bg-white shadow ">
       <div className="container  left-0 right-0 top-0">
@@ -28,39 +43,32 @@ export default function Navbar() {
 
           <ul
             ref={sidebarRef}
-            className={`items-center gap-6 text-secondary ${isOpen ? "fixed right-0 top-0 z-10 flex h-screen w-1/3 flex-col items-start justify-start gap-4 bg-primary px-10 py-14 text-white" : "hidden"} md:flex`}
+            className={` fixed right-0 top-0 z-10 flex h-screen w-2/3 flex-col items-start justify-start gap-4 bg-primary px-10 py-14 text-white transition-all duration-500 md:relative md:h-auto md:w-auto md:translate-x-0 md:flex-row md:items-center md:gap-6 md:bg-transparent md:p-0 md:text-secondary
+            ${isOpen ? "translate-x-0" : "translate-x-full"} `}
           >
-            <li
-              className={`text-sm font-medium ${isOpen ? "hidden" : "block"}`}
-            >
+            <li className="px-5 py-2 font-medium md:p-0 md:text-sm">
               <a href="#about">About Us</a>
             </li>
-            <li className={`${isOpen ? "block" : "hidden"}`}>
-              <NavLink to="/">
-                <Button variant="primary">About Us</Button>
+            <li>
+              <NavLink to="/login">
+                <Button variant={width <= 768 ? "primary" : "white"}>
+                  Log In
+                </Button>
               </NavLink>
             </li>
-            <li className={`flex gap-4 ${isOpen ? "hidden" : "block"}`}>
-              <NavLink to="/">
-                <Button variant="white">Log In</Button>
-              </NavLink>
-            </li>
-            <li className={`${isOpen ? "block" : "hidden"}`}>
-              <NavLink to="/">
-                <Button variant="primary">Log In</Button>
-              </NavLink>
-            </li>
-            <li className={`${isOpen ? "hidden" : "block"}`}>
-              <NavLink to="/">
-                <Button variant="secondary">Sign Up</Button>
-              </NavLink>
-            </li>
-            <li className={`${isOpen ? "block" : "hidden"}`}>
-              <NavLink to="/">
-                <Button variant="primary">Sign Up</Button>
+            <li>
+              <NavLink to="/sign-up">
+                <Button variant={width <= 768 ? "primary" : "secondary"}>
+                  Sign Up
+                </Button>
               </NavLink>
             </li>
           </ul>
+
+          {/* overlay */}
+          <div
+            className={` fixed right-0 top-0 h-screen w-screen bg-black/50 transition-all duration-500 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+          ></div>
 
           <button
             onClick={() => setIsOpen((prev) => !prev)}
