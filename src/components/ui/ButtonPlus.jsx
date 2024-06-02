@@ -1,6 +1,12 @@
-export default function ButtonPlus() {
+export default function ButtonPlus({ onClick, className }) {
   return (
-    <button className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white ">
+    <button
+      onClick={onClick}
+      className={`
+      flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white 
+      ${className}
+      `}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="1.5em"
