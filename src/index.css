@@ -35,3 +35,15 @@
 .fc .fc-daygrid-day-number {
   @apply font-bold;
 }
+
+.fc .fc-button-primary.fc-today-button:disabled {
+  @apply cursor-not-allowed rounded-xl border-primary bg-white text-primary;
+}
+
+.fc .fc-button-primary.fc-today-button {
+  @apply rounded-xl border-primary bg-white text-primary;
+}
+
+.fc-h-event {
+  @apply rounded border-secondary bg-secondary text-center text-white;
+}
