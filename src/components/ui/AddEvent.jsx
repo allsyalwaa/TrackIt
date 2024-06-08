@@ -1,12 +1,19 @@
+import { useState } from "react";
 import Button from "./Button";
 
-export default function AddEvent() {
+export default function AddEvent({ onClose }) {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const closePopup = () => {
+    setIsOpen(false);
+    onClose();
+  };
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
         <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
           <div className="mb-4 flex justify-end">
-            <button className="text-primary">
+            <button onClick={closePopup} className="text-primary">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1.3em"
