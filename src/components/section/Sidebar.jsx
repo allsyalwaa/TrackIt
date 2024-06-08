@@ -9,13 +9,19 @@ export default function Sidebar() {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const sidebarRef = useRef(null);
   const profileMenuRef = useRef(null);
+  const triggerProfileMenu = useRef(null);
   const handleClickOutside = (event) => {
+    // sidebar menu
     if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
       setIsOpen(false);
     }
+
+    // profile menu
     if (
       profileMenuRef.current &&
-      !profileMenuRef.current.contains(event.target)
+      !profileMenuRef.current.contains(event.target) &&
+      triggerProfileMenu.current &&
+      !triggerProfileMenu.current.contains(event.target)
     ) {
       setIsProfileMenuOpen(false);
     }
@@ -186,13 +192,13 @@ export default function Sidebar() {
       </div>
       {/* menu profile */}
       <div
-        ref={profileMenuRef}
         className={`absolute bottom-6 w-full ${isOpen ? "block" : "hidden"} md:block`}
       >
         <div className="mt-4 flex h-0 w-40 items-end">
           <div className="flex-grow border-t border-white"></div>
         </div>
         <button
+          ref={triggerProfileMenu}
           onClick={() => setIsProfileMenuOpen((prev) => !prev)}
           className="mt-4 flex items-center gap-4"
         >
@@ -202,6 +208,7 @@ export default function Sidebar() {
       </div>
       {/* menu log out */}
       <div
+        ref={profileMenuRef}
         className={`absolute bottom-[72px] left-0 w-full bg-white
        px-10 py-6 ${isProfileMenuOpen ? "block" : "hidden"}`}
       >
