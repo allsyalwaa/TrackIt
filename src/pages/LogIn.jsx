@@ -3,7 +3,7 @@ import Logo from "../assets/illustration-logo.svg";
 import ButtonGoogle from "../components/ui/ButtonGoogle";
 import Button from "../components/ui/Button";
 
-export default function SignUp() {
+export default function LogIn() {
   return (
     <>
       <div className="container py-16">
@@ -41,9 +41,12 @@ export default function SignUp() {
                 </NavLink>
               </div>
 
-              <Button variant="primary" className={"mt-6 px-5 py-3"}>
-                Log In
-              </Button>
+              <NavLink to="/dashboard">
+                <Button variant="primary" className={"mt-6 w-full px-5 py-3"}>
+                  Log In
+                </Button>
+              </NavLink>
+
               <p className="mt-2  text-xs font-medium text-black/50">
                 By continuing, you are indicating that you have read and agree
                 to the{" "}
