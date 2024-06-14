@@ -1,7 +1,7 @@
 export default function CardReminders({ text, time }) {
   return (
     <div className="rounded-lg border-[1.5px] border-primary px-4 py-2">
-      <div className="grid grid-cols-2 items-center">
+      <div className="flex items-center justify-between">
         <div className="flex flex-col gap-2">
           <h1 className="text-lg font-medium text-primary">{text}</h1>
           <p className="text-xs font-medium text-primary/50">{time}</p>
