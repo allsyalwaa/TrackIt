@@ -28,9 +28,11 @@ export default function Signup() {
             placeholder="Create a password"
           />
 
-          <Button variant="primary" className={"mt-6 px-5 py-3"}>
-            Sign Up
-          </Button>
+          <NavLink to="/dashboard">
+            <Button variant="primary" className={"mt-6 w-full px-5 py-3"}>
+              Sign Up
+            </Button>
+          </NavLink>
 
           <p className="mt-2 text-xs font-medium text-black/50">
             By signing up, you are indicating that you have read and agree to
