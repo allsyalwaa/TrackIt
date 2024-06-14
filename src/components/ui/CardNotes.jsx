@@ -1,7 +1,7 @@
 export default function CardNotes({ text1, text2, text3 }) {
   return (
     <div className="h-40 rounded-lg border-[1.5px] border-primary p-4">
-      <div className="grid grid-cols-2 items-center">
+      <div className="flex items-center justify-between">
         <div className="flex flex-col gap-2">
           <p className="text-xs font-medium text-primary/50">{text1}</p>
           <h1 className="text-lg font-medium text-primary">{text2}</h1>
