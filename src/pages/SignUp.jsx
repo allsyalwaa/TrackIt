@@ -92,10 +92,7 @@ export default function SignUp() {
               <p className="text-xs font-medium text-black/50">
                 Already have an account?
               </p>
-              <NavLink
-                to="/log-in"
-                className="text-xs font-medium text-primary"
-              >
+              <NavLink to="/login" className="text-xs font-medium text-primary">
                 Log In
               </NavLink>
             </div>
