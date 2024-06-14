@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import Image2 from "../../assets/illustration-dashboard.svg";
 import CardAbout from "../ui/CardAbout";
 
@@ -36,9 +37,11 @@ export default function About() {
       </div>
 
       <div className="flex justify-center">
-        <button className="mt-8 rounded-full border-[1.5px] border-secondary bg-secondary px-8 py-2  font-medium text-white">
-          Join Us
-        </button>
+        <NavLink to="/sign-up">
+          <button className="mt-8 rounded-full border-[1.5px] border-secondary bg-secondary px-8 py-2  font-medium text-white">
+            Join Us
+          </button>
+        </NavLink>
       </div>
     </section>
   );
