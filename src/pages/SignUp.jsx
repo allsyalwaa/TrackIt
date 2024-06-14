@@ -9,7 +9,7 @@ export default function SignUp() {
           <img className="h-20" src={Logo} alt="" />
 
           <h1 className="text-center text-3xl font-bold text-secondary">
-            Check out TrackIt — it's free!
+            Check out TrackIt — it&apos;s free!
           </h1>
 
           <p className="w-2/3 text-center text-lg font-medium text-black/50">
@@ -65,9 +65,11 @@ export default function SignUp() {
                 placeholder="Create a password"
               />
 
-              <button className="mt-6  rounded-full border-[1.5px] border-primary bg-primary px-5 py-3  font-medium text-white">
-                Sign Up
-              </button>
+              <NavLink to="/dashboard">
+                <button className="mt-6  w-full rounded-full border-[1.5px] border-primary bg-primary px-5  py-3 font-medium text-white">
+                  Sign Up
+                </button>
+              </NavLink>
               <p className="mt-2  text-xs font-medium text-black/50">
                 By signing up, you are indicating that you have read and agree
                 to the{" "}
