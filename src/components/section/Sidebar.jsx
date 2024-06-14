@@ -36,7 +36,7 @@ export default function Sidebar() {
   return (
     <>
       {/* menggantikan element nav untuk dibuka */}
-      {isOpen && <div className="relative w-12"></div>}
+      {isOpen && <div className="relative w-12 flex-shrink-0"></div>}
       <nav
         ref={sidebarRef}
         className={`fixed z-20 bg-primary py-6 md:relative md:px-10 ${
