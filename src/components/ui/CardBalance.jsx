@@ -1,18 +1,15 @@
 export default function CardBalance({ text, money }) {
   return (
-    <div className="mt-2 grid grid-cols-7 items-center justify-center gap-6 md:grid-cols-5">
-      <div className="col-span-3 flex flex-col gap-2 md:col-span-2">
-        <h1 className="md:text-normal text-sm font-medium text-primary/50">
-          {text} :
-        </h1>
-      </div>
-      <div className="col-span-3 flex flex-col gap-2 md:col-span-2">
-        <h1 className="md:text-normal flex justify-end text-sm font-medium text-secondary">
+    <div className="mt-2 flex items-center justify-between gap-6 md:grid-cols-5">
+      <p className="md:text-normal text-sm font-medium text-primary/50">
+        {text} :
+      </p>
+      <div className="flex gap-4">
+        <p className="md:text-normal text-sm font-medium text-secondary">
           Rp {money},00
-        </h1>
-      </div>
-      <div className="flex flex-col gap-2 text-primary">
-        <div className="flex justify-end">
+        </p>
+
+        <div className=" text-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1.3em"
