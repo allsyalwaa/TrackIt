@@ -3,7 +3,16 @@ import Logo from "../assets/illustration-logo.svg";
 import ButtonGoogle from "../components/ui/ButtonGoogle";
 import Button from "../components/ui/Button";
 
+import { useGoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
+
 export default function LogIn() {
+  const navigate = useNavigate();
+
+  const login = useGoogleLogin({
+    onSuccess: () => navigate("/dashboard"),
+    flow: "auth-code",
+  });
   return (
     <>
       <div className="container py-16">
@@ -15,7 +24,9 @@ export default function LogIn() {
           </h1>
 
           <div>
-            <ButtonGoogle>Log in with google</ButtonGoogle>
+            <ButtonGoogle onClick={() => login()}>
+              Log in with google
+            </ButtonGoogle>
 
             <div className="mt-4 flex  items-center px-4">
               <div className="flex-grow border-t border-gray-400"></div>
