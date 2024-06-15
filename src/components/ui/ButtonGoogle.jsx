@@ -1,8 +1,15 @@
 import Button from "./Button";
 
-export default function ButtonGoogle({ children = "Continue in with Google" }) {
+export default function ButtonGoogle({
+  children = "Continue in with Google",
+  onClick,
+}) {
   return (
-    <Button variant="white-primary" className="w-full text-xs sm:text-lg">
+    <Button
+      variant="white-primary"
+      className="w-full text-xs sm:text-lg"
+      onClick={onClick}
+    >
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 48 48">
         <path
           fill="#ffc107"
