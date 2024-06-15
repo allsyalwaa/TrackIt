@@ -12,6 +12,7 @@ import Reminders from "./pages/Reminders";
 import Tasks from "./pages/Tasks";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import ComingSoon from "./pages/ComingSoon";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/coming-soon" element={<ComingSoon />} />
       </Routes>
     </BrowserRouter>
   );
