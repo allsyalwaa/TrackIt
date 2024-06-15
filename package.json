@@ -15,7 +15,9 @@
     "@fullcalendar/interaction": "^6.1.14",
     "@fullcalendar/react": "^6.1.13",
     "@react-oauth/google": "^0.12.1",
+    "apexcharts": "^3.49.1",
     "react": "^18.2.0",
+    "react-apexcharts": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1"
   },
