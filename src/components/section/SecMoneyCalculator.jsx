@@ -42,7 +42,7 @@ export default function SecMoneyCalculator() {
             May 2024
           </h2>
           <div className="mt-4 flex flex-col items-center justify-between lg:flex-row">
-            <div className="w-1/2 lg:w-full">
+            <div className="w-1/2">
               <SecChart
                 income={finance.income}
                 expenditure={finance.expenditure}
@@ -77,34 +77,34 @@ export default function SecMoneyCalculator() {
             <AddBalance onClose={handleCloseBalancePopup} />
           )}
         </div>
-      </div>
 
-      <div className="relative mt-3 h-auto rounded-lg border-[1.5px] border-primary p-4 md:h-80">
-        <h1 className="text-xl font-semibold text-primary">Transactions</h1>
-        <div className="mt-2 flex flex-col gap-2">
-          <CardTransactions
-            text1="Transaction name"
-            text2="Balance name"
-            money="5.000.000"
-          />
-          <CardTransactions
-            text1="Transaction name"
-            text2="Balance name"
-            money="5.000.000"
-          />
-          <CardTransactions
-            text1="Transaction name"
-            text2="Balance name"
-            money="5.000.000"
-          />
+        <div className="relative h-auto rounded-lg border-[1.5px] border-primary p-4 md:col-span-2 md:h-80">
+          <h1 className="text-xl font-semibold text-primary">Transactions</h1>
+          <div className="mt-2 flex flex-col gap-2">
+            <CardTransactions
+              text1="Transaction name"
+              text2="Balance name"
+              money="5.000.000"
+            />
+            <CardTransactions
+              text1="Transaction name"
+              text2="Balance name"
+              money="5.000.000"
+            />
+            <CardTransactions
+              text1="Transaction name"
+              text2="Balance name"
+              money="5.000.000"
+            />
 
-          <ButtonPlus
-            onClick={handleOpenTransactionPopup}
-            className="ml-auto"
-          />
-          {isTransactionPopupOpen && (
-            <AddTransaction onClose={handleCloseTransactionPopup} />
-          )}
+            <ButtonPlus
+              onClick={handleOpenTransactionPopup}
+              className="ml-auto"
+            />
+            {isTransactionPopupOpen && (
+              <AddTransaction onClose={handleCloseTransactionPopup} />
+            )}
+          </div>
         </div>
       </div>
     </section>
