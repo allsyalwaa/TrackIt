@@ -39,7 +39,7 @@ export default function Sidebar() {
       {isOpen && <div className="relative w-12 flex-shrink-0"></div>}
       <nav
         ref={sidebarRef}
-        className={`fixed z-20 bg-primary py-6 transition-all delay-100 duration-500 md:relative md:px-10 ${
+        className={`fixed z-20 bg-primary py-6 transition-all duration-500 md:relative md:px-10 ${
           isOpen ? "fixed w-56 px-10" : "relative w-12"
         } h-full md:w-72`}
       >
@@ -65,7 +65,7 @@ export default function Sidebar() {
           alt=""
         />
         <div
-          className={`mt-8  w-full flex-col gap-4 text-white md:flex ${isOpen ? "flex" : "hidden"}`}
+          className={`mt-8  flex w-full flex-col gap-4 text-white  md:flex ${isOpen ? "visible transition-all delay-500" : "invisible"}`}
         >
           <NavLink
             to="/dashboard"
