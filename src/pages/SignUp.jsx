@@ -1,10 +1,20 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../assets/illustration-logo.svg";
 
+import { useGoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
+
 import ButtonGoogle from "../components/ui/ButtonGoogle";
 import Button from "../components/ui/Button";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+
+  const login = useGoogleLogin({
+    onSuccess: () => navigate("/dashboard"),
+    flow: "auth-code",
+  });
+
   return (
     <>
       <div className="container py-16">
@@ -21,7 +31,9 @@ export default function SignUp() {
           </p>
 
           <div>
-            <ButtonGoogle>Sign up with Google</ButtonGoogle>
+            <ButtonGoogle onClick={() => login()}>
+              Sign up with Google
+            </ButtonGoogle>
 
             <div className="mt-4 flex  items-center px-4">
               <div className="flex-grow border-t border-gray-400"></div>
