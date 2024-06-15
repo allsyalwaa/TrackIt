@@ -2,13 +2,22 @@ import { NavLink } from "react-router-dom";
 import ButtonGoogle from "./ButtonGoogle";
 import Button from "./Button";
 
+import { useGoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
+
 export default function Signup() {
+  const navigate = useNavigate();
+
+  const login = useGoogleLogin({
+    onSuccess: () => navigate("/dashboard"),
+    flow: "auth-code",
+  });
   return (
     <div>
       {/* ui login */}
       <div className="flex flex-col">
         {/* login google */}
-        <ButtonGoogle />
+        <ButtonGoogle onClick={() => login()} />
 
         <div className="mt-4 flex items-center px-4">
           <div className="flex-grow border-t border-gray-400"></div>
