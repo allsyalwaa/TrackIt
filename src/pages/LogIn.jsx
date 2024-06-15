@@ -25,12 +25,12 @@ export default function LogIn() {
 
             <form className="flex flex-col" action="">
               <input
-                className="mt-4 rounded-full border-[1.5px] border-primary/50 px-5 py-3 placeholder-primary/50"
+                className="mt-4 rounded-full border-[1.5px] border-primary/50 px-5 py-3 text-xs placeholder-primary/50 sm:text-base"
                 type="email"
                 placeholder="Email"
               />
               <input
-                className="mt-4  rounded-full border-[1.5px] border-primary/50 px-5 py-3 placeholder-primary/50"
+                className="mt-4  rounded-full border-[1.5px] border-primary/50 px-5 py-3 text-xs placeholder-primary/50 sm:text-base"
                 type="password"
                 placeholder="Password"
               />
