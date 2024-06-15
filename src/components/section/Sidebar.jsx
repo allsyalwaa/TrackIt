@@ -65,7 +65,7 @@ export default function Sidebar() {
           alt=""
         />
         <div
-          className={`mt-8  flex w-full flex-col gap-4 text-white  md:flex ${isOpen ? "visible transition-all delay-500" : "invisible"}`}
+          className={`mt-8 flex w-full flex-col gap-4 text-white md:visible  md:flex ${isOpen ? "visible transition-all delay-500" : "invisible"}`}
         >
           <NavLink
             to="/dashboard"
