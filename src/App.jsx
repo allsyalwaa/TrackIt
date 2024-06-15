@@ -11,6 +11,7 @@ import Notes from "./pages/Notes";
 import Reminders from "./pages/Reminders";
 import Tasks from "./pages/Tasks";
 import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/reminders" element={<Reminders />} />
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
