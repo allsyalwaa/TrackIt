@@ -1,7 +1,13 @@
 /* eslint-disable react/prop-types */
-export default function Button({ children, variant = "primary", className }) {
+export default function Button({
+  children,
+  variant = "primary",
+  className,
+  onClick,
+}) {
   return (
     <button
+      onClick={onClick}
       className={`
         flex items-center justify-center gap-4 rounded-full  border-[1.5px] px-4 py-1 font-medium sm:px-5 sm:py-2
         ${variant === "secondary" && "border-secondary bg-secondary text-sm text-white"}
