@@ -39,7 +39,7 @@ export default function Sidebar() {
       {isOpen && <div className="relative w-12 flex-shrink-0"></div>}
       <nav
         ref={sidebarRef}
-        className={`fixed z-20 bg-primary py-6 md:relative md:px-10 ${
+        className={`fixed z-20 bg-primary py-6 transition-all delay-100 duration-500 md:relative md:px-10 ${
           isOpen ? "fixed w-56 px-10" : "relative w-12"
         } h-full md:w-72`}
       >
