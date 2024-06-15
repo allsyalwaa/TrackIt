@@ -1,4 +1,3 @@
-import Chart from "../../assets/chart.svg";
 import AddBalance from "../ui/AddBalance";
 import AddTransaction from "../ui/AddTransaction";
 import ButtonPlus from "../ui/ButtonPlus";
@@ -6,9 +5,15 @@ import CardBalance from "../ui/CardBalance";
 import CardFinancial from "../ui/CardFinancial";
 import CardTransactions from "../ui/CardTransactions";
 
+import SecChart from "./Chart";
+
 import { useState } from "react";
 
 export default function SecMoneyCalculator() {
+  const finance = {
+    income: 1_000_000,
+    expenditure: 2_00_000,
+  };
   const [isBalancePopupOpen, setIsBalancePopupOpen] = useState(false);
   const [isTransactionPopupOpen, setIsTransactionPopupOpen] = useState(false);
 
@@ -36,14 +41,24 @@ export default function SecMoneyCalculator() {
           <h2 className="mt-2 text-sm font-semibold text-secondary">
             May 2024
           </h2>
-          <div className="mt-4 grid items-center gap-6 md:grid-cols-3 md:justify-center">
-            <div>
-              <img className="h-20" src={Chart} alt="" />
+          <div className="mt-4 flex flex-col items-center justify-between lg:flex-row">
+            <div className="w-1/2 lg:w-full">
+              <SecChart
+                income={finance.income}
+                expenditure={finance.expenditure}
+              />
             </div>
-            <div className="col-span-2">
-              <CardFinancial text="Income" money="5.000.000" />
-              <CardFinancial text="Expenditure" money="5.000.000" />
-              <CardFinancial text="Total" money="5.000.000" />
+            <div className="w-full">
+              <CardFinancial text="Income" money={finance.income} />
+              <CardFinancial
+                text="Expenditure"
+                type="expenditure"
+                money={finance.expenditure}
+              />
+              <CardFinancial
+                text="Total"
+                money={finance.income - finance.expenditure}
+              />
             </div>
           </div>
         </div>
