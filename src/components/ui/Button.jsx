@@ -3,11 +3,11 @@ export default function Button({ children, variant = "primary", className }) {
   return (
     <button
       className={`
-        flex items-center justify-center gap-4 rounded-full  border-[1.5px] px-5 py-2 font-medium
+        flex items-center justify-center gap-4 rounded-full  border-[1.5px] px-4 py-1 font-medium sm:px-5 sm:py-2
         ${variant === "secondary" && "border-secondary bg-secondary text-sm text-white"}
-        ${variant === "primary" && "border-primary bg-primary text-lg text-white"}
+        ${variant === "primary" && "border-primary bg-primary text-xs text-white sm:text-lg"}
         ${variant === "white" && "border-secondary text-sm text-secondary"}
-        ${variant === "white-primary" && "border-primary/50 text-lg text-primary"}
+        ${variant === "white-primary" && "border-primary/50 text-xs text-primary sm:text-lg"}
         ${className}
     `}
     >
