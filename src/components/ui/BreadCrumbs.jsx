@@ -2,26 +2,18 @@ export default function BreadCrumbs({
   data = [
     {
       name: "Dashboard",
-      link: "/",
-    },
-    {
-      name: "Projects",
-      link: "/projects",
-    },
-    {
-      name: "Flowbite",
-      link: "/flowbite",
+      link: "/dashboard",
     },
   ],
 }) {
   return (
-    <nav className="flex" aria-label="Breadcrumb">
+    <nav className="mb-2 flex" aria-label="Breadcrumb">
       <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
         {data.map((item, index) => (
           <li key={index} className="inline-flex items-center">
             <a
-              href="#"
-              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+              href={item.link}
+              className="inline-flex items-center text-xs font-medium text-primary/80 hover:text-secondary "
             >
               {index == 0 ? (
                 <svg
@@ -35,7 +27,7 @@ export default function BreadCrumbs({
                 </svg>
               ) : (
                 <svg
-                  className="mx-1 h-3 w-3 text-gray-400 rtl:rotate-180"
+                  className="mx-1 h-2 w-2 text-primary/80 rtl:rotate-180"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
