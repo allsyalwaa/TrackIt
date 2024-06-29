@@ -18,7 +18,7 @@
 }
 
 .fc .fc-toolbar-title {
-  @apply text-xl font-bold text-primary;
+  @apply text-xs font-bold text-primary sm:text-xl;
 }
 
 .fc .fc-button-primary {
@@ -32,12 +32,13 @@
 .fc .fc-day-today {
   @apply bg-secondary;
 }
+
 .fc .fc-daygrid-day-number {
-  @apply font-bold;
+  @apply text-[10px] font-bold sm:text-base;
 }
 
 .fc .fc-button-primary.fc-today-button:disabled {
-  @apply cursor-not-allowed rounded-xl border-primary bg-white text-primary;
+  @apply cursor-not-allowed rounded-xl border-primary bg-white text-xs text-primary sm:text-base;
 }
 
 .fc .fc-button-primary.fc-today-button {
@@ -46,4 +47,16 @@
 
 .fc-h-event {
   @apply rounded border-secondary bg-secondary text-center text-white;
+}
+
+.fc .fc-col-header-cell-cushion {
+  @apply text-[10px] sm:text-base;
+}
+
+.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+  @apply h-0 sm:h-[2em];
+}
+
+.fc .fc-toolbar.fc-header-toolbar {
+  @apply mb-2 sm:mb-[1.5em];
 }
