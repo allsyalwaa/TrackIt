@@ -47,13 +47,7 @@ export default function SecProfile() {
             className="mt-2  rounded-lg border-[1.5px] border-primary/50 px-4 py-0.5 placeholder-primary/50 md:py-2"
             type="email"
           />
-          <label className="mt-4 text-sm text-primary md:text-lg" htmlFor="">
-            Password
-          </label>
-          <input
-            className="mt-2  rounded-lg border-[1.5px] border-primary/50 px-4 py-0.5 placeholder-primary/50 md:py-2"
-            type="password"
-          />
+
           <div className="mt-2 flex justify-end">
             <button
               type="button"
