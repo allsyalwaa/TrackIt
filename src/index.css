@@ -42,7 +42,7 @@
 }
 
 .fc .fc-button-primary.fc-today-button {
-  @apply rounded-xl border-primary bg-white text-primary;
+  @apply rounded-xl border-primary bg-white text-xs text-primary sm:text-base;
 }
 
 .fc-h-event {
