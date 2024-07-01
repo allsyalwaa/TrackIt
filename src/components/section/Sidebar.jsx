@@ -35,12 +35,12 @@ export default function Sidebar() {
 
   return (
     <>
-      <div className="relative w-12 flex-shrink-0 md:w-0"></div>
+      <div className="relative w-12 flex-shrink-0 md:w-56"></div>
       <nav
         ref={sidebarRef}
-        className={`fixed z-20 bg-primary py-6 transition-all duration-500 md:relative md:px-10 ${
+        className={`fixed z-20 bg-primary py-6 transition-all duration-500 md:px-10 ${
           isOpen ? "fixed w-56 px-10" : " w-12"
-        } h-full md:w-72`}
+        } h-full md:w-56`}
       >
         <button
           onClick={() => setIsOpen((prev) => !prev)}
