@@ -60,3 +60,11 @@
 .fc .fc-toolbar.fc-header-toolbar {
   @apply mb-2 sm:mb-[1.5em];
 }
+
+.fc .fc-daygrid-event-harness {
+  @apply pointer-events-none;
+}
+
+.fc-daygrid-day-events {
+  @apply overflow-hidden;
+}
