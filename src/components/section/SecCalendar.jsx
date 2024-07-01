@@ -6,7 +6,10 @@ import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClic
 import { useState } from "react";
 
 export default function SecCalendar() {
-  const events = [{ title: "Title", start: "2024-05-02" }];
+  const events = [
+    { title: "Title", start: "2024-05-02", end: "2024-05-02" },
+    { title: "Title", start: "2024-05-02", end: "2024-05-02" },
+  ];
   const [isEventPopupOpen, setIsEventPopupOpen] = useState(false);
 
   const handleOpenEventPopup = () => {
