@@ -12,7 +12,7 @@ export default function AddEvent({ onClose }) {
     <>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-64 rounded-lg bg-white p-6 shadow-lg md:max-w-md">
+          <div className="w-full max-w-xs rounded-lg bg-white p-6 shadow-lg md:max-w-md">
             <div className="mb-4 flex justify-end">
               <button onClick={closePopup} className="text-primary">
                 <svg
