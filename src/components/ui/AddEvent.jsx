@@ -42,13 +42,13 @@ export default function AddEvent({ onClose }) {
               />
               <hr className="border-t-1 mt-2 w-full border-secondary" />
 
-              <div className="mt-4 grid grid-cols-3 items-center justify-between">
+              <div className="relative mt-4 grid grid-cols-3 items-center justify-between gap-6">
                 <label className="text-lg text-primary" htmlFor="hours">
                   Time :
                 </label>
 
                 <select
-                  className="mx-auto text-lg font-medium text-secondary"
+                  className="mx-auto w-full text-lg font-medium text-secondary"
                   name="hours"
                   id="hours"
                 >
@@ -79,7 +79,7 @@ export default function AddEvent({ onClose }) {
                 </select>
 
                 <select
-                  className="mx-auto text-lg font-medium text-secondary"
+                  className="mx-auto w-full text-lg font-medium text-secondary"
                   name="minutes"
                   id="minutes"
                 >
@@ -102,8 +102,8 @@ export default function AddEvent({ onClose }) {
                 <label className="text-lg text-primary">Location :</label>
                 <input
                   type="text"
-                  className="border-none  placeholder-secondary outline-none placeholder:text-lg placeholder:font-semibold"
-                  placeholder="Yogayakarta"
+                  className="mr-0  border-none placeholder-secondary/50 outline-none placeholder:text-lg placeholder:font-semibold"
+                  placeholder="Location"
                 />
               </div>
               <div className="mt-4 grid grid-cols-2 justify-between">
