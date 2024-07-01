@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../../assets/illustration-logo1.svg";
 import Profile from "../../assets/profile.svg";
+import ConfirmLogout from "../ui/ConfirmLogout";
 
 import { useState, useEffect, useRef } from "react";
 
@@ -32,6 +33,17 @@ export default function Sidebar() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const [isConfirmLogoutPopupOpen, setIsConfirmLogoutPopupOpen] =
+    useState(false);
+
+  const handleOpenConfirmLogoutPopup = () => {
+    setIsConfirmLogoutPopupOpen(true);
+  };
+
+  const handleCloseConfirmLogoutPopup = () => {
+    setIsConfirmLogoutPopupOpen(false);
+  };
 
   return (
     <>
@@ -233,8 +245,8 @@ export default function Sidebar() {
 
               <p>Account Setting</p>
             </NavLink>
-            <NavLink
-              to="/"
+            <button
+              onClick={handleOpenConfirmLogoutPopup}
               className="flex items-center gap-3 text-sm font-medium"
             >
               <svg
@@ -250,9 +262,12 @@ export default function Sidebar() {
               </svg>
 
               <p>Log Out</p>
-            </NavLink>
+            </button>
           </div>
         </div>
+        {isConfirmLogoutPopupOpen && (
+          <ConfirmLogout onClose={handleCloseConfirmLogoutPopup} />
+        )}
       </nav>
     </>
   );
