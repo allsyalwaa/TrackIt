@@ -14,6 +14,7 @@ export default function Button({
         ${variant === "primary" && "border-primary bg-primary text-xs text-white sm:text-lg"}
         ${variant === "white" && "border-secondary text-sm text-secondary"}
         ${variant === "white-primary" && "border-primary/50 text-xs text-primary sm:text-lg"}
+        ${variant === "red" && "border-[#EE0C00] bg-[#EE0C00] text-xs text-white"}
         ${className}
     `}
     >
