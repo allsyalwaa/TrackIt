@@ -62,13 +62,19 @@ export default function LogIn() {
                 By continuing, you are indicating that you have read and agree
                 to the{" "}
                 <span className="text-primary">
-                  <NavLink to="/" className="text-xs font-medium text-primary">
+                  <NavLink
+                    to="/coming-soon"
+                    className="text-xs font-medium text-primary"
+                  >
                     Terms of Use
                   </NavLink>
                 </span>{" "}
                 and{" "}
                 <span className="text-primary">
-                  <NavLink to="/" className="text-xs font-medium text-primary">
+                  <NavLink
+                    to="/coming-soon"
+                    className="text-xs font-medium text-primary"
+                  >
                     Privacy Policy
                   </NavLink>
                 </span>
