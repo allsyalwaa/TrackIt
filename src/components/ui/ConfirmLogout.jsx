@@ -31,10 +31,8 @@ export default function ConfirmLogout({ onClose }) {
                 </Button>
               </NavLink>
               <Button
-                className={
-                  "border-[#EE0C00] bg-[#EE0C00] text-xs md:w-1/4 md:text-sm"
-                }
-                variant="secondary"
+                className={" md:w-1/4 md:text-sm"}
+                variant="red"
                 onClick={closePopup}
               >
                 Cancel
