@@ -4,7 +4,22 @@ import CardNotes from "../ui/CardNotes";
 
 import { useState } from "react";
 
-export default function SecNotes() {
+export default function SecNotes({
+  data = [
+    {
+      id: 1,
+      date: "24 May 2024, 06.00 PM",
+      name: "Note name",
+      description: "Description",
+    },
+    {
+      id: 2,
+      date: "24 May 2024, 06.00 PM",
+      name: "Note name",
+      description: "Description",
+    },
+  ],
+}) {
   const [isNotePopupOpen, setIsNotePopupOpen] = useState(false);
 
   const handleOpenNotePopup = () => {
@@ -20,16 +35,14 @@ export default function SecNotes() {
       <div className="text-3xl font-bold text-secondary">My Notes</div>
       <hr className="mt-4 border-t border-primary/50" />
       <div className="mt-4 flex flex-col gap-4">
-        <CardNotes
-          text1="24 May 2024, 06.00 PM"
-          text2="Note name"
-          text3="Description"
-        />
-        <CardNotes
-          text1="24 May 2024, 06.00 PM"
-          text2="Note name"
-          text3="Description"
-        />
+        {data.map((note) => (
+          <CardNotes
+            key={note.id}
+            text1={note.date}
+            text2={note.name}
+            text3={note.description}
+          />
+        ))}
       </div>
       <button
         onClick={handleOpenNotePopup}
