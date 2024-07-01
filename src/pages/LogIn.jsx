@@ -47,7 +47,10 @@ export default function LogIn() {
               />
 
               <div className="mt-2 flex justify-end">
-                <NavLink to="/" className="text-xs font-medium text-primary">
+                <NavLink
+                  to="/coming-soon"
+                  className="text-xs font-medium text-primary"
+                >
                   Forgot password?
                 </NavLink>
               </div>
