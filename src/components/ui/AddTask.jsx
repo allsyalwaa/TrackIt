@@ -13,7 +13,7 @@ export default function AddTask({ onClose }) {
     <>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg">
+          <div className="w-full max-w-64 md:max-w-2xl rounded-lg bg-white p-6 shadow-lg">
             <div className="mb-4 flex justify-end">
               <button onClick={closePopup} className="text-primary">
                 <svg
@@ -47,7 +47,7 @@ export default function AddTask({ onClose }) {
               />
 
               <div className="mt-6 flex justify-end">
-                <Button className={"w-1/6"} variant="primary">
+                <Button className={"md:w-1/6"} variant="primary">
                   Save
                 </Button>
               </div>

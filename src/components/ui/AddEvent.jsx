@@ -112,7 +112,7 @@ export default function AddEvent({ onClose }) {
               </div>
 
               <div className="mt-6 flex justify-end">
-                <Button className={"w-1/4"} variant="primary">
+                <Button className={"md:w-1/4"} variant="primary">
                   Save
                 </Button>
               </div>
