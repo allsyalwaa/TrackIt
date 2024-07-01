@@ -13,7 +13,7 @@ export default function AddReminder({ onClose }) {
     <>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-xs md:max-w-2xl rounded-lg bg-white p-6 shadow-lg">
+          <div className="w-full max-w-xs rounded-lg bg-white p-6 shadow-lg md:max-w-2xl">
             <div className="mb-4 flex justify-end">
               <button onClick={closePopup} className="text-primary">
                 <svg
@@ -40,13 +40,13 @@ export default function AddReminder({ onClose }) {
               />
               <hr className="border-t-1 mt-2 w-full border-secondary" />
 
-              <div className="mt-4 grid grid-cols-4 items-center justify-between">
+              <div className="relative mt-4 grid grid-cols-4 items-center justify-between gap-6">
                 <label className="text-lg text-primary" htmlFor="hours">
                   Date :
                 </label>
 
                 <select
-                  className="mx-auto text-lg font-medium text-secondary"
+                  className="mx-auto w-full text-lg font-medium text-secondary"
                   name="days"
                   id="days"
                 >
@@ -67,7 +67,7 @@ export default function AddReminder({ onClose }) {
                   <option value="">15</option>
                 </select>
                 <select
-                  className="mx-auto text-lg font-medium text-secondary"
+                  className="mx-auto w-full text-lg font-medium text-secondary"
                   name="months"
                   id="months"
                 >
@@ -85,7 +85,7 @@ export default function AddReminder({ onClose }) {
                 </select>
 
                 <select
-                  className="mx-auto text-lg font-medium text-secondary"
+                  className="mx-auto w-full text-lg font-medium text-secondary"
                   name="years"
                   id="years"
                 >
@@ -103,7 +103,7 @@ export default function AddReminder({ onClose }) {
                 </select>
               </div>
 
-              <div className="mt-4 grid grid-cols-4 items-center justify-between">
+              <div className="relative mt-4 grid grid-cols-4 items-center justify-between gap-6">
                 <label
                   className="col-span-2 text-lg text-primary"
                   htmlFor="hours"
@@ -112,7 +112,7 @@ export default function AddReminder({ onClose }) {
                 </label>
 
                 <select
-                  className="mx-auto text-lg font-medium text-secondary"
+                  className="mx-auto w-full text-lg font-medium text-secondary"
                   name="hours"
                   id="hours"
                 >
@@ -143,7 +143,7 @@ export default function AddReminder({ onClose }) {
                 </select>
 
                 <select
-                  className="mx-auto text-lg font-medium text-secondary"
+                  className="mx-auto w-full text-lg font-medium text-secondary"
                   name="minutes"
                   id="minutes"
                 >
