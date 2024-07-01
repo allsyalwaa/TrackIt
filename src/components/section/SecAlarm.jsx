@@ -1,4 +1,15 @@
-export default function SecAlarm() {
+import CardAlarm from "../ui/CardAlarm";
+
+export default function SecAlarm({
+  data = [
+    {
+      id: 1,
+      name: "Alarm name",
+      time: "06.00 PM",
+      date: "Friday, May 24",
+    },
+  ],
+}) {
   return (
     <section>
       <div className=" flex w-full flex-col items-center justify-center gap-6">
@@ -88,16 +99,15 @@ export default function SecAlarm() {
       </form>
       <hr className="mt-6 border-t border-primary/50" />
 
-      <div className="mx-auto flex items-center justify-between rounded-lg border-[1.5px] border-primary px-4 py-3 text-center">
-        <h1 className="text-sm font-semibold text-primary md:text-lg">
-          Alarm name
-        </h1>
-        <h1 className="text-xl font-bold text-secondary md:text-3xl">
-          06.00 PM
-        </h1>
-        <h1 className="text-sm font-semibold text-primary md:text-lg">
-          Friday, May 24
-        </h1>
+      <div className="mt-4">
+        {data.map((item) => (
+          <CardAlarm
+            key={item.id}
+            text={item.name}
+            time={item.time}
+            date={item.date}
+          />
+        ))}
       </div>
     </section>
   );
