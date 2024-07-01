@@ -21,7 +21,7 @@ export default function SecProfile() {
       <hr className="mt-4 border-t border-primary/50" />
       <div className="mt-6 flex flex-col items-center justify-center">
         <img className="flex h-20 items-center" src={Profile1} alt="" />
-        <div className="mt-2 flex items-center gap-2 text-primary/50">
+        <button className="mt-2 flex items-center gap-2 text-primary/50">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1em"
@@ -34,7 +34,7 @@ export default function SecProfile() {
             />
           </svg>
           <p className="text-xs text-primary/50">upload</p>
-        </div>
+        </button>
 
         <form
           className="mt-4 flex w-full flex-col justify-start md:w-2/5"
