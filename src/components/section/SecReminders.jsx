@@ -4,7 +4,20 @@ import CardReminders from "../ui/CardReminders";
 
 import { useState } from "react";
 
-export default function SecReminders() {
+export default function SecReminders({
+  data = [
+    {
+      id: 1,
+      name: "Reminder name",
+      time: "06.00 PM",
+    },
+    {
+      id: 2,
+      name: "Reminder name",
+      time: "06.00 PM",
+    },
+  ],
+}) {
   const [isReminderPopupOpen, setIsReminderPopupOpen] = useState(false);
 
   const handleOpenReminderPopup = () => {
@@ -19,10 +32,13 @@ export default function SecReminders() {
       <div className="text-3xl font-bold text-secondary">My Reminders</div>
       <hr className="mt-4 border-t border-primary/50" />
       <div className="mt-4 flex flex-col gap-4">
-        <CardReminders text="Reminder name" time="06.00 PM" />
-        <CardReminders text="Reminder name" time="06.00 PM" />
-        <CardReminders text="Reminder name" time="06.00 PM" />
-        <CardReminders text="Reminder name" time="06.00 PM" />
+        {data.map((reminder) => (
+          <CardReminders
+            key={reminder.id}
+            text={reminder.name}
+            time={reminder.time}
+          />
+        ))}
       </div>
       <button
         onClick={handleOpenReminderPopup}
