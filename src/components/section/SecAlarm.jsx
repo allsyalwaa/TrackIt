@@ -17,9 +17,9 @@ export default function SecAlarm() {
             <label className="text-sm text-primary" htmlFor="hours">
               Hours
             </label>
-            <div className="mt-2 rounded-lg border-[1.5px] border-primary px-2 py-3">
+            <div className="relative mt-2 rounded-lg border-[1.5px] border-primary px-2 py-3">
               <select
-                className="mx-auto text-lg font-bold text-secondary"
+                className="mx-auto w-full text-lg font-bold text-secondary"
                 name="hours"
                 id="hours"
               >
@@ -54,9 +54,9 @@ export default function SecAlarm() {
             <label className="text-sm text-primary" htmlFor="minutes">
               Minutes
             </label>
-            <div className="mt-2 rounded-lg border-[1.5px] border-primary px-2 py-3">
+            <div className="relative mt-2 rounded-lg border-[1.5px] border-primary px-2 py-3">
               <select
-                className="mx-auto text-lg font-bold text-secondary"
+                className="mx-auto w-full text-lg font-bold text-secondary"
                 name="minutes"
                 id="minutes"
               >
