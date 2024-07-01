@@ -9,7 +9,34 @@ import SecChart from "./Chart";
 
 import { useState } from "react";
 
-export default function SecMoneyCalculator() {
+export default function SecMoneyCalculator({
+  data_balance = [
+    {
+      id: 1,
+      name: "Balance name",
+      money: "5.000.000",
+    },
+    {
+      id: 2,
+      name: "Balance name",
+      money: "5.000.000",
+    },
+  ],
+  data_transactions = [
+    {
+      id: 1,
+      name: "Transaction name",
+      balance_name: "Balance name",
+      money: "5.000.000",
+    },
+    {
+      id: 2,
+      name: "Transaction name",
+      balance_name: "Balance name",
+      money: "5.000.000",
+    },
+  ],
+}) {
   const finance = {
     income: 1_000_000,
     expenditure: 2_00_000,
@@ -64,9 +91,13 @@ export default function SecMoneyCalculator() {
         </div>
         <div className="relative h-auto rounded-lg border-[1.5px] border-primary p-4">
           <h1 className="text-xl font-semibold text-primary">Balance</h1>
-
-          <CardBalance text="Balance name" money="5.000.000" />
-          <CardBalance text="Balance name" money="5.000.000" />
+          {data_balance.map((balance) => (
+            <CardBalance
+              key={balance.id}
+              text={balance.name}
+              money={balance.money}
+            />
+          ))}
 
           <ButtonPlus
             onClick={handleOpenBalancePopup}
@@ -81,21 +112,14 @@ export default function SecMoneyCalculator() {
         <div className="relative h-auto rounded-lg border-[1.5px] border-primary p-4 md:col-span-2 md:h-80">
           <h1 className="text-xl font-semibold text-primary">Transactions</h1>
           <div className="mt-2 flex flex-col gap-2">
-            <CardTransactions
-              text1="Transaction name"
-              text2="Balance name"
-              money="5.000.000"
-            />
-            <CardTransactions
-              text1="Transaction name"
-              text2="Balance name"
-              money="5.000.000"
-            />
-            <CardTransactions
-              text1="Transaction name"
-              text2="Balance name"
-              money="5.000.000"
-            />
+            {data_transactions.map((transaction) => (
+              <CardTransactions
+                key={transaction.id}
+                text1={transaction.name}
+                text2={transaction.balance_name}
+                money={transaction.money}
+              />
+            ))}
 
             <ButtonPlus
               onClick={handleOpenTransactionPopup}
