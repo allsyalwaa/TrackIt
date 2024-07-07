@@ -36,7 +36,7 @@ export default function AddReminder({ onClose }) {
                 id="title"
                 name="title"
                 className="w-full border-none placeholder-secondary outline-none placeholder:text-xl placeholder:font-semibold"
-                placeholder="Task Name"
+                placeholder="Reminder Name"
               />
               <hr className="border-t-1 mt-2 w-full border-secondary" />
 
