@@ -8,24 +8,15 @@ import { useEffect, useState } from "react";
 import { getEvents } from "../../utils/FetchData";
 
 export default function SecCalendar() {
-  // const events = [
-  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-  // ];
-
   const [isEventPopupOpen, setIsEventPopupOpen] = useState(false);
   const [isEventListOpen, setIsEventListOpen] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const handleOpenEventPopup = () => {
     setIsEventPopupOpen(true);
   };
+
   const handleOpenEventList = () => {
     setIsEventListOpen(true);
   };
@@ -33,18 +24,61 @@ export default function SecCalendar() {
   const handleCloseEventPopup = () => {
     setIsEventPopupOpen(false);
   };
+
   const handleCloseEventList = () => {
     setIsEventListOpen(false);
+    refreshEvents();
   };
 
-  const [events, setEvents] = useState([]);
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const dt = date.getDate();
+    return `${year}-${month < 10 ? "0" + month : month}-${dt < 10 ? "0" + dt : dt}`;
+  };
 
-  useEffect(() => {
+  const refreshEvents = () => {
     console.log("mendapatkan Events");
     getEvents().then((data) => {
-      setEvents(data);
+      const processedEvents = data.map((event) => {
+        console.log(formatDate(event.start));
+        return {
+          ...event,
+          start: formatDate(event.start),
+          end: formatDate(event.end),
+        };
+      });
+      setEvents(processedEvents);
     });
+  };
+  useEffect(() => {
+    refreshEvents();
   }, []);
+
+  const handleDateClick = (info) => {
+    console.log(info.dateStr);
+    setSelectedDate(info.dateStr);
+    let isThereEvent = false;
+    for (let i = 0; i < events.length; i++) {
+      if (info.dateStr === events[i].start || info.dateStr === events[i].end) {
+        isThereEvent = true;
+      }
+    }
+
+    if (isThereEvent) {
+      handleOpenEventList();
+    } else {
+      handleOpenEventPopup();
+    }
+  };
+
+  const handleEventAdded = () => {
+    refreshEvents();
+    if (isEventListOpen) {
+      setIsEventListOpen(true);
+    }
+  };
 
   return (
     <div className="h-full">
@@ -59,24 +93,7 @@ export default function SecCalendar() {
         }))}
         editable={true}
         selectable={true}
-        dateClick={(info) => {
-          console.log(info.dateStr);
-          let isThereEvent = false;
-          for (let i = 0; i < events.length; i++) {
-            if (
-              info.dateStr === events[i].start ||
-              info.dateStr === events[i].end
-            ) {
-              isThereEvent = true;
-            }
-          }
-
-          if (isThereEvent) {
-            handleOpenEventList();
-          } else {
-            handleOpenEventPopup();
-          }
-        }}
+        dateClick={handleDateClick}
         height="100%"
         headerToolbar={{
           left: "today",
@@ -85,14 +102,24 @@ export default function SecCalendar() {
         }}
         eventContent={renderEventContent}
       />
-      {/* <AddEvent /> */}
-      {isEventPopupOpen && <AddEvent onClose={handleCloseEventPopup} />}
-      {isEventListOpen && <EventList onClose={handleCloseEventList} />}
+      {isEventPopupOpen && (
+        <AddEvent
+          onClose={handleCloseEventPopup}
+          selectedDate={selectedDate}
+          onEventAdded={handleEventAdded}
+        />
+      )}
+      {isEventListOpen && (
+        <EventList
+          onClose={handleCloseEventList}
+          selectedDate={selectedDate}
+          onEventAdded={handleEventAdded}
+        />
+      )}
     </div>
   );
 }
 
-// a custom render function
 function renderEventContent() {
   return <div className="h-1"></div>;
 }
