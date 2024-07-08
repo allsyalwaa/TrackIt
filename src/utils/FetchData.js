@@ -46,10 +46,10 @@ export async function getAlarm() {
     return [];
   }
 }
-export async function getEvents() {
+export async function getEvents(date) {
   try {
     const response = await fetch(
-      "https://track-it-rest-api.vercel.app/api/calendar",
+      `https://track-it-rest-api.vercel.app/api/calendar${date ? `?date=${date}` : ""}`,
     );
     const data = await response.json();
     return data;
