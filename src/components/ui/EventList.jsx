@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CardEventList from "./CardEventList";
 import ButtonPlus from "../ui/ButtonPlus";
 import AddEvent from "./AddEvent";
+import { getEvents } from "../../utils/FetchData";
 
 export default function EventList({ onClose }) {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    console.log("mendapatkan Events");
+    getEvents().then((data) => {
+      setEvents(data);
+    });
+  }, []);
+
   const [isOpen, setIsOpen] = useState(true);
 
   const closePopup = () => {
@@ -11,23 +21,23 @@ export default function EventList({ onClose }) {
     onClose();
   };
 
-  const data = [
-    {
-      id: 1,
-      name: "Event 1",
-      time: "10:00 AM",
-    },
-    {
-      id: 2,
-      name: "Event 2",
-      time: "10:00 AM",
-    },
-    {
-      id: 3,
-      name: "Event 3",
-      time: "10:00 AM",
-    },
-  ];
+  // const data = [
+  //   {
+  //     id: 1,
+  //     name: "Event 1",
+  //     time: "10:00 AM",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Event 2",
+  //     time: "10:00 AM",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Event 3",
+  //     time: "10:00 AM",
+  //   },
+  // ];
 
   const [isEventPopupOpen, setIsEventPopupOpen] = useState(false);
 
@@ -66,11 +76,11 @@ export default function EventList({ onClose }) {
             </p>
             <hr className="mt-2 border-t border-primary/50" />
 
-            {data.map((event) => (
+            {events.map((event) => (
               <CardEventList
                 key={event.id}
-                text={event.name}
-                time={event.time}
+                text={event.title}
+                time={event.start}
               />
             ))}
 
