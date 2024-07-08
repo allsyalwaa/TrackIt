@@ -4,20 +4,21 @@ import "../../index.css";
 import AddEvent from "../ui/AddEvent";
 import EventList from "../ui/EventList";
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getEvents } from "../../utils/FetchData";
 
 export default function SecCalendar() {
-  const events = [
-    { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-    { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-    { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-    { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-    { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-    { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-    { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-    { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-    { title: "Title", start: "2024-05-02", end: "2024-05-02" },
-  ];
+  // const events = [
+  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
+  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
+  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
+  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
+  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
+  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
+  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
+  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
+  //   { title: "Title", start: "2024-05-02", end: "2024-05-02" },
+  // ];
 
   const [isEventPopupOpen, setIsEventPopupOpen] = useState(false);
   const [isEventListOpen, setIsEventListOpen] = useState(false);
@@ -36,20 +37,41 @@ export default function SecCalendar() {
     setIsEventListOpen(false);
   };
 
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    console.log("mendapatkan Events");
+    getEvents().then((data) => {
+      setEvents(data);
+    });
+  }, []);
+
   return (
     <div className="h-full">
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         weekends={true}
-        events={events}
+        events={events.map((event) => ({
+          title: event.title,
+          start: event.start,
+          end: event.end,
+        }))}
         editable={true}
         selectable={true}
         dateClick={(info) => {
-          if (
-            info.dateStr === events[0].start ||
-            info.dateStr === events[0].end
-          ) {
+          console.log(info.dateStr);
+          let isThereEvent = false;
+          for (let i = 0; i < events.length; i++) {
+            if (
+              info.dateStr === events[i].start ||
+              info.dateStr === events[i].end
+            ) {
+              isThereEvent = true;
+            }
+          }
+
+          if (isThereEvent) {
             handleOpenEventList();
           } else {
             handleOpenEventPopup();
