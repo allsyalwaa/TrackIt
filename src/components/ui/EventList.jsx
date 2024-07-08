@@ -4,15 +4,17 @@ import ButtonPlus from "../ui/ButtonPlus";
 import AddEvent from "./AddEvent";
 import { getEvents } from "../../utils/FetchData";
 
-export default function EventList({ onClose }) {
+export default function EventList({ onClose, selectedDate, onEventAdded }) {
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     console.log("mendapatkan Events");
-    getEvents().then((data) => {
+    getEvents(selectedDate).then((data) => {
       setEvents(data);
+      setLoading(false);
     });
-  }, []);
+  }, [selectedDate]);
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -20,24 +22,6 @@ export default function EventList({ onClose }) {
     setIsOpen(false);
     onClose();
   };
-
-  // const data = [
-  //   {
-  //     id: 1,
-  //     name: "Event 1",
-  //     time: "10:00 AM",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Event 2",
-  //     time: "10:00 AM",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Event 3",
-  //     time: "10:00 AM",
-  //   },
-  // ];
 
   const [isEventPopupOpen, setIsEventPopupOpen] = useState(false);
 
@@ -48,6 +32,35 @@ export default function EventList({ onClose }) {
   const handleCloseEventPopup = () => {
     setIsEventPopupOpen(false);
   };
+
+  const handleEventAdded = () => {
+    getEvents(selectedDate).then((data) => {
+      setEvents(data);
+    });
+    onEventAdded();
+  };
+
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  const formatTime = (dateStr) => {
+    const date = new Date(dateStr);
+    let hour = date.getUTCHours();
+    let minutes = date.getUTCMinutes();
+    let ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12;
+    hour = hour ? hour : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    return `${hour}:${minutes} ${ampm}`;
+  };
+
   return (
     <>
       {isOpen && (
@@ -72,24 +85,40 @@ export default function EventList({ onClose }) {
             </div>
 
             <p className="text-sm font-bold text-primary/50">
-              Thursday, 2 May 2024
+              {formatDate(selectedDate)}
             </p>
             <hr className="mt-2 border-t border-primary/50" />
 
-            {events.map((event) => (
-              <CardEventList
-                key={event.id}
-                text={event.title}
-                time={event.start}
-              />
-            ))}
+            {loading ? (
+              <div className="mt-2 text-center text-xs text-primary">
+                Loading...
+              </div>
+            ) : events.length > 0 ? (
+              events.map((event) => (
+                <CardEventList
+                  key={event.id}
+                  text={event.title}
+                  time={formatTime(event.start)}
+                />
+              ))
+            ) : (
+              <div className="mt-2 text-center text-xs text-primary">
+                No event
+              </div>
+            )}
 
             <ButtonPlus
               onClick={handleOpenEventPopup}
               className={"ml-auto mt-4"}
             />
           </div>
-          {isEventPopupOpen && <AddEvent onClose={handleCloseEventPopup} />}
+          {isEventPopupOpen && (
+            <AddEvent
+              onClose={handleCloseEventPopup}
+              selectedDate={selectedDate}
+              onEventAdded={handleEventAdded}
+            />
+          )}
         </div>
       )}
     </>
