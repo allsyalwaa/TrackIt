@@ -1,9 +1,17 @@
 import AddTransaction from "../ui/AddTransaction";
 import ConfirmDelete from "./ConfirmDelete";
 import { useState } from "react";
+import { rupiahFormat } from "../../utils";
 
-export default function CardTransactions({ text1, text2, money }) {
+export default function CardTransactions({
+  text1,
+  text2,
+  money,
+  transactionId,
+}) {
   const [isTransactionPopupOpen, setIsTransactionPopupOpen] = useState(false);
+  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
+    useState(false);
 
   const handleOpenTransactionPopup = () => {
     setIsTransactionPopupOpen(true);
@@ -13,9 +21,6 @@ export default function CardTransactions({ text1, text2, money }) {
     setIsTransactionPopupOpen(false);
   };
 
-  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
-    useState(false);
-
   const handleOpenConfirmDeletePopup = () => {
     setIsConfirmDeletePopupOpen(true);
   };
@@ -23,19 +28,44 @@ export default function CardTransactions({ text1, text2, money }) {
   const handleCloseConfirmDeletePopup = () => {
     setIsConfirmDeletePopupOpen(false);
   };
+
+  const moneyColor = money < 0 ? "text-[#EE0C00]" : "text-primary";
+
+  const BASE_URL = import.meta.env.VITE_API_URL;
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        BASE_URL + `/money-calculator/transaction/${transactionId}`,
+        {
+          method: "DELETE",
+        },
+      );
+      alert("Transaction deleted successfully");
+      if (!response.ok) {
+        throw new Error("Failed to delete the transaction");
+      }
+
+      setIsConfirmDeletePopupOpen(false);
+    } catch (error) {
+      console.error("Error deleting transaction:", error);
+    }
+  };
+
   return (
     <div className="rounded-lg border-[1.5px] border-primary/50 p-2">
-      <div className="mx-auto  flex items-center justify-between">
+      <div className="mx-auto flex items-center justify-between">
         <div className="flex flex-col gap-1 md:gap-0">
           <h1 className="text-sm font-medium text-primary">{text1}</h1>
           <p className="text-xs font-medium text-primary/50 md:mt-2">{text2}</p>
-          <h1 className="flex font-medium text-secondary md:hidden">
-            Rp {money},00
+          <h1 className={`flex font-medium md:hidden ${moneyColor}`}>
+            {rupiahFormat(money)}
           </h1>
         </div>
         <div className="flex justify-end gap-3">
-          <h1 className="hidden justify-end font-medium text-secondary md:flex">
-            Rp {money},00
+          <h1
+            className={`hidden justify-end font-medium md:flex ${moneyColor}`}
+          >
+            {rupiahFormat(money)}
           </h1>
           <button onClick={handleOpenTransactionPopup} className="text-primary">
             <svg
@@ -76,7 +106,10 @@ export default function CardTransactions({ text1, text2, money }) {
         <AddTransaction onClose={handleCloseTransactionPopup} />
       )}
       {isConfirmDeletePopupOpen && (
-        <ConfirmDelete onClose={handleCloseConfirmDeletePopup} />
+        <ConfirmDelete
+          onClose={handleCloseConfirmDeletePopup}
+          onDelete={handleDelete}
+        />
       )}
     </div>
   );
