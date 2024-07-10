@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "./Button";
 
-export default function ConfirmDelete({ onClose }) {
+export default function ConfirmDelete({ onClose, onDelete }) {
   const [isOpen, setIsOpen] = useState(true);
 
   const closePopup = () => {
@@ -9,6 +9,10 @@ export default function ConfirmDelete({ onClose }) {
     onClose();
   };
 
+  const handleDelete = () => {
+    onDelete();
+    closePopup();
+  };
   return (
     <>
       {isOpen && (
@@ -23,7 +27,7 @@ export default function ConfirmDelete({ onClose }) {
               <Button
                 className={" md:text-sm"}
                 variant="primary"
-                onClick={closePopup}
+                onClick={handleDelete}
               >
                 Delete
               </Button>
