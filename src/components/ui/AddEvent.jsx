@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Button from "./Button";
-import { getEvents } from "../../utils/FetchData";
 
 export default function AddEvent({ onClose, selectedDate, onEventAdded }) {
   const [isOpen, setIsOpen] = useState(true);
