@@ -12,7 +12,10 @@ import { useState, useEffect } from "react";
 import { getFinance, getBalance, getTransaction } from "../../utils/FetchData";
 
 export default function SecMoneyCalculator() {
-  const [finance, setFinance] = useState([]);
+  const [finance, setFinance] = useState({
+    income: 0,
+    expenditure: 0,
+  });
   const [balance, setBalance] = useState([]);
   const [transaction, setTransaction] = useState([]);
 
@@ -106,7 +109,7 @@ export default function SecMoneyCalculator() {
           <h1 className="text-xl font-semibold text-primary">Balance</h1>
           {isLoadingBalance ? (
             <p className="text-sm text-primary">Loading...</p>
-          ) : (
+          ) : balance.length > 0 ? (
             balance.map((balance) => (
               <CardBalance
                 key={balance.id}
@@ -114,6 +117,8 @@ export default function SecMoneyCalculator() {
                 money={balance.money}
               />
             ))
+          ) : (
+            <p className="text-sm text-primary">No balance found</p>
           )}
           <ButtonPlus
             onClick={handleOpenBalancePopup}
