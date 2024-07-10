@@ -1,5 +1,6 @@
 import AddBalance from "../ui/AddBalance";
 import { useState } from "react";
+import { rupiahFormat } from "../../utils";
 
 export default function CardBalance({ text, money }) {
   const [isBalancePopupOpen, setIsBalancePopupOpen] = useState(false);
@@ -18,7 +19,7 @@ export default function CardBalance({ text, money }) {
       </p>
       <div className="flex gap-4">
         <p className="md:text-normal text-sm font-medium text-secondary">
-          Rp {money},00
+          {rupiahFormat(money)}
         </p>
 
         <button onClick={handleOpenBalancePopup} className=" text-primary">
