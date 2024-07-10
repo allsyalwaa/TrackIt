@@ -68,3 +68,11 @@
 .fc-daygrid-day-events {
   @apply overflow-hidden;
 }
+
+::-webkit-scrollbar {
+  @apply w-1 bg-gray-200;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400;
+}
