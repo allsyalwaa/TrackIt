@@ -7,46 +7,50 @@ import CardTransactions from "../ui/CardTransactions";
 
 import SecChart from "./Chart";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function SecMoneyCalculator({
-  data_balance = [
-    {
-      id: 1,
-      name: "Balance name",
-      money: "5.000.000",
-    },
-    {
-      id: 2,
-      name: "Balance name",
-      money: "5.000.000",
-    },
-  ],
-  data_transactions = [
-    {
-      id: 1,
-      name: "Transaction name",
-      balance_name: "Balance name",
-      money: "5.000.000",
-    },
-    {
-      id: 2,
-      name: "Transaction name",
-      balance_name: "Balance name",
-      money: "5.000.000",
-    },
-  ],
-}) {
-  const finance = {
-    income: 1_000_000,
-    expenditure: 2_00_000,
-  };
+import { getFinance, getBalance, getTransaction } from "../../utils/FetchData";
+
+export default function SecMoneyCalculator() {
+  const [finance, setFinance] = useState([]);
+  const [balance, setBalance] = useState([]);
+  const [transaction, setTransaction] = useState([]);
+
+  const [isLoadingFinance, setIsLoadingFinance] = useState(true);
+  const [isLoadingBalance, setIsLoadingBalance] = useState(true);
+  const [isLoadingTransaction, setIsLoadingTransaction] = useState(true);
+
+  useEffect(() => {
+    console.log("mendapatkan Finance");
+    getFinance().then((data) => {
+      setFinance(data);
+      setIsLoadingFinance(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log("mendapatkan Balance");
+    getBalance().then((data) => {
+      setBalance(data);
+      setIsLoadingBalance(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log("mendapatkan Transaction");
+    getTransaction().then((data) => {
+      setTransaction(data);
+      setIsLoadingTransaction(false);
+    });
+  }, []);
+
   const [isBalancePopupOpen, setIsBalancePopupOpen] = useState(false);
   const [isTransactionPopupOpen, setIsTransactionPopupOpen] = useState(false);
 
   const handleOpenBalancePopup = () => {
     setIsBalancePopupOpen(true);
   };
+
   const handleOpenTransactionPopup = () => {
     setIsTransactionPopupOpen(true);
   };
@@ -54,6 +58,7 @@ export default function SecMoneyCalculator({
   const handleCloseBalancePopup = () => {
     setIsBalancePopupOpen(false);
   };
+
   const handleCloseTransactionPopup = () => {
     setIsTransactionPopupOpen(false);
   };
@@ -69,61 +74,80 @@ export default function SecMoneyCalculator({
             May 2024
           </h2>
           <div className="mt-4 flex flex-col items-center justify-between lg:flex-row">
-            <div className="w-1/2">
-              <SecChart
-                income={finance.income}
-                expenditure={finance.expenditure}
-              />
-            </div>
-            <div className="w-full">
-              <CardFinancial text="Income" money={finance.income} />
-              <CardFinancial
-                text="Expenditure"
-                type="expenditure"
-                money={finance.expenditure}
-              />
-              <CardFinancial
-                text="Total"
-                money={finance.income - finance.expenditure}
-              />
-            </div>
+            {isLoadingFinance ? (
+              <p className="w-full text-start text-sm text-primary">
+                Loading...
+              </p>
+            ) : (
+              <>
+                <div className="w-1/2">
+                  <SecChart
+                    income={finance.income}
+                    expenditure={finance.expenditure}
+                  />
+                </div>
+                <div className="w-full">
+                  <CardFinancial text="Income" money={finance.income} />
+                  <CardFinancial
+                    text="Expenditure"
+                    type="expenditure"
+                    money={finance.expenditure}
+                  />
+                  <CardFinancial
+                    text="Total"
+                    money={finance.income - finance.expenditure}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
-        <div className="relative h-auto rounded-lg border-[1.5px] border-primary p-4">
+        <div className="flex flex-col rounded-lg border-[1.5px] border-primary p-4">
           <h1 className="text-xl font-semibold text-primary">Balance</h1>
-          {data_balance.map((balance) => (
-            <CardBalance
-              key={balance.id}
-              text={balance.name}
-              money={balance.money}
-            />
-          ))}
-
+          {isLoadingBalance ? (
+            <p className="text-sm text-primary">Loading...</p>
+          ) : (
+            balance.map((balance) => (
+              <CardBalance
+                key={balance.id}
+                text={balance.name}
+                money={balance.money}
+              />
+            ))
+          )}
           <ButtonPlus
             onClick={handleOpenBalancePopup}
-            className={"ml-auto mt-4"}
+            className={"ml-auto mt-auto"}
           />
-
           {isBalancePopupOpen && (
             <AddBalance onClose={handleCloseBalancePopup} />
           )}
         </div>
-
-        <div className="relative h-auto rounded-lg border-[1.5px] border-primary p-4 md:col-span-2 md:h-80">
-          <h1 className="text-xl font-semibold text-primary">Transactions</h1>
-          <div className="mt-2 flex flex-col gap-2">
-            {data_transactions.map((transaction) => (
-              <CardTransactions
-                key={transaction.id}
-                text1={transaction.name}
-                text2={transaction.balance_name}
-                money={transaction.money}
-              />
-            ))}
-
+        <div className="flex h-auto flex-col  rounded-lg border-[1.5px] border-primary py-4 md:col-span-2 md:h-72">
+          <h1 className="px-4 text-xl font-semibold text-primary">
+            Transactions
+          </h1>
+          <div className=" mt-2 flex h-full flex-col gap-2 overflow-auto px-4">
+            {isLoadingTransaction ? (
+              <p className="text-center text-sm text-primary">Loading...</p>
+            ) : transaction.length > 0 ? (
+              transaction.map((transaction) => (
+                <CardTransactions
+                  key={transaction.name + transaction.id}
+                  text1={transaction.name}
+                  text2={transaction.balance_name}
+                  money={transaction.money}
+                  transactionId={transaction.id}
+                />
+              ))
+            ) : (
+              <p className="text-center text-sm text-primary">
+                No transactions found
+              </p>
+            )}
             <ButtonPlus
               onClick={handleOpenTransactionPopup}
-              className="ml-auto"
+              className="sticky bottom-0 ml-auto mt-auto shrink-0"
             />
             {isTransactionPopupOpen && (
               <AddTransaction onClose={handleCloseTransactionPopup} />
