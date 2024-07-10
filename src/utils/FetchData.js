@@ -68,7 +68,10 @@ export async function getFinance() {
     return data;
   } catch (error) {
     console.error(error);
-    return [];
+    return {
+      income: 0,
+      expenditure: 0,
+    };
   }
 }
 
