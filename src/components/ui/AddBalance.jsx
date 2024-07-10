@@ -3,11 +3,46 @@ import Button from "./Button";
 
 export default function AddBalance({ onClose }) {
   const [isOpen, setIsOpen] = useState(true);
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState("");
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const closePopup = () => {
     setIsOpen(false);
     onClose();
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Mencegah halaman refresh
+
+    const data = {
+      title,
+      amount: parseFloat(amount),
+    };
+
+    try {
+      const response = await fetch(BASE_URL + "/money-calculator/balance", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      // Reset form fields
+      setTitle("");
+      setAmount("");
+
+      closePopup();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <>
       {isOpen && (
@@ -29,19 +64,27 @@ export default function AddBalance({ onClose }) {
               </button>
             </div>
 
-            <form className="mt-4 flex w-full flex-col justify-start" action="">
+            <form
+              className="mt-4 flex w-full flex-col justify-start"
+              action=""
+              onSubmit={handleSubmit}
+            >
               <input
                 type="text"
                 id="title"
                 name="title"
-                className="w-full border-none placeholder-primary outline-none placeholder:text-xl placeholder:font-semibold"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full border-none text-xl font-semibold text-primary placeholder-primary/50 outline-none placeholder:text-xl placeholder:font-semibold"
                 placeholder="Balance name"
               />
               <hr className="border-t-1 mt-2 w-full border-primary" />
 
               <input
-                className="mt-4  rounded-lg border-[1.5px] border-primary/50 px-4 py-1 placeholder-primary/50"
+                className="mt-4 rounded-lg border-[1.5px] border-primary/50 px-4 py-1 text-primary placeholder-primary/50"
                 type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
                 placeholder="Balance amount"
               />
 
