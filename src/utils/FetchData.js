@@ -58,3 +58,42 @@ export async function getEvents(date) {
     return [];
   }
 }
+
+export async function getFinance() {
+  try {
+    const response = await fetch(
+      `https://track-it-rest-api.vercel.app/api/money-calculator/finance`,
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function getBalance() {
+  try {
+    const response = await fetch(
+      `https://track-it-rest-api.vercel.app/api/money-calculator/balance`,
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function getTransaction() {
+  try {
+    const response = await fetch(
+      `https://track-it-rest-api.vercel.app/api/money-calculator/transaction`,
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
