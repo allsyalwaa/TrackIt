@@ -11,10 +11,22 @@ export default function EventList({ onClose, selectedDate, onEventAdded }) {
   useEffect(() => {
     console.log("mendapatkan Events");
     getEvents(selectedDate).then((data) => {
-      setEvents(data);
+      const sortedData = sortEvents(data);
+      setEvents(sortedData);
       setLoading(false);
     });
   }, [selectedDate]);
+
+  const sortEvents = (events) => {
+    return events.sort((a, b) => {
+      const timeA = new Date(a.start).getTime();
+      const timeB = new Date(b.start).getTime();
+      if (timeA === timeB) {
+        return a.title.localeCompare(b.title);
+      }
+      return timeA - timeB;
+    });
+  };
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -35,7 +47,8 @@ export default function EventList({ onClose, selectedDate, onEventAdded }) {
 
   const handleEventAdded = () => {
     getEvents(selectedDate).then((data) => {
-      setEvents(data);
+      const sortedData = sortEvents(data);
+      setEvents(sortedData);
     });
     onEventAdded();
   };
