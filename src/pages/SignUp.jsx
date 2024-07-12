@@ -4,10 +4,13 @@ import Logo from "../assets/illustration-logo.svg";
 import { useGoogleLogin } from "@react-oauth/google";
 import ButtonGoogle from "../components/ui/ButtonGoogle";
 import Button from "../components/ui/Button";
+import { useUserContext } from "../utils/UserContext";
 
 export default function SignUp() {
   const BASE_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
+
+  const { setUser } = useUserContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -63,6 +66,9 @@ export default function SignUp() {
     });
 
     if (response.ok) {
+      const data = await response.json();
+      setUser(data);
+      localStorage.setItem("userId", 2);
       navigate("/dashboard");
     } else {
       const result = await response.json();
