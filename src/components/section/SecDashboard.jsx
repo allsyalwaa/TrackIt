@@ -4,13 +4,17 @@ import MoneyCalculator from "../../assets/money-calculator.svg";
 import Notes from "../../assets/notes.svg";
 import Reminders from "../../assets/reminders.svg";
 import Tasks from "../../assets/tasks.svg";
+import { useUserContext } from "../../utils/UserContext";
 
 import CardDashboard from "../ui/CardDashboard";
 
 export default function SecDashboard() {
+  const { user } = useUserContext();
   return (
     <section>
-      <h1 className="text-3xl font-bold text-secondary">Hello, username!</h1>
+      <h1 className="text-3xl font-bold text-secondary">
+        Hello, {user.username}!
+      </h1>
       <h2 className="mt-2 text-lg text-primary">
         How can TrackIt assist you today?
       </h2>
