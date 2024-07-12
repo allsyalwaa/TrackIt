@@ -70,9 +70,9 @@
 }
 
 ::-webkit-scrollbar {
-  @apply w-1 bg-gray-200;
+  @apply w-1  bg-gray-200;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-400;
+  @apply rounded-full bg-gray-400;
 }
