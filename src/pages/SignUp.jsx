@@ -1,19 +1,74 @@
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "../assets/illustration-logo.svg";
-
 import { useGoogleLogin } from "@react-oauth/google";
-import { useNavigate } from "react-router-dom";
-
 import ButtonGoogle from "../components/ui/ButtonGoogle";
 import Button from "../components/ui/Button";
 
 export default function SignUp() {
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const login = useGoogleLogin({
     onSuccess: () => navigate("/dashboard"),
     flow: "auth-code",
   });
+
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 8;
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    if (!validatePassword(newPassword)) {
+      setPasswordError("Password must be at least 8 characters long");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    if (!validateEmail(email)) {
+      setError("Invalid email address");
+      return;
+    }
+    if (!validatePassword(password)) {
+      setPasswordError("Password must be at least 8 characters long");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    const response = await fetch(BASE_URL + "/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (response.ok) {
+      navigate("/dashboard");
+    } else {
+      const result = await response.json();
+      setError(result.message || "An error occurred");
+    }
+  };
 
   return (
     <>
@@ -35,36 +90,56 @@ export default function SignUp() {
               Sign up with Google
             </ButtonGoogle>
 
-            <div className="mt-4 flex  items-center px-4">
+            <div className="mt-4 flex items-center px-4">
               <div className="flex-grow border-t border-gray-400"></div>
               <span className="px-4 text-gray-500">or</span>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
 
-            <form className="flex flex-col" action="">
+            <form className="flex flex-col" onSubmit={handleSignup}>
               <input
                 className="mt-4 rounded-full border-[1.5px] border-primary/50 px-5 py-3 text-xs placeholder-primary/50 sm:text-base"
                 type="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
               <input
-                className="mt-4  rounded-full border-[1.5px] border-primary/50 px-5 py-3 text-xs placeholder-primary/50 sm:text-base"
+                className="mt-4 rounded-full border-[1.5px] border-primary/50 px-5 py-3 text-xs placeholder-primary/50 sm:text-base"
                 type="password"
                 placeholder="Create a password"
+                value={password}
+                onChange={handlePasswordChange}
+                required
               />
+
+              {passwordError && (
+                <p className="mt-2 text-xs text-red-500">{passwordError}</p>
+              )}
+
               <input
-                className="mt-4  rounded-full border-[1.5px] border-primary/50 px-5 py-3 text-xs placeholder-primary/50 sm:text-base"
+                className="mt-4 rounded-full border-[1.5px] border-primary/50 px-5 py-3 text-xs placeholder-primary/50 sm:text-base"
                 type="password"
                 placeholder="Confirm a password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
               />
 
-              <NavLink to="/dashboard">
-                <Button variant="primary" className={"mt-6 w-full px-5 py-3"}>
-                  Sign Up
-                </Button>
-              </NavLink>
+              {error && error === "Passwords do not match" && (
+                <p className="mt-2 text-xs text-red-500">{error}</p>
+              )}
 
-              <p className="mt-2  text-xs font-medium text-black/50">
+              <Button
+                variant="primary"
+                className={"mt-6 w-full px-5 py-3"}
+                type="submit"
+              >
+                Sign Up
+              </Button>
+
+              <p className="mt-2 text-xs font-medium text-black/50">
                 By signing up, you are indicating that you have read and agree
                 to the{" "}
                 <span className="text-primary">
