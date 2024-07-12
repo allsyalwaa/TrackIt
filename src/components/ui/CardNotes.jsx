@@ -46,7 +46,7 @@ export default function CardNotes({ id, text1, text2, text3, onDelete }) {
   };
 
   return (
-    <div className="h-40 rounded-lg border-[1.5px] border-primary p-4">
+    <div className=" rounded-lg border-[1.5px] border-primary p-4">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-2">
           <p className="text-xs font-medium text-primary/50">{text1}</p>
