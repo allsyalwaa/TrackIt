@@ -3,10 +3,57 @@ import Button from "./Button";
 
 export default function AddReminder({ onClose }) {
   const [isOpen, setIsOpen] = useState(true);
+  const [title, setTitle] = useState("");
+  const [day, setDay] = useState(1);
+  const [month, setMonth] = useState("January");
+  const [year, setYear] = useState(2020);
+  const [hour, setHour] = useState(0);
+  const [minute, setMinute] = useState(0);
+  const [description, setDescription] = useState("");
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const closePopup = () => {
     setIsOpen(false);
     onClose();
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Buat objek yang berisi data form
+    const reminderData = {
+      title: title,
+      date: `${year}-${month}-${day}`,
+      time: `${hour}:${minute}`,
+      description: description,
+    };
+
+    try {
+      // Kirim data ke server menggunakan method POST
+      const response = await fetch(BASE_URL + "/reminder", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reminderData),
+      });
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      // Reset form dan tutup popup jika berhasil
+      setTitle("");
+      setDay(1);
+      setMonth("January");
+      setYear(2020);
+      setHour(0);
+      setMinute(0);
+      setDescription("");
+      closePopup();
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -30,18 +77,23 @@ export default function AddReminder({ onClose }) {
               </button>
             </div>
 
-            <form className="mt-4 flex w-full flex-col justify-start" action="">
+            <form
+              className="mt-4 flex w-full flex-col justify-start"
+              onSubmit={handleSubmit}
+            >
               <input
                 type="text"
                 id="title"
                 name="title"
-                className="w-full border-none placeholder-secondary outline-none placeholder:text-xl placeholder:font-semibold"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full border-none text-xl font-semibold text-secondary placeholder-secondary outline-none placeholder:text-xl placeholder:font-semibold"
                 placeholder="Reminder Name"
               />
               <hr className="border-t-1 mt-2 w-full border-secondary" />
 
               <div className="relative mt-4 grid grid-cols-4 items-center justify-between gap-6">
-                <label className="text-lg text-primary" htmlFor="hours">
+                <label className="text-lg text-primary" htmlFor="days">
                   Date :
                 </label>
 
@@ -49,57 +101,49 @@ export default function AddReminder({ onClose }) {
                   className="mx-auto w-full text-lg font-medium text-secondary"
                   name="days"
                   id="days"
+                  value={day}
+                  onChange={(e) => setDay(e.target.value)}
                 >
-                  <option value="">1</option>
-                  <option value="">2</option>
-                  <option value="">3</option>
-                  <option value="">4</option>
-                  <option value="">5</option>
-                  <option value="">6</option>
-                  <option value="">7</option>
-                  <option value="">8</option>
-                  <option value="">9</option>
-                  <option value="">10</option>
-                  <option value="">11</option>
-                  <option value="">12</option>
-                  <option value="">13</option>
-                  <option value="">14</option>
-                  <option value="">15</option>
+                  {[...Array(31).keys()].map((day) => (
+                    <option key={day + 1} value={day + 1}>
+                      {day + 1}
+                    </option>
+                  ))}
                 </select>
+
                 <select
                   className="mx-auto w-full text-lg font-medium text-secondary"
                   name="months"
                   id="months"
+                  value={month}
+                  onChange={(e) => setMonth(e.target.value)}
                 >
-                  <option value="">January</option>
-                  <option value="">February</option>
-                  <option value="">March</option>
-                  <option value="">April</option>
-                  <option value="">May</option>
-                  <option value="">June</option>
-                  <option value="">July</option>
-                  <option value="">August</option>
-                  <option value="">September</option>
-                  <option value="">October</option>
-                  <option value="">December</option>
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
                 </select>
 
                 <select
                   className="mx-auto w-full text-lg font-medium text-secondary"
                   name="years"
                   id="years"
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
                 >
-                  <option value="">2020</option>
-                  <option value="">2021</option>
-                  <option value="">2022</option>
-                  <option value="">2023</option>
-                  <option value="">2024</option>
-                  <option value="">2025</option>
-                  <option value="">2026</option>
-                  <option value="">2027</option>
-                  <option value="">2028</option>
-                  <option value="">2029</option>
-                  <option value="">2030</option>
+                  {[...Array(11).keys()].map((year) => (
+                    <option key={year + 2020} value={year + 2020}>
+                      {year + 2020}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -115,61 +159,41 @@ export default function AddReminder({ onClose }) {
                   className="mx-auto w-full text-lg font-medium text-secondary"
                   name="hours"
                   id="hours"
+                  value={hour}
+                  onChange={(e) => setHour(e.target.value)}
                 >
-                  <option value="">6 PM</option>
-                  <option value="">7 PM</option>
-                  <option value="">8 PM</option>
-                  <option value="">9 PM</option>
-                  <option value="">10 PM</option>
-                  <option value="">11 PM</option>
-                  <option value="">12 PM</option>
-                  <option value="">1 PM</option>
-                  <option value="">2 PM</option>
-                  <option value="">3 PM</option>
-                  <option value="">4 PM</option>
-                  <option value="">5 PM</option>
-                  <option value="">6 AM</option>
-                  <option value="">7 AM</option>
-                  <option value="">8 AM</option>
-                  <option value="">9 AM</option>
-                  <option value="">10 AM</option>
-                  <option value="">11 AM</option>
-                  <option value="">12 AM</option>
-                  <option value="">1 AM</option>
-                  <option value="">2 AM</option>
-                  <option value="">3 AM</option>
-                  <option value="">4 AM</option>
-                  <option value="">5 AM</option>
+                  {[...Array(24).keys()].map((hour) => (
+                    <option key={hour} value={hour}>
+                      {hour < 10 ? `0${hour}` : hour}:00
+                    </option>
+                  ))}
                 </select>
 
                 <select
                   className="mx-auto w-full text-lg font-medium text-secondary"
                   name="minutes"
                   id="minutes"
+                  value={minute}
+                  onChange={(e) => setMinute(e.target.value)}
                 >
-                  <option value="">00</option>
-                  <option value="">05</option>
-                  <option value="">10</option>
-                  <option value="">15</option>
-                  <option value="">20</option>
-                  <option value="">25</option>
-                  <option value="">30</option>
-                  <option value="">35</option>
-                  <option value="">40</option>
-                  <option value="">45</option>
-                  <option value="">50</option>
-                  <option value="">55</option>
+                  {[0, 15, 30, 45].map((minute) => (
+                    <option key={minute} value={minute}>
+                      {minute < 10 ? `0${minute}` : minute}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               <textarea
-                className="mt-4 h-36 border-none placeholder-primary/50"
+                className="mt-4 h-36 border-none text-primary placeholder-primary/50 outline-none"
                 type="text"
                 placeholder="Description :"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
 
               <div className="mt-6 flex justify-end">
-                <Button className={"md:w-1/6"} variant="primary">
+                <Button className={"md:w-1/6"} variant="primary" type="submit">
                   Save
                 </Button>
               </div>
