@@ -1,20 +1,20 @@
-import AddNotes from "../ui/AddNotes";
+import EditNotes from "../ui/EditNotes";
 import ConfirmDelete from "./ConfirmDelete";
 import { useState } from "react";
 
-export default function CardNotes({ text1, text2, text3 }) {
+export default function CardNotes({ id, text1, text2, text3, onDelete }) {
   const [isNotesPopupOpen, setIsNotesPopupOpen] = useState(false);
+  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
+    useState(false);
 
   const handleOpenNotesPopup = () => {
+    console.log("Opening EditNotes with noteId:", id); // Log noteId
     setIsNotesPopupOpen(true);
   };
 
   const handleCloseNotesPopup = () => {
     setIsNotesPopupOpen(false);
   };
-
-  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
-    useState(false);
 
   const handleOpenConfirmDeletePopup = () => {
     setIsConfirmDeletePopupOpen(true);
@@ -23,6 +23,28 @@ export default function CardNotes({ text1, text2, text3 }) {
   const handleCloseConfirmDeletePopup = () => {
     setIsConfirmDeletePopupOpen(false);
   };
+
+  const BASE_URL = import.meta.env.VITE_API_URL;
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/notes/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("Note deleted successfully");
+      if (response.ok) {
+        setIsConfirmDeletePopupOpen(false);
+        onDelete(id);
+      } else {
+        console.error("Failed to delete the note");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="h-40 rounded-lg border-[1.5px] border-primary p-4">
       <div className="flex items-center justify-between">
@@ -67,9 +89,14 @@ export default function CardNotes({ text1, text2, text3 }) {
           </button>
         </div>
       </div>
-      {isNotesPopupOpen && <AddNotes onClose={handleCloseNotesPopup} />}
+      {isNotesPopupOpen && (
+        <EditNotes onClose={handleCloseNotesPopup} noteId={id} />
+      )}
       {isConfirmDeletePopupOpen && (
-        <ConfirmDelete onClose={handleCloseConfirmDeletePopup} />
+        <ConfirmDelete
+          onClose={handleCloseConfirmDeletePopup}
+          onDelete={handleDelete}
+        />
       )}
     </div>
   );
