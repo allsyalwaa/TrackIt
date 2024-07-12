@@ -1,9 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Profile1 from "../../assets/illustration-profile.svg";
 import ChangePassword from "../ui/ChangePassword";
+import { useUserContext } from "../../utils/UserContext";
 
 export default function SecProfile() {
   const [isPasswordPopupOpen, setIsPasswordPopupOpen] = useState(false);
+  const [profile, setProfile] = useState(null);
+  const BASE_URL = import.meta.env.VITE_API_URL;
+  const { user } = useUserContext();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/user/${user.userId}`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setProfile(data);
+      } catch (error) {
+        console.error("Failed to fetch profile:", error);
+      }
+    };
+
+    if (user.userId) {
+      fetchProfile();
+    }
+  }, []);
 
   const handleOpenPasswordPopup = () => {
     setIsPasswordPopupOpen(true);
@@ -20,7 +43,7 @@ export default function SecProfile() {
       </div>
       <hr className="mt-4 border-t border-primary/50" />
       <div className="mt-6 flex flex-col items-center justify-center">
-        <img className="flex h-20 items-center" src={Profile1} alt="" />
+        <img className="flex h-20 items-center" src={Profile1} alt="Profile" />
         <button className="mt-2 flex items-center gap-2 text-primary/50">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -40,12 +63,15 @@ export default function SecProfile() {
           className="mt-4 flex w-full flex-col justify-start md:w-2/5"
           action=""
         >
-          <label className="text-sm text-primary md:text-lg" htmlFor="">
+          <label className="text-sm text-primary md:text-lg" htmlFor="email">
             Email
           </label>
           <input
-            className="mt-2  rounded-lg border-[1.5px] border-primary/50 px-4 py-0.5 placeholder-primary/50 md:py-2"
+            id="email"
+            className="mt-2 cursor-not-allowed rounded-lg border-[1.5px] border-primary/50 px-4 py-0.5 text-primary placeholder-primary/50 md:py-2"
             type="email"
+            value={user.email}
+            readOnly
           />
 
           <div className="mt-2 flex justify-end">
