@@ -3,10 +3,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import ButtonGoogle from "./ButtonGoogle";
 import Button from "./Button";
+import { useUserContext } from "../../utils/UserContext"; // Import UserContext
 
 export default function Signup() {
   const BASE_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
+  const { setUserId } = useUserContext(); // Destructure setUserId from UserContext
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -62,6 +64,8 @@ export default function Signup() {
     });
 
     if (response.ok) {
+      const result = await response.json();
+      setUserId(result.userId); // Set userId in context
       navigate("/dashboard");
     } else {
       const result = await response.json();
