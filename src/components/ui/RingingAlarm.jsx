@@ -49,11 +49,14 @@ export default function RingingAlarm({ onClose, alarm }) {
               <h1 className="text-sm font-semibold text-primary md:text-lg">
                 {alarm.name}
               </h1>
-              <button onClick={closePopup} className="mt-4">
-                <Button className={"rounded-lg"} variant="secondary">
-                  Close
-                </Button>
-              </button>
+
+              <Button
+                className={"mt-4 rounded-lg"}
+                onClick={closePopup}
+                variant="secondary"
+              >
+                Close
+              </Button>
             </div>
           </div>
         </div>
