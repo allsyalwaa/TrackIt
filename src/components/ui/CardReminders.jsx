@@ -1,20 +1,20 @@
-import AddReminder from "../ui/AddReminder";
+import EditReminder from "../ui/EditReminder";
 import ConfirmDelete from "./ConfirmDelete";
 import { useState } from "react";
 
-export default function CardReminders({ text, time }) {
+export default function CardReminders({ id, text, time, onDelete }) {
   const [isReminderPopupOpen, setIsReminderPopupOpen] = useState(false);
+  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
+    useState(false);
 
   const handleOpenReminderPopup = () => {
+    console.log("Opening EditReminder with reminderId:", id); // Log reminderId
     setIsReminderPopupOpen(true);
   };
 
   const handleCloseReminderPopup = () => {
     setIsReminderPopupOpen(false);
   };
-
-  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
-    useState(false);
 
   const handleOpenConfirmDeletePopup = () => {
     setIsConfirmDeletePopupOpen(true);
@@ -23,11 +23,35 @@ export default function CardReminders({ text, time }) {
   const handleCloseConfirmDeletePopup = () => {
     setIsConfirmDeletePopupOpen(false);
   };
+
+  const BASE_URL = import.meta.env.VITE_API_URL;
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/reminder/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("Reminder deleted successfully");
+      if (response.ok) {
+        setIsConfirmDeletePopupOpen(false);
+        onDelete(id);
+      } else {
+        console.error("Failed to delete the reminder");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="rounded-lg border-[1.5px] border-primary px-4 py-2">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-2">
-          <h1 className="text-lg font-medium text-primary">{text}</h1>
+          <button className="text-lg font-medium text-primary hover:text-secondary">
+            {text}
+          </button>
           <p className="text-xs font-medium text-primary/50">{time}</p>
         </div>
         <div className="flex justify-end gap-3">
@@ -67,10 +91,13 @@ export default function CardReminders({ text, time }) {
         </div>
       </div>
       {isReminderPopupOpen && (
-        <AddReminder onClose={handleCloseReminderPopup} />
+        <EditReminder onClose={handleCloseReminderPopup} reminderId={id} />
       )}
       {isConfirmDeletePopupOpen && (
-        <ConfirmDelete onClose={handleCloseConfirmDeletePopup} />
+        <ConfirmDelete
+          onClose={handleCloseConfirmDeletePopup}
+          onDelete={handleDelete}
+        />
       )}
     </div>
   );
