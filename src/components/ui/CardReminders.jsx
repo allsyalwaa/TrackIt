@@ -113,10 +113,7 @@ export default function CardReminders({ id, text, time, onDelete }) {
         />
       )}
       {isDetailReminderPopupOpen && (
-        <DetailReminder
-          onClose={handleCloseDetailReminderPopup}
-          reminderId={id}
-        />
+        <DetailReminder onClose={handleCloseDetailReminderPopup} id={id} />
       )}
     </div>
   );
