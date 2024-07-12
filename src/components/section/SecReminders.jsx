@@ -53,7 +53,7 @@ export default function SecReminders() {
     // Memisahkan tanggal dan waktu
     const [date, time] = dateTimeString.split("T");
     // Menghilangkan karakter yang tidak berguna
-    const formattedTime = time.split(".")[0];
+    const formattedTime = time.split(":00Z")[0];
     // Mengonversi waktu ke format AM/PM
     return convertToAmPm(formattedTime);
   };
