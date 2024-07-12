@@ -1,4 +1,4 @@
-import AddTransaction from "../ui/AddTransaction";
+import EditTransaction from "../ui/EditTransaction";
 import ConfirmDelete from "./ConfirmDelete";
 import { useState } from "react";
 import { rupiahFormat } from "../../utils";
@@ -107,7 +107,7 @@ export default function CardTransactions({
         </div>
       </div>
       {isTransactionPopupOpen && (
-        <AddTransaction onClose={handleCloseTransactionPopup} />
+        <EditTransaction onClose={handleCloseTransactionPopup} />
       )}
       {isConfirmDeletePopupOpen && (
         <ConfirmDelete
