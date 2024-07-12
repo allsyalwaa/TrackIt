@@ -8,6 +8,7 @@ export default function CardTransactions({
   text2,
   money,
   transactionId,
+  onDelete,
 }) {
   const [isTransactionPopupOpen, setIsTransactionPopupOpen] = useState(false);
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
@@ -32,19 +33,22 @@ export default function CardTransactions({
   const moneyColor = money < 0 ? "text-[#EE0C00]" : "text-primary";
 
   const BASE_URL = import.meta.env.VITE_API_URL;
+
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        BASE_URL + `/money-calculator/transaction/${transactionId}`,
+        `${BASE_URL}/money-calculator/transaction/${transactionId}`,
         {
           method: "DELETE",
         },
       );
-      alert("Transaction deleted successfully");
+
       if (!response.ok) {
         throw new Error("Failed to delete the transaction");
       }
 
+      console.log("Transaction deleted successfully");
+      onDelete(transactionId);
       setIsConfirmDeletePopupOpen(false);
     } catch (error) {
       console.error("Error deleting transaction:", error);
