@@ -11,10 +11,8 @@ export default function SecAlarm() {
   useEffect(() => {
     console.log("mendapatkan Data");
     getAlarm().then((data) => {
-      // Urutkan alarm berdasarkan waktu pengaturan terbaru
-      const sortedAlarms = data.sort(
-        (a, b) => new Date(b.setTime) - new Date(a.setTime),
-      );
+      // Urutkan alarm berdasarkan id terbesar ke terkecil
+      const sortedAlarms = data.sort((a, b) => b.id - a.id);
       setAlarm(sortedAlarms);
       setLoading(false);
     });
@@ -131,10 +129,8 @@ export default function SecAlarm() {
       const data = await response.json();
       console.log("Success:", data);
       getAlarm().then((data) => {
-        // Urutkan alarm berdasarkan waktu pengaturan terbaru
-        const sortedAlarms = data.sort(
-          (a, b) => new Date(b.setTime) - new Date(a.setTime),
-        );
+        // Urutkan alarm berdasarkan id terbesar ke terkecil
+        const sortedAlarms = data.sort((a, b) => b.id - a.id);
         setAlarm(sortedAlarms);
       });
     } catch (error) {
@@ -157,7 +153,8 @@ export default function SecAlarm() {
 
       console.log(`Alarm with id ${alarmId} deleted successfully.`);
       getAlarm().then((data) => {
-        setAlarm(data);
+        const sortedAlarms = data.sort((a, b) => b.id - a.id);
+        setAlarm(sortedAlarms);
       });
     } catch (error) {
       console.error("Error:", error);
