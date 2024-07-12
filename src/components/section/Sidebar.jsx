@@ -2,10 +2,12 @@ import { NavLink } from "react-router-dom";
 import Logo from "../../assets/illustration-logo1.svg";
 import Profile from "../../assets/profile.svg";
 import ConfirmLogout from "../ui/ConfirmLogout";
+import { useUserContext } from "../../utils/UserContext";
 
 import { useState, useEffect, useRef } from "react";
 
 export default function Sidebar() {
+  const { user } = useUserContext();
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const sidebarRef = useRef(null);
@@ -217,7 +219,7 @@ export default function Sidebar() {
             className="mt-4 flex items-center gap-4"
           >
             <img className="h-8" src={Profile} alt="" />
-            <p className="text-sm font-medium text-white">username</p>
+            <p className="text-sm font-medium text-white">{user.username}</p>
           </button>
         </div>
         {/* menu log out */}
