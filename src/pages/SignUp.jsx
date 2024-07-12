@@ -52,6 +52,11 @@ export default function SignUp() {
                 type="password"
                 placeholder="Create a password"
               />
+              <input
+                className="mt-4  rounded-full border-[1.5px] border-primary/50 px-5 py-3 text-xs placeholder-primary/50 sm:text-base"
+                type="password"
+                placeholder="Confirm a password"
+              />
 
               <NavLink to="/dashboard">
                 <Button variant="primary" className={"mt-6 w-full px-5 py-3"}>
@@ -63,13 +68,19 @@ export default function SignUp() {
                 By signing up, you are indicating that you have read and agree
                 to the{" "}
                 <span className="text-primary">
-                  <NavLink to="/coming-soon" className="text-xs font-medium text-primary">
+                  <NavLink
+                    to="/coming-soon"
+                    className="text-xs font-medium text-primary"
+                  >
                     Terms of Use
                   </NavLink>
                 </span>{" "}
                 and{" "}
                 <span className="text-primary">
-                  <NavLink to="/coming-soon" className="text-xs font-medium text-primary">
+                  <NavLink
+                    to="/coming-soon"
+                    className="text-xs font-medium text-primary"
+                  >
                     Privacy Policy
                   </NavLink>
                 </span>
