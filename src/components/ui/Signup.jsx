@@ -36,6 +36,11 @@ export default function Signup() {
             type="password"
             placeholder="Create a password"
           />
+          <input
+            className="mt-4 rounded-full border-[1.5px] border-primary/50 px-5 py-3 text-xs placeholder-primary/50 sm:text-sm md:text-base"
+            type="password"
+            placeholder="Confirm a password"
+          />
 
           <NavLink to="/dashboard">
             <Button variant="primary" className={"mt-6 w-full px-5 py-3"}>
