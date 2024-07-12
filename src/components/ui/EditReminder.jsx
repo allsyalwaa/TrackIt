@@ -23,6 +23,7 @@ export default function EditReminder({ onClose, reminderId }) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        console.log("EditReminder data fetched:", data);
         setTitle(data.name);
 
         const dateTime = new Date(data.dateTime);
