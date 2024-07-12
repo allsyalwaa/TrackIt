@@ -42,7 +42,11 @@ export default function SecMoneyCalculator() {
   useEffect(() => {
     console.log("mendapatkan Transaction");
     getTransaction().then((data) => {
-      setTransaction(data);
+      // Urutkan transaksi berdasarkan tanggal
+      const sortedTransactions = data.sort(
+        (a, b) => new Date(b.date) - new Date(a.date),
+      );
+      setTransaction(sortedTransactions);
       setIsLoadingTransaction(false);
     });
   }, []);
@@ -66,6 +70,12 @@ export default function SecMoneyCalculator() {
     setIsTransactionPopupOpen(false);
   };
 
+  const handleDeleteTransaction = (transactionId) => {
+    setTransaction(
+      transaction.filter((transaction) => transaction.id !== transactionId),
+    );
+  };
+
   return (
     <section>
       <div className="grid gap-3 md:grid-cols-2">
@@ -74,7 +84,7 @@ export default function SecMoneyCalculator() {
             Financial records
           </h1>
           <h2 className="mt-2 text-sm font-semibold text-secondary">
-            May 2024
+            {finance.month} {finance.year}
           </h2>
           <div className="mt-4 flex flex-col items-center justify-between lg:flex-row">
             {isLoadingFinance ? (
@@ -143,6 +153,7 @@ export default function SecMoneyCalculator() {
                   text2={transaction.balance_name}
                   money={transaction.money}
                   transactionId={transaction.id}
+                  onDelete={handleDeleteTransaction}
                 />
               ))
             ) : (
