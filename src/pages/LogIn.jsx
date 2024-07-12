@@ -53,7 +53,7 @@ export default function LogIn() {
         // Assuming response.ok and result contains user id or similar field
         // Here we assume login is successful if `id` is present in response
         // Save necessary user data (e.g., to localStorage)
-        localStorage.setItem("user", JSON.stringify(result));
+        localStorage.setItem("userId", result.id);
         navigate("/dashboard");
       } else {
         setError("Incorrect password");
