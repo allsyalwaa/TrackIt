@@ -1,10 +1,13 @@
 import EditReminder from "../ui/EditReminder";
+import DetailReminder from "./DetailReminder";
 import ConfirmDelete from "./ConfirmDelete";
 import { useState } from "react";
 
 export default function CardReminders({ id, text, time, onDelete }) {
   const [isReminderPopupOpen, setIsReminderPopupOpen] = useState(false);
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
+    useState(false);
+  const [isDetailReminderPopupOpen, setIsDetailReminderPopupOpen] =
     useState(false);
 
   const handleOpenReminderPopup = () => {
@@ -22,6 +25,13 @@ export default function CardReminders({ id, text, time, onDelete }) {
 
   const handleCloseConfirmDeletePopup = () => {
     setIsConfirmDeletePopupOpen(false);
+  };
+  const handleOpenDetailReminderPopup = () => {
+    setIsDetailReminderPopupOpen(true);
+  };
+
+  const handleCloseDetailReminderPopup = () => {
+    setIsDetailReminderPopupOpen(false);
   };
 
   const BASE_URL = import.meta.env.VITE_API_URL;
@@ -49,7 +59,10 @@ export default function CardReminders({ id, text, time, onDelete }) {
     <div className="rounded-lg border-[1.5px] border-primary px-4 py-2">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-2">
-          <button className="text-lg font-medium text-primary hover:text-secondary">
+          <button
+            onClick={handleOpenDetailReminderPopup}
+            className="text-lg font-medium text-primary hover:text-secondary"
+          >
             {text}
           </button>
           <p className="text-xs font-medium text-primary/50">{time}</p>
@@ -97,6 +110,12 @@ export default function CardReminders({ id, text, time, onDelete }) {
         <ConfirmDelete
           onClose={handleCloseConfirmDeletePopup}
           onDelete={handleDelete}
+        />
+      )}
+      {isDetailReminderPopupOpen && (
+        <DetailReminder
+          onClose={handleCloseDetailReminderPopup}
+          reminderId={id}
         />
       )}
     </div>
