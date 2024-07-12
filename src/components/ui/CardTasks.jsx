@@ -1,20 +1,28 @@
-import AddTask from "../ui/AddTask";
+import EditTask from "../ui/EditTask";
 import ConfirmDelete from "./ConfirmDelete";
 import { useState } from "react";
 
-export default function CardTasks({ text1, text2 }) {
+export default function CardTasks({
+  id,
+  text1,
+  text2,
+  initialCompleted,
+  onDelete,
+}) {
   const [isTaskPopupOpen, setIsTaskPopupOpen] = useState(false);
+  const BASE_URL = import.meta.env.VITE_API_URL;
+  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
+    useState(false);
+  const [completed, setCompleted] = useState(initialCompleted);
 
   const handleOpenTaskPopup = () => {
+    console.log("Opening EditTask with taskId:", id); // Log taskId
     setIsTaskPopupOpen(true);
   };
 
   const handleCloseTaskPopup = () => {
     setIsTaskPopupOpen(false);
   };
-
-  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
-    useState(false);
 
   const handleOpenConfirmDeletePopup = () => {
     setIsConfirmDeletePopupOpen(true);
@@ -23,12 +31,60 @@ export default function CardTasks({ text1, text2 }) {
   const handleCloseConfirmDeletePopup = () => {
     setIsConfirmDeletePopupOpen(false);
   };
+
+  const handleCheckboxChange = async () => {
+    const newCompletedStatus = !completed;
+    setCompleted(newCompletedStatus);
+
+    try {
+      const response = await fetch(BASE_URL + `/task/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ completed: newCompletedStatus }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update the task status");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setCompleted(!newCompletedStatus); // Revert if update fails
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(BASE_URL + `/task/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("Task deleted successfully");
+
+      if (response.ok) {
+        setIsConfirmDeletePopupOpen(false);
+        onDelete(id);
+      } else {
+        console.error("Failed to delete the task");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
-    <div className="rounded-lg border-[1.5px] border-primary px-4 py-2">
+    <div
+      className={`rounded-lg border-[1.5px] border-primary px-4 py-2 ${completed ? "text-gray-500 line-through" : ""}`}
+    >
       <div className="flex items-center justify-between">
         <input
           type="checkbox"
           className="h-4 w-4 rounded-sm border-[1.2px] border-primary"
+          checked={completed}
+          onChange={handleCheckboxChange}
         />
         <div className="ml-4 flex w-full flex-col gap-2">
           <h1 className="text-lg font-medium text-primary">{text1}</h1>
@@ -70,9 +126,14 @@ export default function CardTasks({ text1, text2 }) {
           </button>
         </div>
       </div>
-      {isTaskPopupOpen && <AddTask onClose={handleCloseTaskPopup} />}
+      {isTaskPopupOpen && (
+        <EditTask onClose={handleCloseTaskPopup} taskId={id} />
+      )}
       {isConfirmDeletePopupOpen && (
-        <ConfirmDelete onClose={handleCloseConfirmDeletePopup} />
+        <ConfirmDelete
+          onClose={handleCloseConfirmDeletePopup}
+          onDelete={handleDelete}
+        />
       )}
     </div>
   );
