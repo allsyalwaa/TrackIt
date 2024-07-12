@@ -15,6 +15,7 @@ export default function EditReminder({ onClose, reminderId }) {
   const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
+    console.log(reminderId);
     const fetchReminderData = async () => {
       setIsLoading(true);
       try {
