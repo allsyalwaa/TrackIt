@@ -7,17 +7,14 @@ export default function EditReminder({ onClose, reminderId }) {
   const [day, setDay] = useState(1);
   const [month, setMonth] = useState("January");
   const [year, setYear] = useState(2020);
-  const [hour, setHour] = useState(0);
-  const [minute, setMinute] = useState(0);
+  const [hour, setHour] = useState("12");
+  const [minute, setMinute] = useState("00");
+  const [timePeriod, setTimePeriod] = useState("AM");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    console.log("BASE_URL:", BASE_URL); // Log BASE_URL
-    console.log("reminderId:", reminderId); // Log reminderId
-
-    // Fetch the existing reminder data when the component is mounted
     const fetchReminderData = async () => {
       setIsLoading(true);
       try {
@@ -26,16 +23,28 @@ export default function EditReminder({ onClose, reminderId }) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Fetched data:", data); // Log data fetched
-        setTitle(data.title);
-        const [year, month, day] = data.date.split("-");
-        setYear(parseInt(year, 10));
-        setMonth(month);
-        setDay(parseInt(day, 10));
-        const [hour, minute] = data.time.split(":");
-        setHour(parseInt(hour, 10));
-        setMinute(parseInt(minute, 10));
-        setDescription(data.description);
+        setTitle(data.name);
+
+        const dateTime = new Date(data.dateTime);
+        setYear(dateTime.getFullYear());
+        setMonth(dateTime.toLocaleString("default", { month: "long" }));
+        setDay(dateTime.getDate());
+
+        let hours = dateTime.getHours();
+        let period = "AM";
+        if (hours >= 12) {
+          period = "PM";
+          if (hours > 12) {
+            hours -= 12;
+          }
+        } else if (hours === 0) {
+          hours = 12;
+        }
+
+        setHour(hours.toString().padStart(2, "0"));
+        setMinute(dateTime.getMinutes().toString().padStart(2, "0"));
+        setTimePeriod(period);
+        setDescription(data.description || "");
       } catch (error) {
         console.error("Error fetching reminder data:", error);
       } finally {
@@ -53,19 +62,41 @@ export default function EditReminder({ onClose, reminderId }) {
     onClose();
   };
 
+  const handleHoursInput = (event) => {
+    let value = event.target.value;
+    value = value.replace(/[^0-9]/g, ""); // Hanya angka
+    if (value !== "" && (parseInt(value) < 1 || parseInt(value) > 12)) {
+      value = value.slice(0, -1); // Hapus karakter terakhir jika tidak valid
+    }
+    setHour(value);
+  };
+
+  const handleMinutesInput = (event) => {
+    let value = event.target.value;
+    value = value.replace(/[^0-9]/g, ""); // Hanya angka
+    if (value.length > 2) {
+      value = value.slice(0, 2); // Batasi panjang input maksimal 2 karakter
+    }
+    if (value !== "" && parseInt(value) > 59) {
+      value = value.slice(0, -1); // Hapus karakter terakhir jika tidak valid
+    }
+    setMinute(value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Buat objek yang berisi data form
+    let formattedHour = hour.length === 1 ? "0" + hour : hour;
+    let formattedMinute = minute.length === 1 ? "0" + minute : minute;
+
     const reminderData = {
       title: title,
       date: `${year}-${month}-${day}`,
-      time: `${hour}:${minute}`,
+      time: `${formattedHour}:${formattedMinute} ${timePeriod}`,
       description: description,
     };
 
     try {
-      // Kirim data ke server menggunakan method PUT untuk memperbarui reminder
       const response = await fetch(`${BASE_URL}/reminder/${reminderId}`, {
         method: "PUT",
         headers: {
@@ -78,13 +109,12 @@ export default function EditReminder({ onClose, reminderId }) {
         throw new Error("Something went wrong");
       }
 
-      // Reset form dan tutup popup jika berhasil
       setTitle("");
       setDay(1);
       setMonth("January");
       setYear(2020);
-      setHour(0);
-      setMinute(0);
+      setHour("");
+      setMinute("");
       setDescription("");
       closePopup();
     } catch (error) {
@@ -129,104 +159,112 @@ export default function EditReminder({ onClose, reminderId }) {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="w-full border-none text-xl font-semibold text-secondary outline-none"
+                  placeholder="Reminder Name"
                 />
                 <hr className="border-t-1 mt-2 w-full border-secondary" />
 
-                <div className="relative mt-4 grid grid-cols-4 items-center justify-between gap-6">
+                <div className="relative mt-4 grid grid-cols-3 items-center justify-between">
                   <label className="text-lg text-primary" htmlFor="days">
                     Date :
                   </label>
+                  <div className="col-span-2 grid grid-cols-3 gap-6">
+                    <select
+                      className="mx-auto w-full text-lg font-medium text-secondary"
+                      name="days"
+                      id="days"
+                      value={day}
+                      onChange={(e) => setDay(e.target.value)}
+                    >
+                      {[...Array(31).keys()].map((day) => (
+                        <option key={day + 1} value={day + 1}>
+                          {day + 1}
+                        </option>
+                      ))}
+                    </select>
 
-                  <select
-                    className="mx-auto w-full text-lg font-medium text-secondary"
-                    name="days"
-                    id="days"
-                    value={day}
-                    onChange={(e) => setDay(e.target.value)}
-                  >
-                    {[...Array(31).keys()].map((day) => (
-                      <option key={day + 1} value={day + 1}>
-                        {day + 1}
-                      </option>
-                    ))}
-                  </select>
+                    <select
+                      className="mx-auto w-full text-lg font-medium text-secondary"
+                      name="months"
+                      id="months"
+                      value={month}
+                      onChange={(e) => setMonth(e.target.value)}
+                    >
+                      <option value="January">January</option>
+                      <option value="February">February</option>
+                      <option value="March">March</option>
+                      <option value="April">April</option>
+                      <option value="May">May</option>
+                      <option value="June">June</option>
+                      <option value="July">July</option>
+                      <option value="August">August</option>
+                      <option value="September">September</option>
+                      <option value="October">October</option>
+                      <option value="November">November</option>
+                      <option value="December">December</option>
+                    </select>
 
-                  <select
-                    className="mx-auto w-full text-lg font-medium text-secondary"
-                    name="months"
-                    id="months"
-                    value={month}
-                    onChange={(e) => setMonth(e.target.value)}
-                  >
-                    <option value="January">January</option>
-                    <option value="February">February</option>
-                    <option value="March">March</option>
-                    <option value="April">April</option>
-                    <option value="May">May</option>
-                    <option value="June">June</option>
-                    <option value="July">July</option>
-                    <option value="August">August</option>
-                    <option value="September">September</option>
-                    <option value="October">October</option>
-                    <option value="November">November</option>
-                    <option value="December">December</option>
-                  </select>
-
-                  <select
-                    className="mx-auto w-full text-lg font-medium text-secondary"
-                    name="years"
-                    id="years"
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)}
-                  >
-                    {[...Array(11).keys()].map((year) => (
-                      <option key={year + 2020} value={year + 2020}>
-                        {year + 2020}
-                      </option>
-                    ))}
-                  </select>
+                    <select
+                      className="mx-auto w-full text-lg font-medium text-secondary"
+                      name="years"
+                      id="years"
+                      value={year}
+                      onChange={(e) => setYear(e.target.value)}
+                    >
+                      {[...Array(11).keys()].map((year) => (
+                        <option key={year + 2020} value={year + 2020}>
+                          {year + 2020}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
-                <div className="relative mt-4 grid grid-cols-4 items-center justify-between gap-6">
-                  <label
-                    className="col-span-2 text-lg text-primary"
-                    htmlFor="hours"
-                  >
+                <div className="relative mt-4 grid grid-cols-3 items-center justify-between">
+                  <label className="text-lg text-primary" htmlFor="hours">
                     Time :
                   </label>
+                  <div className="col-span-2 grid grid-cols-3 gap-6">
+                    <input
+                      type="text"
+                      placeholder="12"
+                      className="mx-auto w-full text-lg font-medium text-secondary placeholder-secondary/50 outline-none placeholder:text-base placeholder:font-semibold"
+                      name="hours"
+                      id="hours"
+                      maxLength="2"
+                      pattern="[0-9]*"
+                      value={hour}
+                      onInput={handleHoursInput}
+                    />
 
-                  <select
-                    className="mx-auto w-full text-lg font-medium text-secondary"
-                    name="hours"
-                    id="hours"
-                    value={hour}
-                    onChange={(e) => setHour(e.target.value)}
-                  >
-                    {[...Array(24).keys()].map((hour) => (
-                      <option key={hour} value={hour}>
-                        {hour < 10 ? `0${hour}` : hour}:00
-                      </option>
-                    ))}
-                  </select>
+                    <input
+                      type="text"
+                      placeholder="00"
+                      className="mx-auto w-full text-lg font-medium text-secondary placeholder-secondary/50 outline-none placeholder:text-base placeholder:font-semibold"
+                      name="minutes"
+                      id="minutes"
+                      maxLength="2"
+                      pattern="[0-9]*"
+                      value={minute}
+                      onInput={handleMinutesInput}
+                    />
 
-                  <select
-                    className="mx-auto w-full text-lg font-medium text-secondary"
-                    name="minutes"
-                    id="minutes"
-                    value={minute}
-                    onChange={(e) => setMinute(e.target.value)}
-                  >
-                    {[0, 15, 30, 45].map((minute) => (
-                      <option key={minute} value={minute}>
-                        {minute < 10 ? `0${minute}` : minute}
-                      </option>
-                    ))}
-                  </select>
+                    <select
+                      className="mx-auto w-full text-lg font-medium text-secondary"
+                      name="timePeriod"
+                      id="timePeriod"
+                      value={timePeriod}
+                      onChange={(e) => setTimePeriod(e.target.value)}
+                    >
+                      <option value="AM">AM</option>
+                      <option value="PM">PM</option>
+                    </select>
+                  </div>
                 </div>
 
                 <textarea
-                  className="mt-4 h-36 border-none text-primary outline-none"
+                  className="mt-4 h-36 border-none text-primary placeholder-primary/50 outline-none"
                   type="text"
+                  placeholder="Description :"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
