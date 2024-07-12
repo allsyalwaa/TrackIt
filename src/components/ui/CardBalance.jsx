@@ -1,4 +1,4 @@
-import AddBalance from "../ui/AddBalance";
+import EditBalance from "../ui/EditBalance";
 import { useState } from "react";
 import { rupiahFormat } from "../../utils";
 
@@ -36,7 +36,7 @@ export default function CardBalance({ text, money }) {
           </svg>
         </button>
       </div>
-      {isBalancePopupOpen && <AddBalance onClose={handleCloseBalancePopup} />}
+      {isBalancePopupOpen && <EditBalance onClose={handleCloseBalancePopup} />}
     </div>
   );
 }
