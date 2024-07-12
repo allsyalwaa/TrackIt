@@ -3,11 +3,47 @@ import Button from "./Button";
 
 export default function AddNotes({ onClose }) {
   const [isOpen, setIsOpen] = useState(true);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const closePopup = () => {
     setIsOpen(false);
     onClose();
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Buat objek yang berisi data form
+    const noteData = {
+      name: title,
+      description: description,
+    };
+
+    try {
+      // Kirim data ke server menggunakan method POST
+      const response = await fetch(BASE_URL + "/notes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(noteData),
+      });
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      // Reset form dan tutup popup jika berhasil
+      setTitle("");
+      setDescription("");
+      closePopup();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <>
       {isOpen && (
@@ -29,24 +65,31 @@ export default function AddNotes({ onClose }) {
               </button>
             </div>
 
-            <form className="mt-4 flex w-full flex-col justify-start" action="">
+            <form
+              className="mt-4 flex w-full flex-col justify-start"
+              onSubmit={handleSubmit}
+            >
               <input
                 type="text"
                 id="title"
                 name="title"
-                className="w-full border-none placeholder-secondary outline-none placeholder:text-xl placeholder:font-semibold"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full border-none text-xl font-semibold text-secondary placeholder-secondary outline-none placeholder:text-xl placeholder:font-semibold"
                 placeholder="Note Name"
               />
               <hr className="border-t-1 mt-2 w-full border-secondary" />
 
               <textarea
-                className="mt-4 h-56 rounded-lg border-[1.5px] border-primary/50 px-4 py-1 placeholder-primary/50"
+                className="mt-4 h-56 rounded-lg border-[1.5px] border-primary/50 px-4 py-1 text-primary placeholder-primary/50 outline-none"
                 type="text"
                 placeholder="Description :"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
 
               <div className="mt-6 flex justify-end">
-                <Button className={"md:w-1/6"} variant="primary">
+                <Button className={"md:w-1/6"} variant="primary" type="submit">
                   Save
                 </Button>
               </div>
