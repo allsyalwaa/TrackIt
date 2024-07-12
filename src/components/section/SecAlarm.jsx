@@ -11,7 +11,11 @@ export default function SecAlarm() {
   useEffect(() => {
     console.log("mendapatkan Data");
     getAlarm().then((data) => {
-      setAlarm(data);
+      // Urutkan alarm berdasarkan waktu pengaturan terbaru
+      const sortedAlarms = data.sort(
+        (a, b) => new Date(b.setTime) - new Date(a.setTime),
+      );
+      setAlarm(sortedAlarms);
       setLoading(false);
     });
   }, []);
@@ -97,6 +101,7 @@ export default function SecAlarm() {
       name: name,
       time: formattedTime,
       date: cdate,
+      setTime: new Date().toISOString(), // tambahkan properti setTime
     };
 
     // Post data to the server
@@ -126,7 +131,11 @@ export default function SecAlarm() {
       const data = await response.json();
       console.log("Success:", data);
       getAlarm().then((data) => {
-        setAlarm(data);
+        // Urutkan alarm berdasarkan waktu pengaturan terbaru
+        const sortedAlarms = data.sort(
+          (a, b) => new Date(b.setTime) - new Date(a.setTime),
+        );
+        setAlarm(sortedAlarms);
       });
     } catch (error) {
       console.error("Error:", error);
