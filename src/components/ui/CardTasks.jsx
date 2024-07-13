@@ -1,4 +1,5 @@
 import EditTask from "../ui/EditTask";
+import DetailTask from "./DetailTask";
 import ConfirmDelete from "./ConfirmDelete";
 import { useState } from "react";
 
@@ -10,10 +11,11 @@ export default function CardTasks({
   onDelete,
 }) {
   const [isTaskPopupOpen, setIsTaskPopupOpen] = useState(false);
-  const BASE_URL = import.meta.env.VITE_API_URL;
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
     useState(false);
+  const [isDetailTaskPopupOpen, setIsDetailTaskPopupOpen] = useState(false);
   const [completed, setCompleted] = useState(initialCompleted);
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const handleOpenTaskPopup = () => {
     console.log("Opening EditTask with taskId:", id); // Log taskId
@@ -30,6 +32,14 @@ export default function CardTasks({
 
   const handleCloseConfirmDeletePopup = () => {
     setIsConfirmDeletePopupOpen(false);
+  };
+
+  const handleOpenDetailTaskPopup = () => {
+    setIsDetailTaskPopupOpen(true);
+  };
+
+  const handleCloseDetailTaskPopup = () => {
+    setIsDetailTaskPopupOpen(false);
   };
 
   const handleCheckboxChange = async () => {
@@ -86,8 +96,13 @@ export default function CardTasks({
           checked={completed}
           onChange={handleCheckboxChange}
         />
-        <div className="ml-4 flex w-full flex-col gap-2">
-          <h1 className="text-lg font-medium text-primary">{text1}</h1>
+        <div className="ml-4 flex w-full flex-col items-start gap-2">
+          <button
+            onClick={handleOpenDetailTaskPopup}
+            className="text-lg font-medium text-primary hover:text-secondary"
+          >
+            {text1}
+          </button>
           <p className="text-xs font-medium text-primary/50">{text2}</p>
         </div>
         <div className="col-span-5 flex justify-end gap-3">
@@ -134,6 +149,9 @@ export default function CardTasks({
           onClose={handleCloseConfirmDeletePopup}
           onDelete={handleDelete}
         />
+      )}
+      {isDetailTaskPopupOpen && (
+        <DetailTask onClose={handleCloseDetailTaskPopup} id={id} />
       )}
     </div>
   );
