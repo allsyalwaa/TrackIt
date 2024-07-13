@@ -1,4 +1,5 @@
 import EditNotes from "../ui/EditNotes";
+import DetailNotes from "./DetailNotes";
 import ConfirmDelete from "./ConfirmDelete";
 import { useState } from "react";
 
@@ -6,6 +7,7 @@ export default function CardNotes({ id, text1, text2, text3, onDelete }) {
   const [isNotesPopupOpen, setIsNotesPopupOpen] = useState(false);
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
     useState(false);
+  const [isDetailNotesPopupOpen, setIsDetailNotesPopupOpen] = useState(false);
 
   const handleOpenNotesPopup = () => {
     console.log("Opening EditNotes with noteId:", id); // Log noteId
@@ -22,6 +24,14 @@ export default function CardNotes({ id, text1, text2, text3, onDelete }) {
 
   const handleCloseConfirmDeletePopup = () => {
     setIsConfirmDeletePopupOpen(false);
+  };
+
+  const handleOpenDetailNotesPopup = () => {
+    setIsDetailNotesPopupOpen(true);
+  };
+
+  const handleCloseDetailNotesPopup = () => {
+    setIsDetailNotesPopupOpen(false);
   };
 
   const BASE_URL = import.meta.env.VITE_API_URL;
@@ -46,11 +56,16 @@ export default function CardNotes({ id, text1, text2, text3, onDelete }) {
   };
 
   return (
-    <div className=" rounded-lg border-[1.5px] border-primary p-4">
+    <div className="rounded-lg border-[1.5px] border-primary p-4">
       <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col items-start gap-2">
           <p className="text-xs font-medium text-primary/50">{text1}</p>
-          <h1 className="text-lg font-medium text-primary">{text2}</h1>
+          <button
+            onClick={handleOpenDetailNotesPopup}
+            className="text-lg font-medium text-primary hover:text-secondary"
+          >
+            {text2}
+          </button>
           <p className="text-xs font-medium text-primary">{text3}</p>
         </div>
         <div className="flex justify-end gap-3">
@@ -97,6 +112,9 @@ export default function CardNotes({ id, text1, text2, text3, onDelete }) {
           onClose={handleCloseConfirmDeletePopup}
           onDelete={handleDelete}
         />
+      )}
+      {isDetailNotesPopupOpen && (
+        <DetailNotes onClose={handleCloseDetailNotesPopup} id={id} />
       )}
     </div>
   );
