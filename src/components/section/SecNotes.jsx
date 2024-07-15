@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import AddNotes from "../ui/AddNotes";
+import AddNotes from "../ui/addcontent/AddNotes";
 import ButtonPlus from "../ui/ButtonPlus";
-import CardNotes from "../ui/CardNotes";
+import CardNotes from "../ui/cardcontent/CardNotes";
 import { getNotes } from "../../utils/fetchdata/NotesService";
 
 export default function SecNotes() {
@@ -25,7 +25,7 @@ export default function SecNotes() {
       }));
 
       notesWithLastEdited.sort(
-        (a, b) => new Date(b.lastEdited) - new Date(a.lastEdited)
+        (a, b) => new Date(b.lastEdited) - new Date(a.lastEdited),
       );
 
       setNotes(notesWithLastEdited);
