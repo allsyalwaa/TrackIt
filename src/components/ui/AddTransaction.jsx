@@ -14,7 +14,7 @@ export default function AddTransaction({ onClose }) {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Mencegah halaman refresh
+    event.preventDefault(); 
 
     const data = {
       title,
@@ -26,7 +26,6 @@ export default function AddTransaction({ onClose }) {
       await postTransaction(data);
       alert("Transaction added successfully");
 
-      // Reset form fields
       setTitle("");
       setBalanceName("");
       setAmount("");
