@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
-import CardAlarm from "../ui/CardAlarm";
+import CardAlarm from "../ui/cardcontent/CardAlarm";
 import RingingAlarm from "../ui/RingingAlarm";
-import { getAlarm, postAlarm, deleteAlarm } from "../../utils/fetchdata/AlarmService";
+import {
+  getAlarm,
+  postAlarm,
+  deleteAlarm,
+} from "../../utils/fetchdata/AlarmService";
 import { validation } from "../../utils/Validation";
 
 export default function SecAlarm() {
