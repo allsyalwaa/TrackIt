@@ -1,32 +1,26 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import Profile1 from "../../assets/illustration-profile.svg";
 import ChangePassword from "../ui/ChangePassword";
 import { useUserContext } from "../../utils/UserContext";
+import { fetchUserProfile } from "../../utils/fetchdata/UserService";
 
 export default function SecProfile() {
   const [isPasswordPopupOpen, setIsPasswordPopupOpen] = useState(false);
   const [profile, setProfile] = useState(null);
-  const BASE_URL = import.meta.env.VITE_API_URL;
   const { user } = useUserContext();
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/user/${user.userId}`);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setProfile(data);
-      } catch (error) {
-        console.error("Failed to fetch profile:", error);
-      }
-    };
-
     if (user.userId) {
-      fetchProfile();
+      fetchUserProfile(user.userId)
+        .then((data) => {
+          setProfile(data);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch profile:", error);
+        });
     }
-  }, []);
+  }, [user.userId]);
 
   const handleOpenPasswordPopup = () => {
     setIsPasswordPopupOpen(true);
