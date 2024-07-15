@@ -39,7 +39,6 @@ export const handleDeleteTask = async (id) => {
     throw new Error("Failed to delete the task");
   }
 
-  console.log("Task deleted successfully");
   return response.json();
 };
 
