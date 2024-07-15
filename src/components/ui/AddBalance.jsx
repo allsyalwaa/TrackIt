@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Button from "./Button";
+import { addBalance } from "../../utils/fetchdata/MoneyCalculatorService";
 
 export default function AddBalance({ onClose }) {
   const [isOpen, setIsOpen] = useState(true);
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const closePopup = () => {
     setIsOpen(false);
@@ -21,18 +21,7 @@ export default function AddBalance({ onClose }) {
     };
 
     try {
-      const response = await fetch(BASE_URL + "/money-calculator/balance", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      console.log(response);
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-
+      await addBalance(data);
       // Reset form fields
       setTitle("");
       setAmount("");
@@ -66,7 +55,6 @@ export default function AddBalance({ onClose }) {
 
             <form
               className="mt-4 flex w-full flex-col justify-start"
-              action=""
               onSubmit={handleSubmit}
             >
               <input
