@@ -1,29 +1,21 @@
 import { useState, useEffect } from "react";
 import Button from "./Button";
+import {
+  fetchBalanceData,
+  updateBalanceData,
+} from "../../utils/fetchdata/MoneyCalculatorService";
 
 export default function EditBalance({ onClose, balanceId }) {
   const [isOpen, setIsOpen] = useState(true);
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    console.log("BASE_URL:", BASE_URL);
-    console.log("balanceId:", balanceId);
-
-    // Fetch the existing balance data when the component is mounted
-    const fetchBalanceData = async () => {
+    const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(
-          `${BASE_URL}/money-calculator/balance/${balanceId}`,
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log("Fetched data:", data);
+        const data = await fetchBalanceData(balanceId);
         setTitle(data.title);
         setAmount(data.amount);
       } catch (error) {
@@ -34,9 +26,9 @@ export default function EditBalance({ onClose, balanceId }) {
     };
 
     if (balanceId) {
-      fetchBalanceData();
+      fetchData();
     }
-  }, [balanceId, BASE_URL]);
+  }, [balanceId]);
 
   const closePopup = () => {
     setIsOpen(false);
@@ -52,22 +44,7 @@ export default function EditBalance({ onClose, balanceId }) {
     };
 
     try {
-      const response = await fetch(
-        `${BASE_URL}/money-calculator/balance/${balanceId}`,
-        {
-          method: balanceId ? "PUT" : "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(balanceData),
-        },
-      );
-      console.log(await response.json());
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-
-      // Reset form fields
+      await updateBalanceData(balanceId, balanceData);
       setTitle("");
       setAmount("");
       closePopup();
@@ -91,7 +68,7 @@ export default function EditBalance({ onClose, balanceId }) {
                 >
                   <path
                     fill="currentColor"
-                    d="m289.94 256l95-95A24 24 0 0 0 351 127l-95 95l-95-95a24 24 0 0 0-34 34l95 95l-95 95a24 24 0 1 0 34 34l95-95l95 95a24 24 0 0 0 34-34Z"
+                    d="m289.94 256l95-95A24 24 0 0 0 351 127l-95 95l-95-95a24 24 0 0 0-34 34l95 95l-95 95a24 24 1 0 0 34 34l95-95l95 95a24 24 0 0 0 34-34Z"
                   />
                 </svg>
               </button>
