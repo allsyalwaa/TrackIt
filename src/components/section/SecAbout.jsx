@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import Image2 from "../../assets/illustration-dashboard.svg";
-import CardAbout from "../ui/CardAbout";
+import CardAbout from "../ui/cardcontent/CardAbout";
 
 export default function About() {
   return (
