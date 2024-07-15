@@ -14,12 +14,10 @@ export default function Sidebar() {
   const profileMenuRef = useRef(null);
   const triggerProfileMenu = useRef(null);
   const handleClickOutside = (event) => {
-    // sidebar menu
     if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
       setIsOpen(false);
     }
 
-    // profile menu
     if (
       profileMenuRef.current &&
       !profileMenuRef.current.contains(event.target) &&
