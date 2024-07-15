@@ -6,7 +6,7 @@ import Reminders from "../../assets/reminders.svg";
 import Tasks from "../../assets/tasks.svg";
 import { useUserContext } from "../../utils/UserContext";
 
-import CardDashboard from "../ui/CardDashboard";
+import CardDashboard from "../ui/cardcontent/CardDashboard";
 
 export default function SecDashboard() {
   const { user } = useUserContext();
