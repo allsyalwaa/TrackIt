@@ -1,9 +1,8 @@
+import { useEffect, useState } from "react";
 import AddTask from "../ui/AddTask";
 import ButtonPlus from "../ui/ButtonPlus";
 import CardTasks from "../ui/CardTasks";
-
-import { useEffect, useState } from "react";
-import { getTasks } from "../../utils/FetchData";
+import { getTasks } from "../../utils/fetchdata/TaskService";
 
 export default function SecTasks() {
   const [isTaskPopupOpen, setIsTaskPopupOpen] = useState(false);
@@ -23,15 +22,12 @@ export default function SecTasks() {
   };
 
   useEffect(() => {
-    console.log("mendapatkan Tasks");
     getTasks().then((data) => {
-      // Tambahkan properti lastEdited jika tidak ada
       const tasksWithLastEdited = data.map((task) => ({
         ...task,
         lastEdited: task.lastEdited || new Date().toISOString(),
       }));
 
-      // Urutkan tugas berdasarkan lastEdited
       tasksWithLastEdited.sort(
         (a, b) => new Date(b.lastEdited) - new Date(a.lastEdited),
       );
