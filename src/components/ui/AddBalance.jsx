@@ -13,7 +13,7 @@ export default function AddBalance({ onClose }) {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Mencegah halaman refresh
+    event.preventDefault(); 
 
     const data = {
       title,
@@ -22,7 +22,6 @@ export default function AddBalance({ onClose }) {
 
     try {
       await addBalance(data);
-      // Reset form fields
       setTitle("");
       setAmount("");
 
