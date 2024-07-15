@@ -5,7 +5,6 @@ import AddEvent from "../ui/AddEvent";
 import EventList from "../ui/EventList";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useEffect, useState } from "react";
-// import { getEvents } from "../../utils/fetchdata/EventService";
 import { refreshEvents } from "../../utils/EventUtils";
 
 export default function SecCalendar() {
