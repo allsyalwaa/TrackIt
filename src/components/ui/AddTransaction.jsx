@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Button from "./Button";
+import { postTransaction } from "../../utils/fetchdata/MoneyCalculatorService";
 
 export default function AddTransaction({ onClose }) {
   const [isOpen, setIsOpen] = useState(true);
   const [title, setTitle] = useState("");
   const [balanceName, setBalanceName] = useState("");
   const [amount, setAmount] = useState("");
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const closePopup = () => {
     setIsOpen(false);
@@ -23,18 +23,8 @@ export default function AddTransaction({ onClose }) {
     };
 
     try {
-      const response = await fetch(BASE_URL + "/money-calculator/transaction", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      console.log(response);
+      await postTransaction(data);
       alert("Transaction added successfully");
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
 
       // Reset form fields
       setTitle("");
