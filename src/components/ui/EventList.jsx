@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import CardEventList from "./CardEventList";
+import CardEventList from "./cardcontent/CardEventList";
 import ButtonPlus from "../ui/ButtonPlus";
-import AddEvent from "./AddEvent";
+import AddEvent from "./addcontent/AddEvent";
 import { getEvents } from "../../utils/fetchdata/EventService";
 import { sortEvents, formatDate, formatTime } from "../../utils/DateUtils";
 
