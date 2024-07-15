@@ -80,7 +80,7 @@ export default function CardTasks({
         <div className="ml-4 flex w-full flex-col items-start gap-2">
           <button
             onClick={handleOpenDetailTaskPopup}
-            className="text-lg font-medium text-primary hover:text-secondary"
+            className="text-left text-lg font-medium text-primary hover:text-secondary"
           >
             {text1}
           </button>
