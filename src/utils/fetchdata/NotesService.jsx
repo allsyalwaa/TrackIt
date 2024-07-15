@@ -39,7 +39,6 @@ export const handleDeleteNote = async (id) => {
     throw new Error("Failed to delete the note");
   }
 
-  console.log("Note deleted successfully");
   return response.json();
 };
 
