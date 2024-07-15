@@ -23,7 +23,7 @@ export default function LogIn() {
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    setError(""); // Clear the error message when the user starts typing a new password
+    setError(""); 
     if (newPassword.length < 8) {
       setPasswordError("Password must be at least 8 characters long");
     } else {
