@@ -1,14 +1,13 @@
+import { useState } from "react";
 import EditReminder from "../ui/EditReminder";
 import DetailReminder from "./DetailReminder";
 import ConfirmDelete from "./ConfirmDelete";
-import { useState } from "react";
+import { handleDeleteReminder } from "../../utils/fetchdata/ReminderService";
 
 export default function CardReminders({ id, text, time, onDelete }) {
   const [isReminderPopupOpen, setIsReminderPopupOpen] = useState(false);
-  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
-    useState(false);
-  const [isDetailReminderPopupOpen, setIsDetailReminderPopupOpen] =
-    useState(false);
+  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] = useState(false);
+  const [isDetailReminderPopupOpen, setIsDetailReminderPopupOpen] = useState(false);
 
   const handleOpenReminderPopup = () => {
     console.log("Opening EditReminder with reminderId:", id); // Log reminderId
@@ -26,6 +25,7 @@ export default function CardReminders({ id, text, time, onDelete }) {
   const handleCloseConfirmDeletePopup = () => {
     setIsConfirmDeletePopupOpen(false);
   };
+
   const handleOpenDetailReminderPopup = () => {
     setIsDetailReminderPopupOpen(true);
   };
@@ -34,22 +34,11 @@ export default function CardReminders({ id, text, time, onDelete }) {
     setIsDetailReminderPopupOpen(false);
   };
 
-  const BASE_URL = import.meta.env.VITE_API_URL;
   const handleDelete = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/reminder/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log("Reminder deleted successfully");
-      if (response.ok) {
-        setIsConfirmDeletePopupOpen(false);
-        onDelete(id);
-      } else {
-        console.error("Failed to delete the reminder");
-      }
+      await handleDeleteReminder(id);
+      setIsConfirmDeletePopupOpen(false);
+      onDelete(id);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -81,10 +70,7 @@ export default function CardReminders({ id, text, time, onDelete }) {
               />
             </svg>
           </button>
-          <button
-            onClick={handleOpenConfirmDeletePopup}
-            className="text-primary"
-          >
+          <button onClick={handleOpenConfirmDeletePopup} className="text-primary">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="1.3em"
@@ -103,14 +89,9 @@ export default function CardReminders({ id, text, time, onDelete }) {
           </button>
         </div>
       </div>
-      {isReminderPopupOpen && (
-        <EditReminder onClose={handleCloseReminderPopup} reminderId={id} />
-      )}
+      {isReminderPopupOpen && <EditReminder onClose={handleCloseReminderPopup} reminderId={id} />}
       {isConfirmDeletePopupOpen && (
-        <ConfirmDelete
-          onClose={handleCloseConfirmDeletePopup}
-          onDelete={handleDelete}
-        />
+        <ConfirmDelete onClose={handleCloseConfirmDeletePopup} onDelete={handleDelete} />
       )}
       {isDetailReminderPopupOpen && (
         <DetailReminder onClose={handleCloseDetailReminderPopup} id={id} />
