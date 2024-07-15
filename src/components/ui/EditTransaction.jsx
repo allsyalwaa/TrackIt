@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import Button from "./Button";
+import {
+  fetchTransactionData,
+  updateTransactionData,
+} from "../../utils/fetchdata/MoneyCalculatorService";
 
 export default function EditTransaction({ onClose, transactionId }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -7,24 +11,12 @@ export default function EditTransaction({ onClose, transactionId }) {
   const [balanceName, setBalanceName] = useState("");
   const [amount, setAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    console.log("BASE_URL:", BASE_URL);
-    console.log("transactionId:", transactionId);
-
-    // Fetch the existing transaction data when the component is mounted
-    const fetchTransactionData = async () => {
+    const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(
-          `${BASE_URL}/money-calculator/transaction/${transactionId}`,
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log("Fetched data:", data);
+        const data = await fetchTransactionData(transactionId);
         setTitle(data.title);
         setBalanceName(data.balanceName);
         setAmount(data.amount);
@@ -36,9 +28,9 @@ export default function EditTransaction({ onClose, transactionId }) {
     };
 
     if (transactionId) {
-      fetchTransactionData();
+      fetchData();
     }
-  }, [transactionId, BASE_URL]);
+  }, [transactionId]);
 
   const closePopup = () => {
     setIsOpen(false);
@@ -55,27 +47,11 @@ export default function EditTransaction({ onClose, transactionId }) {
     };
 
     try {
-      const response = await fetch(
-        `${BASE_URL}/money-calculator/transaction/${transactionId}`,
-        {
-          method: transactionId ? "PUT" : "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(transactionData),
-        },
-      );
-      console.log(await response.json());
-      alert("Transaction added successfully");
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-
-      // Reset form fields
+      await updateTransactionData(transactionId, transactionData);
+      alert("Transaction updated successfully");
       setTitle("");
       setBalanceName("");
       setAmount("");
-
       closePopup();
     } catch (error) {
       console.error("Error:", error);
@@ -110,7 +86,6 @@ export default function EditTransaction({ onClose, transactionId }) {
             ) : (
               <form
                 className="mt-4 flex w-full flex-col justify-start"
-                action=""
                 onSubmit={handleSubmit}
               >
                 <input
