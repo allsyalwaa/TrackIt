@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import CardEventList from "./CardEventList";
 import ButtonPlus from "../ui/ButtonPlus";
 import AddEvent from "./AddEvent";
-import { getEvents } from "../../utils/FetchData";
+import { getEvents } from "../../utils/fetchdata/EventService";
+import { sortEvents, formatDate, formatTime } from "../../utils/DateUtils";
 
 export default function EventList({ onClose, selectedDate, onEventAdded }) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
+  const [isEventPopupOpen, setIsEventPopupOpen] = useState(false);
 
   useEffect(() => {
     console.log("mendapatkan Events");
@@ -17,25 +20,10 @@ export default function EventList({ onClose, selectedDate, onEventAdded }) {
     });
   }, [selectedDate]);
 
-  const sortEvents = (events) => {
-    return events.sort((a, b) => {
-      const timeA = new Date(a.start).getTime();
-      const timeB = new Date(b.start).getTime();
-      if (timeA === timeB) {
-        return a.title.localeCompare(b.title);
-      }
-      return timeA - timeB;
-    });
-  };
-
-  const [isOpen, setIsOpen] = useState(true);
-
   const closePopup = () => {
     setIsOpen(false);
     onClose();
   };
-
-  const [isEventPopupOpen, setIsEventPopupOpen] = useState(false);
 
   const handleOpenEventPopup = () => {
     setIsEventPopupOpen(true);
@@ -53,32 +41,13 @@ export default function EventList({ onClose, selectedDate, onEventAdded }) {
     onEventAdded();
   };
 
-  const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const formatTime = (dateStr) => {
-    const date = new Date(dateStr);
-    let hour = date.getUTCHours();
-    let minutes = date.getUTCMinutes();
-    let ampm = hour >= 12 ? "PM" : "AM";
-    hour = hour % 12;
-    hour = hour ? hour : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    return `${hour}:${minutes} ${ampm}`;
-  };
-
   return (
     <>
       {isOpen && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center  ${isEventPopupOpen ? "bg-transparent" : "bg-black/50"}`}
+          className={`fixed inset-0 z-50 flex items-center justify-center ${
+            isEventPopupOpen ? "bg-transparent" : "bg-black/50"
+          }`}
         >
           <div className="w-full max-w-xs rounded-lg bg-white p-6 shadow-lg md:max-w-md">
             <div className="mb-4 flex justify-end">
