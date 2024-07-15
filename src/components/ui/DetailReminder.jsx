@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import EditReminder from "../ui/EditReminder";
+import { fetchReminderDetails } from "../../utils/fetchdata/ReminderService";
 
 export default function DetailReminder({ id, onClose }) {
   const [isReminderPopupOpen, setIsReminderPopupOpen] = useState(false);
@@ -8,42 +9,16 @@ export default function DetailReminder({ id, onClose }) {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchReminder = async () => {
       setIsLoading(true);
       try {
-        console.log(`Fetching data from ${BASE_URL}/reminder/${id}`);
-        const response = await fetch(`${BASE_URL}/reminder/${id}`);
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Data fetched:", data);
-          setTitle(data.name); // Assuming `data.name` is the title
-          setDescription(data.description);
-
-          console.log("Received dateTime:", data.dateTime);
-          const reminderDate = new Date(data.dateTime);
-          console.log("Parsed date:", reminderDate);
-          if (!isNaN(reminderDate)) {
-            const formattedDate = reminderDate
-              .toLocaleString("en-GB", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true,
-              })
-              .replace(",", ""); // Remove comma for desired format
-            setDate(formattedDate);
-          } else {
-            console.error("Invalid date format:", data.dateTime);
-            setDate("Invalid Date");
-          }
-        } else {
-          console.error("Failed to fetch the reminder:", response.statusText);
-        }
+        const data = await fetchReminderDetails(id);
+        setTitle(data.name); // Assuming `data.name` is the title
+        setDescription(data.description);
+        const formattedDate = formatDateTime(data.dateTime);
+        setDate(formattedDate);
       } catch (error) {
         console.error("Error:", error);
       } finally {
@@ -52,10 +27,28 @@ export default function DetailReminder({ id, onClose }) {
     };
 
     fetchReminder();
-  }, [id, BASE_URL]);
+  }, [id]);
+
+  const formatDateTime = (dateTime) => {
+    const reminderDate = new Date(dateTime);
+    if (!isNaN(reminderDate)) {
+      return reminderDate
+        .toLocaleString("en-GB", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        })
+        .replace(",", ""); // Remove comma for desired format
+    } else {
+      console.error("Invalid date format:", dateTime);
+      return "Invalid Date";
+    }
+  };
 
   const handleOpenReminderPopup = () => {
-    console.log("Opening EditReminder with reminderId:", id);
     setIsReminderPopupOpen(true);
   };
 
@@ -87,7 +80,7 @@ export default function DetailReminder({ id, onClose }) {
                 >
                   <path
                     fill="currentColor"
-                    d="m289.94 256l95-95A24 24 0 0 0 351 127l-95 95l-95-95a24 24 0 0 0-34 34l95 95l-95 95a24 24 1 0 0 34 34l95-95l95 95a24 24 0 0 0 34-34Z"
+                    d="m289.94 256l95-95A24 24 0 0 0 351 127l-95 95l-95-95a24 24 1 0 0 34 34l95-95l95 95a24 24 0 0 0 34-34Z"
                   />
                 </svg>
               </button>
