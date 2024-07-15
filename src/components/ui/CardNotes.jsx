@@ -1,7 +1,8 @@
+import { useState } from "react";
 import EditNotes from "../ui/EditNotes";
 import DetailNotes from "./DetailNotes";
 import ConfirmDelete from "./ConfirmDelete";
-import { useState } from "react";
+import { handleDeleteNote } from "../../utils/fetchdata/NotesService";
 
 export default function CardNotes({ id, text1, text2, text3, onDelete }) {
   const [isNotesPopupOpen, setIsNotesPopupOpen] = useState(false);
@@ -10,7 +11,7 @@ export default function CardNotes({ id, text1, text2, text3, onDelete }) {
   const [isDetailNotesPopupOpen, setIsDetailNotesPopupOpen] = useState(false);
 
   const handleOpenNotesPopup = () => {
-    console.log("Opening EditNotes with noteId:", id); // Log noteId
+    console.log("Opening EditNotes with noteId:", id);
     setIsNotesPopupOpen(true);
   };
 
@@ -34,22 +35,11 @@ export default function CardNotes({ id, text1, text2, text3, onDelete }) {
     setIsDetailNotesPopupOpen(false);
   };
 
-  const BASE_URL = import.meta.env.VITE_API_URL;
   const handleDelete = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/notes/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log("Note deleted successfully");
-      if (response.ok) {
-        setIsConfirmDeletePopupOpen(false);
-        onDelete(id);
-      } else {
-        console.error("Failed to delete the note");
-      }
+      await handleDeleteNote(id);
+      setIsConfirmDeletePopupOpen(false);
+      onDelete(id);
     } catch (error) {
       console.error("Error:", error);
     }
