@@ -15,21 +15,21 @@ export const extractTime = (dateTimeString) => {
 
 export const handleHoursInput = (event, setHour) => {
   let value = event.target.value;
-  value = value.replace(/[^0-9]/g, ""); // Hanya angka
+  value = value.replace(/[^0-9]/g, ""); 
   if (value !== "" && (parseInt(value) < 1 || parseInt(value) > 12)) {
-    value = value.slice(0, -1); // Hapus karakter terakhir jika tidak valid
+    value = value.slice(0, -1); 
   }
   setHour(value);
 };
 
 export const handleMinutesInput = (event, setMinute) => {
   let value = event.target.value;
-  value = value.replace(/[^0-9]/g, ""); // Hanya angka
+  value = value.replace(/[^0-9]/g, ""); 
   if (value.length > 2) {
-    value = value.slice(0, 2); // Batasi panjang input maksimal 2 karakter
+    value = value.slice(0, 2); 
   }
   if (value !== "" && parseInt(value) > 59) {
-    value = value.slice(0, -1); // Hapus karakter terakhir jika tidak valid
+    value = value.slice(0, -1); 
   }
   setMinute(value);
 };
