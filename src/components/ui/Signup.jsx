@@ -3,12 +3,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import ButtonGoogle from "./ButtonGoogle";
 import Button from "./Button";
-import { useUserContext } from "../../utils/UserContext"; // Import UserContext
+import { useUserContext } from "../../utils/UserContext";
+import { validatePassword } from "../../utils/Validation";
+import { handleSignup } from "../../utils/fetchdata/AuthService";
 
 export default function Signup() {
   const BASE_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
-  const { setUserId } = useUserContext(); // Destructure setUserId from UserContext
+  const { setUserId } = useUserContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,15 +23,6 @@ export default function Signup() {
     flow: "auth-code",
   });
 
-  const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
-
-  const validatePassword = (password) => {
-    return password.length >= 8;
-  };
-
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
@@ -40,44 +33,24 @@ export default function Signup() {
     }
   };
 
-  const handleSignup = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (!validateEmail(email)) {
-      setError("Invalid email address");
-      return;
-    }
-    if (!validatePassword(password)) {
-      setPasswordError("Password must be at least 8 characters long");
-      return;
-    }
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    const response = await fetch(BASE_URL + "/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      setUserId(result.userId); // Set userId in context
-      navigate("/dashboard");
-    } else {
-      const result = await response.json();
-      setError(result.message || "An error occurred");
-    }
+    handleSignup(
+      e,
+      email,
+      password,
+      confirmPassword,
+      setUserId,
+      navigate,
+      setError,
+      setPasswordError,
+      BASE_URL,
+    );
   };
 
   return (
     <div>
-      {/* ui login */}
       <div className="flex flex-col">
-        {/* login google */}
         <ButtonGoogle onClick={() => login()} />
 
         <div className="mt-4 flex items-center px-4">
@@ -86,7 +59,7 @@ export default function Signup() {
           <div className="flex-grow border-t border-gray-400"></div>
         </div>
 
-        <form className="flex flex-col" onSubmit={handleSignup}>
+        <form className="flex flex-col" onSubmit={handleFormSubmit}>
           <input
             className="mt-4 rounded-full border-[1.5px] border-primary/50 px-5 py-3 text-xs placeholder-primary/50 sm:text-sm md:text-base"
             type="email"
