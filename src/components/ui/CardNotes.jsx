@@ -11,7 +11,6 @@ export default function CardNotes({ id, text1, text2, text3, onDelete }) {
   const [isDetailNotesPopupOpen, setIsDetailNotesPopupOpen] = useState(false);
 
   const handleOpenNotesPopup = () => {
-    console.log("Opening EditNotes with noteId:", id);
     setIsNotesPopupOpen(true);
   };
 
