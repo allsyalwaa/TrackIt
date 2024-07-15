@@ -12,7 +12,6 @@ export default function EventList({ onClose, selectedDate, onEventAdded }) {
   const [isEventPopupOpen, setIsEventPopupOpen] = useState(false);
 
   useEffect(() => {
-    console.log("mendapatkan Events");
     getEvents(selectedDate).then((data) => {
       const sortedData = sortEvents(data);
       setEvents(sortedData);
