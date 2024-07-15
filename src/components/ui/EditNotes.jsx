@@ -1,27 +1,18 @@
 import { useState, useEffect } from "react";
 import Button from "./Button";
+import { fetchNoteData, updateNoteData } from "../../utils/fetchdata/NotesService";
 
 export default function EditNotes({ onClose, noteId }) {
   const [isOpen, setIsOpen] = useState(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    console.log("BASE_URL:", BASE_URL); // Log BASE_URL
-    console.log("noteId:", noteId); // Log noteId
-
-    // Fetch the existing note data when the component is mounted
-    const fetchNoteData = async () => {
+    const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}/notes/${noteId}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log("Fetched data:", data); // Log data fetched
+        const data = await fetchNoteData(noteId);
         setTitle(data.name);
         setDescription(data.description);
       } catch (error) {
@@ -32,9 +23,9 @@ export default function EditNotes({ onClose, noteId }) {
     };
 
     if (noteId) {
-      fetchNoteData();
+      fetchData();
     }
-  }, [noteId, BASE_URL]);
+  }, [noteId]);
 
   const closePopup = () => {
     setIsOpen(false);
@@ -44,27 +35,13 @@ export default function EditNotes({ onClose, noteId }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Buat objek yang berisi data form
     const noteData = {
       name: title,
       description: description,
     };
 
     try {
-      // Kirim data ke server menggunakan method PUT untuk memperbarui catatan
-      const response = await fetch(`${BASE_URL}/notes/${noteId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(noteData),
-      });
-      console.log(await response.json());
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-
-      // Reset form dan tutup popup jika berhasil
+      await updateNoteData(noteId, noteData);
       setTitle("");
       setDescription("");
       closePopup();
