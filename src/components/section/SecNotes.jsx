@@ -1,9 +1,8 @@
+import { useEffect, useState } from "react";
 import AddNotes from "../ui/AddNotes";
 import ButtonPlus from "../ui/ButtonPlus";
 import CardNotes from "../ui/CardNotes";
-
-import { useEffect, useState } from "react";
-import { getNotes } from "../../utils/FetchData";
+import { getNotes } from "../../utils/fetchdata/NotesService";
 
 export default function SecNotes() {
   const [isNotePopupOpen, setIsNotePopupOpen] = useState(false);
@@ -19,17 +18,14 @@ export default function SecNotes() {
   };
 
   useEffect(() => {
-    console.log("mendapatkan Notes");
     getNotes().then((data) => {
-      // Tambahkan properti lastEdited jika tidak ada
       const notesWithLastEdited = data.map((note) => ({
         ...note,
         lastEdited: note.lastEdited || new Date().toISOString(),
       }));
 
-      // Urutkan note berdasarkan lastEdited
       notesWithLastEdited.sort(
-        (a, b) => new Date(b.lastEdited) - new Date(a.lastEdited),
+        (a, b) => new Date(b.lastEdited) - new Date(a.lastEdited)
       );
 
       setNotes(notesWithLastEdited);
