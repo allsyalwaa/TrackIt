@@ -10,7 +10,6 @@ export default function CardReminders({ id, text, time, onDelete }) {
   const [isDetailReminderPopupOpen, setIsDetailReminderPopupOpen] = useState(false);
 
   const handleOpenReminderPopup = () => {
-    console.log("Opening EditReminder with reminderId:", id); // Log reminderId
     setIsReminderPopupOpen(true);
   };
 
