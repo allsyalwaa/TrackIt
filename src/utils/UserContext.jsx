@@ -10,15 +10,12 @@ export const UserProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    // Ambil userId dari local storage
     const userId = localStorage.getItem("userId");
 
-    // Jika userId ada, fetch data user dari API (contoh API digunakan)
     if (userId) {
       fetch(BASE_URL + `/user/${userId}`)
         .then((response) => response.json())
         .then((data) => {
-          // Set data user ke state
           setUser({
             email: data.email,
             username: data.username,
@@ -28,7 +25,6 @@ export const UserProvider = ({ children }) => {
           console.error("Error fetching user data:", error);
         });
     } else {
-      // Jika tidak ada userId di local storage, set user dengan data default
       setUser({
         email: "syalwa@gmail.com",
         username: "syalwa",
