@@ -1,5 +1,11 @@
 import { useState } from "react";
 import Button from "./Button";
+import { postEvent } from "../../utils/fetchdata/EventService";
+import {
+  formatDate,
+  handleHoursInput,
+  handleMinutesInput,
+} from "../../utils/DateTimeUtils";
 
 export default function AddEvent({ onClose, selectedDate, onEventAdded }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -7,61 +13,6 @@ export default function AddEvent({ onClose, selectedDate, onEventAdded }) {
   const closePopup = () => {
     setIsOpen(false);
     onClose();
-  };
-
-  const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const handleHoursInput = (event) => {
-    let value = event.target.value;
-    value = value.replace(/[^0-9]/g, ""); // Hanya angka
-    if (value !== "" && (parseInt(value) < 1 || parseInt(value) > 12)) {
-      value = value.slice(0, -1); // Hapus karakter terakhir jika tidak valid
-    }
-    event.target.value = value;
-  };
-
-  const handleMinutesInput = (event) => {
-    let value = event.target.value;
-    value = value.replace(/[^0-9]/g, ""); // Hanya angka
-    if (value.length > 2) {
-      value = value.slice(0, 2); // Batasi panjang input maksimal 2 karakter
-    }
-    if (value !== "" && parseInt(value) > 59) {
-      value = value.slice(0, -1); // Hapus karakter terakhir jika tidak valid
-    }
-    event.target.value = value;
-  };
-
-  const BASE_URL = import.meta.env.VITE_API_URL;
-
-  const postEvents = async (events) => {
-    try {
-      const response = await fetch(BASE_URL + "/calendar", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(events),
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-      console.log("Success:", data);
-      onEventAdded();
-    } catch (error) {
-      console.error("Error:", error);
-    }
   };
 
   const handleSubmit = (e) => {
@@ -81,19 +32,22 @@ export default function AddEvent({ onClose, selectedDate, onEventAdded }) {
       minutes = "0" + minutes;
     }
 
-    console.log(title, hours, minutes, time);
     const date = `${selectedDate}T${hours}:${minutes}:00${time}.000Z`;
-
-    console.log(date);
 
     const newEvent = {
       title: title,
-      start: `${selectedDate}T${hours}:${minutes}:00${time}.000Z`,
-      end: `${selectedDate}T${hours}:${minutes}:00${time}.000Z`,
+      start: date,
+      end: date,
     };
 
-    postEvents(newEvent);
-    closePopup();
+    postEvent(newEvent)
+      .then(() => {
+        onEventAdded();
+        closePopup();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -165,27 +119,11 @@ export default function AddEvent({ onClose, selectedDate, onEventAdded }) {
                     name="time"
                     id="time"
                   >
-                    <option value="">AM</option>
-                    <option value="">PM</option>
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
                   </select>
                 </div>
               </div>
-
-              {/* <div className="mt-4 grid grid-cols-3 justify-between">
-                <label className="text-lg text-primary">Location :</label>
-                <input
-                  type="text"
-                  className="col-span-2  mr-0 border-none placeholder-secondary/50 outline-none placeholder:text-base placeholder:font-semibold"
-                  placeholder="Location"
-                />
-              </div>
-              <div className="mt-4 grid grid-cols-3 justify-between">
-                <label className="text-lg text-primary">Description :</label>
-                <textarea
-                  className="col-span-2 border-none placeholder-secondary/50 outline-none placeholder:text-base placeholder:font-semibold"
-                  placeholder="Description"
-                />
-              </div> */}
 
               <div className="mt-6 flex justify-end">
                 <Button
