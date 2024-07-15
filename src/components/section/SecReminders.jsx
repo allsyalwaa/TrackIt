@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import AddReminder from "../ui/AddReminder";
+import AddReminder from "../ui/addcontent/AddReminder";
 import ButtonPlus from "../ui/ButtonPlus";
-import CardReminders from "../ui/CardReminders";
+import CardReminders from "../ui/cardcontent/CardReminders";
 import { getReminders } from "../../utils/fetchdata/ReminderService";
 import { extractTime } from "../../utils/TimeUtils";
 
