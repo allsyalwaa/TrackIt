@@ -18,7 +18,6 @@ export default function RingingAlarm({ onClose, alarm }) {
 
   useEffect(() => {
     if (isOpen) {
-      // Memutar audio saat popup terbuka
       if (audioRef.current) {
         const playPromise = audioRef.current.play();
         if (playPromise !== undefined) {
