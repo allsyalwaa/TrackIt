@@ -18,7 +18,6 @@ export default function CardTasks({
   const [completed, setCompleted] = useState(initialCompleted);
 
   const handleOpenTaskPopup = () => {
-    console.log("Opening EditTask with taskId:", id); // Log taskId
     setIsTaskPopupOpen(true);
   };
 
