@@ -1,7 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import "../../index.css";
-import AddEvent from "../ui/AddEvent";
+import AddEvent from "../ui/addcontent/AddEvent";
 import EventList from "../ui/EventList";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useEffect, useState } from "react";
