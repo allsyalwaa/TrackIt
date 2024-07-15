@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Button from "./Button";
+import { postReminder } from "../../utils/fetchdata/ReminderService";
+import { handleHoursInput, handleMinutesInput } from "../../utils/TimeUtils";
 
 export default function AddReminder({ onClose }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -11,32 +13,10 @@ export default function AddReminder({ onClose }) {
   const [minute, setMinute] = useState("");
   const [timePeriod, setTimePeriod] = useState("AM");
   const [description, setDescription] = useState("");
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const closePopup = () => {
     setIsOpen(false);
     onClose();
-  };
-
-  const handleHoursInput = (event) => {
-    let value = event.target.value;
-    value = value.replace(/[^0-9]/g, ""); // Hanya angka
-    if (value !== "" && (parseInt(value) < 1 || parseInt(value) > 12)) {
-      value = value.slice(0, -1); // Hapus karakter terakhir jika tidak valid
-    }
-    setHour(value);
-  };
-
-  const handleMinutesInput = (event) => {
-    let value = event.target.value;
-    value = value.replace(/[^0-9]/g, ""); // Hanya angka
-    if (value.length > 2) {
-      value = value.slice(0, 2); // Batasi panjang input maksimal 2 karakter
-    }
-    if (value !== "" && parseInt(value) > 59) {
-      value = value.slice(0, -1); // Hapus karakter terakhir jika tidak valid
-    }
-    setMinute(value);
   };
 
   const handleSubmit = async (event) => {
@@ -53,17 +33,7 @@ export default function AddReminder({ onClose }) {
     };
 
     try {
-      const response = await fetch(BASE_URL + "/reminder", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reminderData),
-      });
-      console.log(response);
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
+      await postReminder(reminderData);
 
       setTitle("");
       setDay(1);
@@ -184,7 +154,7 @@ export default function AddReminder({ onClose }) {
                     maxLength="2"
                     pattern="[0-9]*"
                     value={hour}
-                    onInput={handleHoursInput}
+                    onInput={(e) => handleHoursInput(e, setHour)}
                   />
 
                   <input
@@ -196,7 +166,7 @@ export default function AddReminder({ onClose }) {
                     maxLength="2"
                     pattern="[0-9]*"
                     value={minute}
-                    onInput={handleMinutesInput}
+                    onInput={(e) => handleMinutesInput(e, setMinute)}
                   />
 
                   <select
