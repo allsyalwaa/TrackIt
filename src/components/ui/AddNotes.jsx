@@ -15,7 +15,6 @@ export default function AddNotes({ onClose }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Buat objek yang berisi data form
     const noteData = {
       name: title,
       description: description,
@@ -24,7 +23,6 @@ export default function AddNotes({ onClose }) {
     try {
       await postNote(noteData);
 
-      // Reset form dan tutup popup jika berhasil
       setTitle("");
       setDescription("");
       closePopup();
