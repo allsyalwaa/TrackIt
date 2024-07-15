@@ -1,7 +1,8 @@
+import { useState } from "react";
 import EditTransaction from "../ui/EditTransaction";
 import ConfirmDelete from "./ConfirmDelete";
-import { useState } from "react";
 import { rupiahFormat } from "../../utils";
+import { deleteTransaction } from "../../utils/fetchdata/MoneyCalculatorService";
 
 export default function CardTransactions({
   text1,
@@ -30,23 +31,9 @@ export default function CardTransactions({
     setIsConfirmDeletePopupOpen(false);
   };
 
-  const moneyColor = money < 0 ? "text-[#EE0C00]" : "text-primary";
-
-  const BASE_URL = import.meta.env.VITE_API_URL;
-
   const handleDelete = async () => {
     try {
-      const response = await fetch(
-        `${BASE_URL}/money-calculator/transaction/${transactionId}`,
-        {
-          method: "DELETE",
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to delete the transaction");
-      }
-
+      await deleteTransaction(transactionId);
       console.log("Transaction deleted successfully");
       onDelete(transactionId);
       setIsConfirmDeletePopupOpen(false);
@@ -54,6 +41,8 @@ export default function CardTransactions({
       console.error("Error deleting transaction:", error);
     }
   };
+
+  const moneyColor = money < 0 ? "text-[#EE0C00]" : "text-primary";
 
   return (
     <div className="rounded-lg border-[1.5px] border-primary/50 p-2">
