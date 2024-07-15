@@ -15,9 +15,9 @@ export default function DetailNotes({ id, onClose }) {
       setIsLoading(true);
       try {
         const data = await fetchNoteDetails(id);
-        setTitle(data.name); // Assuming `data.name` is the title
+        setTitle(data.name); 
         setDescription(data.description);
-        setDate(data.date); // Mengambil date tanpa mengubahnya
+        setDate(data.date); 
       } catch (error) {
         console.error("Error:", error);
       } finally {
