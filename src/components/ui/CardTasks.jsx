@@ -49,7 +49,7 @@ export default function CardTasks({
       await updateTaskStatus(id, newCompletedStatus);
     } catch (error) {
       console.error("Error:", error);
-      setCompleted(!newCompletedStatus); // Revert if update fails
+      setCompleted(!newCompletedStatus); 
     }
   };
 
