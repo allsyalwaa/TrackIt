@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react";
 import AddReminder from "../ui/AddReminder";
 import ButtonPlus from "../ui/ButtonPlus";
 import CardReminders from "../ui/CardReminders";
-
-import { useEffect, useState } from "react";
-import { getReminders } from "../../utils/FetchData";
+import { getReminders } from "../../utils/fetchdata/ReminderService";
+import { extractTime } from "../../utils/TimeUtils";
 
 export default function SecReminders() {
   const [isReminderPopupOpen, setIsReminderPopupOpen] = useState(false);
@@ -19,15 +19,12 @@ export default function SecReminders() {
   };
 
   useEffect(() => {
-    console.log("mendapatkan Reminders");
     getReminders().then((data) => {
-      // Tambahkan properti lastEdited jika tidak ada
       const remindersWithLastEdited = data.map((reminder) => ({
         ...reminder,
         lastEdited: reminder.lastEdited || new Date().toISOString(),
       }));
 
-      // Urutkan reminder berdasarkan lastEdited
       remindersWithLastEdited.sort(
         (a, b) => new Date(b.lastEdited) - new Date(a.lastEdited),
       );
@@ -39,23 +36,6 @@ export default function SecReminders() {
 
   const handleDeleteReminder = (reminderId) => {
     setReminders(reminders.filter((reminder) => reminder.id !== reminderId));
-  };
-
-  const convertToAmPm = (time) => {
-    const [hour, minute, second] = time.split(":");
-    let hourInt = parseInt(hour);
-    const ampm = hourInt >= 12 ? "PM" : "AM";
-    hourInt = hourInt % 12 || 12;
-    return `${hourInt}:${minute} ${ampm}`;
-  };
-
-  const extractTime = (dateTimeString) => {
-    // Memisahkan tanggal dan waktu
-    const [date, time] = dateTimeString.split("T");
-    // Menghilangkan karakter yang tidak berguna
-    const formattedTime = time.split(":00Z")[0];
-    // Mengonversi waktu ke format AM/PM
-    return convertToAmPm(formattedTime);
   };
 
   return (
