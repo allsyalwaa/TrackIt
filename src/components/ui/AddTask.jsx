@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Button from "./Button";
+import { postTask } from "../../utils/fetchdata/TaskService";
 
 export default function AddTask({ onClose }) {
   const [isOpen, setIsOpen] = useState(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const closePopup = () => {
     setIsOpen(false);
@@ -23,17 +23,7 @@ export default function AddTask({ onClose }) {
 
     try {
       // Kirim data ke server menggunakan method POST
-      const response = await fetch(BASE_URL + "/task", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(taskData),
-      });
-      console.log(response);
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
+      await postTask(taskData);
 
       // Reset form dan tutup popup jika berhasil
       setTitle("");
