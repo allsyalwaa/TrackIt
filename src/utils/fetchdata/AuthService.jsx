@@ -68,7 +68,6 @@ export const handleLogin = async (
     });
 
     const result = await response.json();
-    console.log("Response from API:", result);
 
     if (response.ok && result.id) {
       localStorage.setItem("userId", result.id);
