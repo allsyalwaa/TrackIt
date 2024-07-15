@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import AddBalance from "../ui/AddBalance";
-import AddTransaction from "../ui/AddTransaction";
+import AddBalance from "../ui/addcontent/AddBalance";
+import AddTransaction from "../ui/addcontent/AddTransaction";
 import ButtonPlus from "../ui/ButtonPlus";
-import CardBalance from "../ui/CardBalance";
-import CardFinancial from "../ui/CardFinancial";
-import CardTransactions from "../ui/CardTransactions";
+import CardBalance from "../ui/cardcontent/CardBalance";
+import CardFinancial from "../ui/cardcontent/CardFinancial";
+import CardTransactions from "../ui/cardcontent/CardTransactions";
 import SecChart from "./Chart";
 import {
   getFinance,
