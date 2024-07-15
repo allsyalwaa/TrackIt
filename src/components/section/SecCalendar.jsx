@@ -3,9 +3,10 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import "../../index.css";
 import AddEvent from "../ui/AddEvent";
 import EventList from "../ui/EventList";
-import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
+import interactionPlugin from "@fullcalendar/interaction";
 import { useEffect, useState } from "react";
-import { getEvents } from "../../utils/FetchData";
+// import { getEvents } from "../../utils/fetchdata/EventService";
+import { refreshEvents } from "../../utils/EventUtils";
 
 export default function SecCalendar() {
   const [isEventPopupOpen, setIsEventPopupOpen] = useState(false);
@@ -27,44 +28,18 @@ export default function SecCalendar() {
 
   const handleCloseEventList = () => {
     setIsEventListOpen(false);
-    refreshEvents();
+    refreshEvents(setEvents);
   };
 
-  const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const dt = date.getDate();
-    return `${year}-${month < 10 ? "0" + month : month}-${dt < 10 ? "0" + dt : dt}`;
-  };
-
-  const refreshEvents = () => {
-    console.log("mendapatkan Events");
-    getEvents().then((data) => {
-      const processedEvents = data.map((event) => {
-        console.log(formatDate(event.start));
-        return {
-          ...event,
-          start: formatDate(event.start),
-          end: formatDate(event.end),
-        };
-      });
-      setEvents(processedEvents);
-    });
-  };
   useEffect(() => {
-    refreshEvents();
+    refreshEvents(setEvents);
   }, []);
 
   const handleDateClick = (info) => {
-    console.log(info.dateStr);
     setSelectedDate(info.dateStr);
-    let isThereEvent = false;
-    for (let i = 0; i < events.length; i++) {
-      if (info.dateStr === events[i].start || info.dateStr === events[i].end) {
-        isThereEvent = true;
-      }
-    }
+    let isThereEvent = events.some(
+      (event) => info.dateStr === event.start || info.dateStr === event.end,
+    );
 
     if (isThereEvent) {
       handleOpenEventList();
@@ -74,7 +49,7 @@ export default function SecCalendar() {
   };
 
   const handleEventAdded = () => {
-    refreshEvents();
+    refreshEvents(setEvents);
     if (isEventListOpen) {
       setIsEventListOpen(true);
     }
