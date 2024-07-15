@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
 import Button from "./Button";
+import {
+  fetchReminderData,
+  updateReminderData,
+} from "../../utils/fetchdata/ReminderService";
+import {
+  handleHoursInput,
+  handleMinutesInput,
+} from "../../utils/TimeInputHandlers";
 
 export default function EditReminder({ onClose, reminderId }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -12,19 +20,12 @@ export default function EditReminder({ onClose, reminderId }) {
   const [timePeriod, setTimePeriod] = useState("AM");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    console.log(reminderId);
-    const fetchReminderData = async () => {
+    const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}/reminder/${reminderId}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log("EditReminder data fetched:", data);
+        const data = await fetchReminderData(reminderId);
         setTitle(data.name);
 
         const dateTime = new Date(data.dateTime);
@@ -55,34 +56,13 @@ export default function EditReminder({ onClose, reminderId }) {
     };
 
     if (reminderId) {
-      fetchReminderData();
+      fetchData();
     }
-  }, [reminderId, BASE_URL]);
+  }, [reminderId]);
 
   const closePopup = () => {
     setIsOpen(false);
     onClose();
-  };
-
-  const handleHoursInput = (event) => {
-    let value = event.target.value;
-    value = value.replace(/[^0-9]/g, ""); // Hanya angka
-    if (value !== "" && (parseInt(value) < 1 || parseInt(value) > 12)) {
-      value = value.slice(0, -1); // Hapus karakter terakhir jika tidak valid
-    }
-    setHour(value);
-  };
-
-  const handleMinutesInput = (event) => {
-    let value = event.target.value;
-    value = value.replace(/[^0-9]/g, ""); // Hanya angka
-    if (value.length > 2) {
-      value = value.slice(0, 2); // Batasi panjang input maksimal 2 karakter
-    }
-    if (value !== "" && parseInt(value) > 59) {
-      value = value.slice(0, -1); // Hapus karakter terakhir jika tidak valid
-    }
-    setMinute(value);
   };
 
   const handleSubmit = async (event) => {
@@ -99,18 +79,7 @@ export default function EditReminder({ onClose, reminderId }) {
     };
 
     try {
-      const response = await fetch(`${BASE_URL}/reminder/${reminderId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reminderData),
-      });
-      console.log(response);
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-
+      await updateReminderData(reminderId, reminderData);
       setTitle("");
       setDay(1);
       setMonth("January");
@@ -139,7 +108,7 @@ export default function EditReminder({ onClose, reminderId }) {
                 >
                   <path
                     fill="currentColor"
-                    d="m289.94 256l95-95A24 24 0 0 0 351 127l-95 95l-95-95a24 24 0 0 0-34 34l95 95l-95 95a24 24 0 1 0 34 34l95-95l95 95a24 24 0 0 0 34-34Z"
+                    d="m289.94 256l95-95A24 24 0 0 0 351 127l-95 95l-95-95a24 24 0 0 0-34 34l95 95l-95 95a24 24 1 0 0 34 34l95-95l95 95a24 24 0 0 0 34-34Z"
                   />
                 </svg>
               </button>
