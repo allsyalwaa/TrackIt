@@ -28,7 +28,6 @@ export default function Navbar() {
 
     window.addEventListener("resize", handleResize);
 
-    // Cleanup listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
