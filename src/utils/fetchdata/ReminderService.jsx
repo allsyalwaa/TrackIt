@@ -39,7 +39,6 @@ export const handleDeleteReminder = async (id) => {
     throw new Error("Failed to delete the reminder");
   }
 
-  console.log("Reminder deleted successfully");
   return response.json();
 };
 
