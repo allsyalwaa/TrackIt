@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import EditTask from "../ui/EditTask";
+import { fetchTaskDetails } from "../../utils/fetchdata/TaskService";
 
 export default function DetailTask({ id, onClose }) {
   const [isTaskPopupOpen, setIsTaskPopupOpen] = useState(false);
@@ -7,20 +8,14 @@ export default function DetailTask({ id, onClose }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchTask = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}/task/${id}`);
-        if (response.ok) {
-          const data = await response.json();
-          setTitle(data.name);
-          setDescription(data.description);
-        } else {
-          console.error("Failed to fetch the task:", response.statusText);
-        }
+        const data = await fetchTaskDetails(id);
+        setTitle(data.name);
+        setDescription(data.description);
       } catch (error) {
         console.error("Error:", error);
       } finally {
@@ -29,7 +24,7 @@ export default function DetailTask({ id, onClose }) {
     };
 
     fetchTask();
-  }, [id, BASE_URL]);
+  }, [id]);
 
   const handleOpenTaskPopup = () => {
     setIsTaskPopupOpen(true);
