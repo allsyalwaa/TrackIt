@@ -34,8 +34,7 @@ export default function CardTransactions({
   const handleDelete = async () => {
     try {
       await deleteTransaction(transactionId);
-      console.log("Transaction deleted successfully");
-      onDelete(transactionId);
+        onDelete(transactionId);
       setIsConfirmDeletePopupOpen(false);
     } catch (error) {
       console.error("Error deleting transaction:", error);
