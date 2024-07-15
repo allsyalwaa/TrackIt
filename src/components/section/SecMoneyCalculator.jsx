@@ -1,15 +1,16 @@
+import { useState, useEffect } from "react";
 import AddBalance from "../ui/AddBalance";
 import AddTransaction from "../ui/AddTransaction";
 import ButtonPlus from "../ui/ButtonPlus";
 import CardBalance from "../ui/CardBalance";
 import CardFinancial from "../ui/CardFinancial";
 import CardTransactions from "../ui/CardTransactions";
-
 import SecChart from "./Chart";
-
-import { useState, useEffect } from "react";
-
-import { getFinance, getBalance, getTransaction } from "../../utils/FetchData";
+import {
+  getFinance,
+  getBalance,
+  getTransaction,
+} from "../../utils/fetchdata/MoneyCalculatorService";
 
 export default function SecMoneyCalculator() {
   const [finance, setFinance] = useState({
@@ -24,7 +25,6 @@ export default function SecMoneyCalculator() {
   const [isLoadingTransaction, setIsLoadingTransaction] = useState(true);
 
   useEffect(() => {
-    console.log("mendapatkan Finance");
     getFinance().then((data) => {
       setFinance(data);
       setIsLoadingFinance(false);
@@ -32,7 +32,6 @@ export default function SecMoneyCalculator() {
   }, []);
 
   useEffect(() => {
-    console.log("mendapatkan Balance");
     getBalance().then((data) => {
       setBalance(data);
       setIsLoadingBalance(false);
@@ -40,9 +39,7 @@ export default function SecMoneyCalculator() {
   }, []);
 
   useEffect(() => {
-    console.log("mendapatkan Transaction");
     getTransaction().then((data) => {
-      // Urutkan transaksi berdasarkan tanggal
       const sortedTransactions = data.sort(
         (a, b) => new Date(b.date) - new Date(a.date),
       );
