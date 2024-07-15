@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import EditNotes from "../ui/EditNotes";
+import { fetchNoteDetails } from "../../utils/fetchdata/NotesService";
 
 export default function DetailNotes({ id, onClose }) {
   const [isNotesPopupOpen, setIsNotesPopupOpen] = useState(false);
@@ -8,25 +9,15 @@ export default function DetailNotes({ id, onClose }) {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchNotes = async () => {
       setIsLoading(true);
       try {
-        console.log(`Fetching data from ${BASE_URL}/notes/${id}`);
-        const response = await fetch(`${BASE_URL}/notes/${id}`);
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Data fetched:", data);
-          setTitle(data.name); // Assuming `data.name` is the title
-          setDescription(data.description);
-
-          console.log("Received dateTime:", data.date);
-          setDate(data.date); // Mengambil date tanpa mengubahnya
-        } else {
-          console.error("Failed to fetch the notes:", response.statusText);
-        }
+        const data = await fetchNoteDetails(id);
+        setTitle(data.name); // Assuming `data.name` is the title
+        setDescription(data.description);
+        setDate(data.date); // Mengambil date tanpa mengubahnya
       } catch (error) {
         console.error("Error:", error);
       } finally {
@@ -35,10 +26,9 @@ export default function DetailNotes({ id, onClose }) {
     };
 
     fetchNotes();
-  }, [id, BASE_URL]);
+  }, [id]);
 
   const handleOpenNotesPopup = () => {
-    console.log("Opening EditNotes with notesId:", id);
     setIsNotesPopupOpen(true);
   };
 
@@ -70,7 +60,7 @@ export default function DetailNotes({ id, onClose }) {
                 >
                   <path
                     fill="currentColor"
-                    d="m289.94 256l95-95A24 24 0 0 0 351 127l-95 95l-95-95a24 24 0 0 0-34 34l95 95l-95 95a24 24 1 0 0 34 34l95-95l95 95a24 24 0 0 0 34-34Z"
+                    d="m289.94 256l95-95A24 24 0 0 0 351 127l-95 95l-95-95a24 24 1 0 0 34 34l95-95l95 95a24 24 0 0 0 34-34Z"
                   />
                 </svg>
               </button>
