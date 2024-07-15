@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import AddTask from "../ui/AddTask";
+import AddTask from "../ui/addcontent/AddTask";
 import ButtonPlus from "../ui/ButtonPlus";
-import CardTasks from "../ui/CardTasks";
+import CardTasks from "../ui/cardcontent/CardTasks";
 import { getTasks } from "../../utils/fetchdata/TaskService";
 
 export default function SecTasks() {
