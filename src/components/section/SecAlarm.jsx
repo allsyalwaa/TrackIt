@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import CardAlarm from "../ui/CardAlarm";
-import { getAlarm } from "../../utils/FetchData";
 import RingingAlarm from "../ui/RingingAlarm";
+import { getAlarm, postAlarm, deleteAlarm } from "../../utils/fetchdata/AlarmService";
+import { validation } from "../../utils/Validation";
 
 export default function SecAlarm() {
   const [alarm, setAlarm] = useState([]);
   const [loading, setLoading] = useState(true);
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    console.log("mendapatkan Data");
     getAlarm().then((data) => {
-      // Urutkan alarm berdasarkan id terbesar ke terkecil
       const sortedAlarms = data.sort((a, b) => b.id - a.id);
       setAlarm(sortedAlarms);
       setLoading(false);
@@ -99,102 +97,31 @@ export default function SecAlarm() {
       name: name,
       time: formattedTime,
       date: cdate,
-      setTime: new Date().toISOString(), // tambahkan properti setTime
+      setTime: new Date().toISOString(),
     };
 
-    // Post data to the server
-    postAlarm(newAlarm);
+    postAlarm(newAlarm).then(() => {
+      getAlarm().then((data) => {
+        const sortedAlarms = data.sort((a, b) => b.id - a.id);
+        setAlarm(sortedAlarms);
+      });
+    });
 
-    // Reset form
     form.reset();
     setFormData({ minutes: "", "alarm-name": "" });
     setErrors({});
     setIsSubmitted(false);
   };
 
-  const postAlarm = async (alarm) => {
-    try {
-      const response = await fetch(BASE_URL + "/alarm", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(alarm),
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-      console.log("Success:", data);
-      getAlarm().then((data) => {
-        // Urutkan alarm berdasarkan id terbesar ke terkecil
-        const sortedAlarms = data.sort((a, b) => b.id - a.id);
-        setAlarm(sortedAlarms);
-      });
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const deleteAlarm = async (alarmId) => {
-    try {
-      const response = await fetch(`${BASE_URL}/alarm/${alarmId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      console.log(`Alarm with id ${alarmId} deleted successfully.`);
-      getAlarm().then((data) => {
-        const sortedAlarms = data.sort((a, b) => b.id - a.id);
-        setAlarm(sortedAlarms);
-      });
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
   const handleCloseAlarm = (alarmId) => {
     setIsRinging(false);
     setCurrentAlarm(null);
-    deleteAlarm(alarmId);
-  };
-
-  const validation = (formData) => {
-    const errors = {};
-    const minuteError = checkMinutes(formData.minutes);
-    const nameError = checkAlarmName(formData["alarm-name"]);
-    if (minuteError) {
-      errors.minutes = minuteError;
-    }
-    if (nameError) {
-      errors["alarm-name"] = nameError;
-    }
-    return errors;
-  };
-
-  const checkMinutes = (minutes) => {
-    if (minutes.length !== 2 || isNaN(minutes) || minutes < 0 || minutes > 59) {
-      return "Minutes must be a 2-digit number between 00 and 59.";
-    }
-    return false;
-  };
-
-  const checkAlarmName = (name) => {
-    if (name.trim() === "" && isSubmitted) {
-      return "Alarm name cannot be empty.";
-    }
-    if (name.length < 3 || name.length > 20) {
-      return "Alarm name must be between 3 and 20 characters.";
-    }
-    return false;
+    deleteAlarm(alarmId).then(() => {
+      getAlarm().then((data) => {
+        const sortedAlarms = data.sort((a, b) => b.id - a.id);
+        setAlarm(sortedAlarms);
+      });
+    });
   };
 
   const handleInput = (e) => {
@@ -204,13 +131,11 @@ export default function SecAlarm() {
     }
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Validasi input saat mengetik (khusus untuk "minutes")
     if (name === "minutes") {
       const errors = validation({ ...formData, [name]: value });
       setErrors(errors);
     }
 
-    // Hapus pesan kesalahan jika input "alarm-name" sudah benar
     if (name === "alarm-name" && value.length >= 3 && value.length <= 20) {
       setErrors((prev) => ({ ...prev, "alarm-name": null }));
     } else if (name === "alarm-name") {
