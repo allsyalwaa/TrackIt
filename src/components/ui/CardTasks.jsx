@@ -1,7 +1,8 @@
+import { useState } from "react";
 import EditTask from "../ui/EditTask";
 import DetailTask from "./DetailTask";
 import ConfirmDelete from "./ConfirmDelete";
-import { useState } from "react";
+import { handleDeleteTask, updateTaskStatus } from "../../utils/fetchdata/TaskService";
 
 export default function CardTasks({
   id,
@@ -15,7 +16,6 @@ export default function CardTasks({
     useState(false);
   const [isDetailTaskPopupOpen, setIsDetailTaskPopupOpen] = useState(false);
   const [completed, setCompleted] = useState(initialCompleted);
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const handleOpenTaskPopup = () => {
     console.log("Opening EditTask with taskId:", id); // Log taskId
@@ -47,17 +47,7 @@ export default function CardTasks({
     setCompleted(newCompletedStatus);
 
     try {
-      const response = await fetch(BASE_URL + `/task/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ completed: newCompletedStatus }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update the task status");
-      }
+      await updateTaskStatus(id, newCompletedStatus);
     } catch (error) {
       console.error("Error:", error);
       setCompleted(!newCompletedStatus); // Revert if update fails
@@ -66,20 +56,9 @@ export default function CardTasks({
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(BASE_URL + `/task/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log("Task deleted successfully");
-
-      if (response.ok) {
-        setIsConfirmDeletePopupOpen(false);
-        onDelete(id);
-      } else {
-        console.error("Failed to delete the task");
-      }
+      await handleDeleteTask(id);
+      setIsConfirmDeletePopupOpen(false);
+      onDelete(id);
     } catch (error) {
       console.error("Error:", error);
     }
