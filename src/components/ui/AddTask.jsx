@@ -15,17 +15,14 @@ export default function AddTask({ onClose }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Buat objek yang berisi data form
     const taskData = {
       title: title,
       description: description,
     };
 
     try {
-      // Kirim data ke server menggunakan method POST
       await postTask(taskData);
 
-      // Reset form dan tutup popup jika berhasil
       setTitle("");
       setDescription("");
       closePopup();
