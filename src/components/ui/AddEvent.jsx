@@ -24,7 +24,6 @@ export default function AddEvent({ onClose, selectedDate, onEventAdded }) {
     const title = form.title.value;
     const time = form.time.value;
 
-    // Tambahkan 0 di depan jika panjang input 1
     if (hours.length === 1) {
       hours = "0" + hours;
     }
