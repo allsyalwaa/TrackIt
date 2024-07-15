@@ -1,27 +1,18 @@
 import { useState, useEffect } from "react";
 import Button from "./Button";
+import { fetchTaskData, updateTaskData } from "../../utils/fetchdata/TaskService";
 
 export default function EditTask({ onClose, taskId }) {
   const [isOpen, setIsOpen] = useState(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    console.log("BASE_URL:", BASE_URL); // Log BASE_URL
-    console.log("taskId:", taskId); // Log taskId
-
-    // Fetch the existing task data when the component is mounted
-    const fetchTaskData = async () => {
+    const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}/task/${taskId}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log("Fetched data:", data); // Log data fetched
+        const data = await fetchTaskData(taskId);
         setTitle(data.name);
         setDescription(data.description);
       } catch (error) {
@@ -32,9 +23,9 @@ export default function EditTask({ onClose, taskId }) {
     };
 
     if (taskId) {
-      fetchTaskData();
+      fetchData();
     }
-  }, [taskId, BASE_URL]);
+  }, [taskId]);
 
   const closePopup = () => {
     setIsOpen(false);
@@ -44,27 +35,13 @@ export default function EditTask({ onClose, taskId }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Buat objek yang berisi data form
     const taskData = {
       title: title,
       description: description,
     };
 
     try {
-      // Kirim data ke server menggunakan method PUT untuk memperbarui tugas
-      const response = await fetch(`${BASE_URL}/task/${taskId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(taskData),
-      });
-      console.log(response);
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-
-      // Reset form dan tutup popup jika berhasil
+      await updateTaskData(taskId, taskData);
       setTitle("");
       setDescription("");
       closePopup();
@@ -109,12 +86,12 @@ export default function EditTask({ onClose, taskId }) {
                   name="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full border-none text-xl font-semibold text-secondary  outline-none "
+                  className="w-full border-none text-xl font-semibold text-secondary outline-none"
                 />
                 <hr className="border-t-1 mt-2 w-full border-secondary" />
 
                 <textarea
-                  className="mt-4 h-56 rounded-lg border-[1.5px] border-primary/50 px-4 py-1 text-primary  outline-none"
+                  className="mt-4 h-56 rounded-lg border-[1.5px] border-primary/50 px-4 py-1 text-primary outline-none"
                   type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
