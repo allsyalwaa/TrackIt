@@ -15,7 +15,7 @@ export default function DetailReminder({ id, onClose }) {
       setIsLoading(true);
       try {
         const data = await fetchReminderDetails(id);
-        setTitle(data.name); // Assuming `data.name` is the title
+        setTitle(data.name); 
         setDescription(data.description);
         const formattedDate = formatDateTime(data.dateTime);
         setDate(formattedDate);
@@ -41,7 +41,7 @@ export default function DetailReminder({ id, onClose }) {
           minute: "2-digit",
           hour12: true,
         })
-        .replace(",", ""); // Remove comma for desired format
+        .replace(",", ""); 
     } else {
       console.error("Invalid date format:", dateTime);
       return "Invalid Date";
