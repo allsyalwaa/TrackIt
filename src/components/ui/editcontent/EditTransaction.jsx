@@ -48,7 +48,6 @@ export default function EditTransaction({ onClose, transactionId }) {
 
     try {
       await updateTransactionData(transactionId, transactionData);
-      alert("Transaction updated successfully");
       setTitle("");
       setBalanceName("");
       setAmount("");

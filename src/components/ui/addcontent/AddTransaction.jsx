@@ -24,7 +24,6 @@ export default function AddTransaction({ onClose }) {
 
     try {
       await postTransaction(data);
-      alert("Transaction added successfully");
 
       setTitle("");
       setBalanceName("");
