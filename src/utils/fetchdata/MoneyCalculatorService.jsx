@@ -33,7 +33,7 @@ export const addBalance = async (data) => {
     },
     body: JSON.stringify(data),
   });
-
+  alert("Balance added successfully");
   if (!response.ok) {
     throw new Error("Something went wrong");
   }
