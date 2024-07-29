@@ -87,7 +87,7 @@ export const postTransaction = async (data) => {
     },
     body: JSON.stringify(data),
   });
-
+  alert("Transaction added successfully");
   if (!response.ok) {
     throw new Error("Something went wrong");
   }

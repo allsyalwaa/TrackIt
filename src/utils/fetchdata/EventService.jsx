@@ -21,7 +21,7 @@ export const postEvent = async (event) => {
     },
     body: JSON.stringify(event),
   });
-
+  alert("Event added successfully");
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }

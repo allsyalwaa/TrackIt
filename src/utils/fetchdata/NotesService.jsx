@@ -19,7 +19,7 @@ export const postNote = async (noteData) => {
     },
     body: JSON.stringify(noteData),
   });
-
+  alert("Note added successfully");
   if (!response.ok) {
     throw new Error("Something went wrong");
   }

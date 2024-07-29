@@ -19,7 +19,7 @@ export const postTask = async (taskData) => {
     },
     body: JSON.stringify(taskData),
   });
-
+  alert("Task added successfully");
   if (!response.ok) {
     throw new Error("Something went wrong");
   }

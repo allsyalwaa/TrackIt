@@ -19,7 +19,7 @@ export const postReminder = async (reminderData) => {
     },
     body: JSON.stringify(reminderData),
   });
-
+  alert("Reminder added successfully");
   if (!response.ok) {
     throw new Error("Something went wrong");
   }
