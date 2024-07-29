@@ -78,9 +78,8 @@ export default function AddTransaction({ onClose }) {
                 onChange={(e) => setBalanceName(e.target.value)}
               >
                 <option value="">Balance name</option>
-                <option value="balance1">Balance 1</option>
-                <option value="balance2">Balance 2</option>
-                <option value="balance3">Balance 3</option>
+                <option value="balance1">Balance A</option>
+                <option value="balance2">Balance B</option>
               </select>
 
               <input
