@@ -4,7 +4,7 @@ import MoneyCalculator from "../../assets/money-calculator.svg";
 import Notes from "../../assets/notes.svg";
 import Reminders from "../../assets/reminders.svg";
 import Tasks from "../../assets/tasks.svg";
-import { useUserContext } from "../../utils/UseUser";
+import { useUserContext } from "../../utils/UserContext";
 
 import CardDashboard from "../ui/cardcontent/CardDashboard";
 

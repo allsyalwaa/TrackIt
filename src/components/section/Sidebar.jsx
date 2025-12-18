@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import Logo from "../../assets/illustration-logo1.svg";
 import Profile from "../../assets/profile.svg";
 import ConfirmLogout from "../ui/ConfirmLogout";
-import { useUserContext } from "../../utils/UseUser";
+import { useUserContext } from "../../utils/UserContext";
 
 import { useState, useEffect, useRef } from "react";
 

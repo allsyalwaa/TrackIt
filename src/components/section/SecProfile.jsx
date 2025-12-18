@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Profile1 from "../../assets/illustration-profile.svg";
 import ChangePassword from "../ui/ChangePassword";
-import { useUserContext } from "../../utils/UseUser";
+import { useUserContext } from "../../utils/UserContext";
 import { fetchUserProfile } from "../../utils/fetchdata/UserService";
 
 export default function SecProfile() {

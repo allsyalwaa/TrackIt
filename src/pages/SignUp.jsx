@@ -4,7 +4,7 @@ import Logo from "../assets/illustration-logo.svg";
 import { useGoogleLogin } from "@react-oauth/google";
 import ButtonGoogle from "../components/ui/ButtonGoogle";
 import Button from "../components/ui/Button";
-import { useUserContext } from "../utils/UseUser";
+import { useUserContext } from "../utils/UserContext";
 import {
   validatePassword,
   handleSignup,

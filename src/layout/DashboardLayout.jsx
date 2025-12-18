@@ -1,7 +1,7 @@
 import Sidebar from "../components/section/Sidebar";
 import BreadCrumbs from "../components/ui/BreadCrumbs";
 import { useEffect } from "react";
-import { useUserContext } from "../utils/UseUser";
+import { useUserContext } from "../utils/UserContext";
 
 export default function DashboardLayout({ children, data }) {
   const { setUser } = useUserContext();
