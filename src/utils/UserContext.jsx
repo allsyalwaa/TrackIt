@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 
 export const UserContext = createContext();
 
@@ -13,4 +13,9 @@ export const UserProvider = ({ children }) => {
       {children}
     </UserContext.Provider>
   );
+};
+
+// ⬇⬇⬇ INI YANG HILANG DARI FILE KAMU
+export const useUserContext = () => {
+  return useContext(UserContext);
 };
