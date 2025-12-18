@@ -49,8 +49,8 @@ export default function SecReminders() {
           {reminders.map((reminder) => (
             <CardReminders
               key={reminder.id}
-              text={reminder.name}
-              time={extractTime(reminder.dateTime)}
+              text={reminder.title}
+              time={extractTime(reminder.reminder)}
               id={reminder.id}
               onDelete={handleDeleteReminder}
             />
@@ -59,7 +59,7 @@ export default function SecReminders() {
       )}
 
       <ButtonPlus
-        className={"absolute bottom-8 right-8"}
+        className={"fixed bottom-8 right-8"}
         onClick={handleOpenReminderPopup}
       />
 

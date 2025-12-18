@@ -10,6 +10,7 @@ export const formatDate = (dateStr) => {
 
 export const refreshEvents = (setEvents) => {
   getEvents().then((data) => {
+    console.log(data);
     const processedEvents = data.map((event) => {
       return {
         ...event,

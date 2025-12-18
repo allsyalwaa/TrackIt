@@ -4,7 +4,14 @@ import DetailNotes from "../detailcontent/DetailNotes";
 import ConfirmDelete from "../ConfirmDelete";
 import { handleDeleteNote } from "../../../utils/fetchdata/NotesService";
 
-export default function CardNotes({ id, text1, text2, text3, onDelete }) {
+export default function CardNotes({
+  id,
+  text1,
+  text2,
+  text3,
+  onDelete,
+  onClose,
+}) {
   const [isNotesPopupOpen, setIsNotesPopupOpen] = useState(false);
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
     useState(false);
@@ -16,6 +23,7 @@ export default function CardNotes({ id, text1, text2, text3, onDelete }) {
 
   const handleCloseNotesPopup = () => {
     setIsNotesPopupOpen(false);
+    onClose && onClose();
   };
 
   const handleOpenConfirmDeletePopup = () => {

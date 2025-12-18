@@ -27,8 +27,7 @@ export default function AddReminder({ onClose }) {
 
     const reminderData = {
       title: title,
-      date: `${year}-${month}-${day}`,
-      time: `${formattedHour}:${formattedMinute} ${timePeriod}`,
+      reminder: `${year}-${month}-${day} ${formattedHour}:${formattedMinute} ${timePeriod}`,
       description: description,
     };
 

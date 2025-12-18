@@ -1,4 +1,4 @@
-export default function CardEventList({ text, time }) {
+export default function CardEventList({ text, time }) { 
   return (
     <div className="mt-3">
       <button className="flex w-full items-center justify-between">

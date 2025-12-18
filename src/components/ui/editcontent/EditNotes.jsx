@@ -16,7 +16,7 @@ export default function EditNotes({ onClose, noteId }) {
       setIsLoading(true);
       try {
         const data = await fetchNoteData(noteId);
-        setTitle(data.name);
+        setTitle(data.title);
         setDescription(data.description);
       } catch (error) {
         console.error("Error fetching note data:", error);
@@ -39,7 +39,7 @@ export default function EditNotes({ onClose, noteId }) {
     event.preventDefault();
 
     const noteData = {
-      name: title,
+      title: title,
       description: description,
     };
 

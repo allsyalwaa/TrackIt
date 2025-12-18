@@ -26,9 +26,9 @@ export default function EditReminder({ onClose, reminderId }) {
       setIsLoading(true);
       try {
         const data = await fetchReminderData(reminderId);
-        setTitle(data.name);
+        setTitle(data.title);
 
-        const dateTime = new Date(data.dateTime);
+        const dateTime = new Date(data.reminder);
         setYear(dateTime.getFullYear());
         setMonth(dateTime.toLocaleString("default", { month: "long" }));
         setDay(dateTime.getDate());
@@ -73,8 +73,7 @@ export default function EditReminder({ onClose, reminderId }) {
 
     const reminderData = {
       title: title,
-      date: `${year}-${month}-${day}`,
-      time: `${formattedHour}:${formattedMinute} ${timePeriod}`,
+      reminder: `${year}-${month}-${day} ${formattedHour}:${formattedMinute} ${timePeriod}`,
       description: description,
     };
 

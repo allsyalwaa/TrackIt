@@ -13,6 +13,7 @@ export default function EventList({ onClose, selectedDate, onEventAdded }) {
 
   useEffect(() => {
     getEvents(selectedDate).then((data) => {
+      console.log(data);
       const sortedData = sortEvents(data);
       setEvents(sortedData);
       setLoading(false);
@@ -34,6 +35,7 @@ export default function EventList({ onClose, selectedDate, onEventAdded }) {
 
   const handleEventAdded = () => {
     getEvents(selectedDate).then((data) => {
+      console.log(data);
       const sortedData = sortEvents(data);
       setEvents(sortedData);
     });
@@ -79,7 +81,7 @@ export default function EventList({ onClose, selectedDate, onEventAdded }) {
                 <CardEventList
                   key={event.id}
                   text={event.title}
-                  time={formatTime(event.start)}
+                  time={formatTime(event.calendar)}
                 />
               ))
             ) : (

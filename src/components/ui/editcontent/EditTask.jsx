@@ -16,7 +16,7 @@ export default function EditTask({ onClose, taskId }) {
       setIsLoading(true);
       try {
         const data = await fetchTaskData(taskId);
-        setTitle(data.name);
+        setTitle(data.title);
         setDescription(data.description);
       } catch (error) {
         console.error("Error fetching task data:", error);

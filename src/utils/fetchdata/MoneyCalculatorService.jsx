@@ -29,6 +29,7 @@ export const addBalance = async (data) => {
   const response = await fetch(`${BASE_URL}/money-calculator/balance`, {
     method: "POST",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
@@ -57,6 +58,7 @@ export const updateBalanceData = async (balanceId, balanceData) => {
     {
       method: balanceId ? "PUT" : "POST",
       headers: {
+        accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(balanceData),
@@ -83,6 +85,7 @@ export const postTransaction = async (data) => {
   const response = await fetch(`${BASE_URL}/money-calculator/transaction`, {
     method: "POST",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
@@ -126,6 +129,7 @@ export const updateTransactionData = async (transactionId, transactionData) => {
     {
       method: "PUT",
       headers: {
+        accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(transactionData),

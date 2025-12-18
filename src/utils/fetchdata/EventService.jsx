@@ -17,6 +17,7 @@ export const postEvent = async (event) => {
   const response = await fetch(`${BASE_URL}/calendar`, {
     method: "POST",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(event),

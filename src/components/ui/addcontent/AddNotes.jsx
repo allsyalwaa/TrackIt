@@ -16,7 +16,7 @@ export default function AddNotes({ onClose }) {
     event.preventDefault();
 
     const noteData = {
-      name: title,
+      title: title,
       description: description,
     };
 

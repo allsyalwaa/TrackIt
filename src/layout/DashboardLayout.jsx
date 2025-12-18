@@ -1,7 +1,7 @@
 import Sidebar from "../components/section/Sidebar";
 import BreadCrumbs from "../components/ui/BreadCrumbs";
 import { useEffect } from "react";
-import { useUserContext } from "../utils/UserContext";
+import { useUserContext } from "../utils/UseUser";
 
 export default function DashboardLayout({ children, data }) {
   const { setUser } = useUserContext();
@@ -27,7 +27,7 @@ export default function DashboardLayout({ children, data }) {
         username: "syalwa",
       });
     }
-  }, []);
+  }, [BASE_URL, setUser]);
   return (
     <>
       <div className="flex min-h-dvh ">

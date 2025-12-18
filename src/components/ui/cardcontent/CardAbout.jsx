@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 export default function CardAbout({ text }) {
   return (
     <div className="flex items-center gap-4">

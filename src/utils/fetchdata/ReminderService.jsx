@@ -2,7 +2,7 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 
 export async function getReminders() {
   try {
-    const response = await fetch(BASE_URL + "/reminder");
+    const response = await fetch(BASE_URL + "/reminders");
     const data = await response.json();
     return data;
   } catch (error) {
@@ -12,9 +12,10 @@ export async function getReminders() {
 }
 
 export const postReminder = async (reminderData) => {
-  const response = await fetch(`${BASE_URL}/reminder`, {
+  const response = await fetch(`${BASE_URL}/reminders`, {
     method: "POST",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(reminderData),
@@ -28,9 +29,10 @@ export const postReminder = async (reminderData) => {
 };
 
 export const handleDeleteReminder = async (id) => {
-  const response = await fetch(`${BASE_URL}/reminder/${id}`, {
+  const response = await fetch(`${BASE_URL}/reminders/${id}`, {
     method: "DELETE",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
   });
@@ -43,7 +45,7 @@ export const handleDeleteReminder = async (id) => {
 };
 
 export const fetchReminderDetails = async (id) => {
-  const response = await fetch(`${BASE_URL}/reminder/${id}`);
+  const response = await fetch(`${BASE_URL}/reminders/${id}`);
   if (!response.ok) {
     throw new Error("Failed to fetch the reminder");
   }
@@ -51,7 +53,7 @@ export const fetchReminderDetails = async (id) => {
 };
 
 export const fetchReminderData = async (reminderId) => {
-  const response = await fetch(`${BASE_URL}/reminder/${reminderId}`);
+  const response = await fetch(`${BASE_URL}/reminders/${reminderId}`);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -59,9 +61,10 @@ export const fetchReminderData = async (reminderId) => {
 };
 
 export const updateReminderData = async (reminderId, reminderData) => {
-  const response = await fetch(`${BASE_URL}/reminder/${reminderId}`, {
+  const response = await fetch(`${BASE_URL}/reminders/${reminderId}`, {
     method: "PUT",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(reminderData),

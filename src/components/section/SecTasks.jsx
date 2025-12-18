@@ -21,7 +21,7 @@ export default function SecTasks() {
     setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
-  useEffect(() => {
+  const fetchData = () => {
     getTasks().then((data) => {
       const tasksWithLastEdited = data.map((task) => ({
         ...task,
@@ -35,6 +35,9 @@ export default function SecTasks() {
       setTasks(tasksWithLastEdited);
       setIsLoading(false);
     });
+  };
+  useEffect(() => {
+    fetchData();
   }, []);
 
   return (
@@ -49,10 +52,11 @@ export default function SecTasks() {
             <CardTasks
               key={task.id}
               id={task.id}
-              text1={task.name}
+              text1={task.title}
               text2={task.description}
               initialCompleted={task.completed}
               onDelete={handleDeleteTask}
+              onClose={fetchData}
             />
           ))}
         </div>
@@ -60,7 +64,7 @@ export default function SecTasks() {
 
       <ButtonPlus
         onClick={handleOpenTaskPopup}
-        className="absolute bottom-8 right-8"
+        className={"fixed bottom-8 right-8"}
       />
 
       {isTaskPopupOpen && <AddTask onClose={handleCloseTaskPopup} />}

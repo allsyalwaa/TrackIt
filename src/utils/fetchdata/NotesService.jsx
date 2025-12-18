@@ -15,6 +15,7 @@ export const postNote = async (noteData) => {
   const response = await fetch(`${BASE_URL}/notes`, {
     method: "POST",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(noteData),
@@ -31,6 +32,7 @@ export const handleDeleteNote = async (id) => {
   const response = await fetch(`${BASE_URL}/notes/${id}`, {
     method: "DELETE",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
   });
@@ -47,7 +49,9 @@ export const fetchNoteDetails = async (id) => {
   if (!response.ok) {
     throw new Error("Failed to fetch the notes");
   }
-  return response.json();
+  const data = await response.json();
+  console.log(data);
+  return data;
 };
 
 export const fetchNoteData = async (noteId) => {
@@ -62,6 +66,7 @@ export const updateNoteData = async (noteId, noteData) => {
   const response = await fetch(`${BASE_URL}/notes/${noteId}`, {
     method: "PUT",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(noteData),

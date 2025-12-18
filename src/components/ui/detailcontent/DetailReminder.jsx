@@ -15,9 +15,9 @@ export default function DetailReminder({ id, onClose }) {
       setIsLoading(true);
       try {
         const data = await fetchReminderDetails(id);
-        setTitle(data.name);
+        setTitle(data.title);
         setDescription(data.description);
-        const formattedDate = formatDateTime(data.dateTime);
+        const formattedDate = formatDateTime(data.reminder);
         setDate(formattedDate);
       } catch (error) {
         console.error("Error:", error);

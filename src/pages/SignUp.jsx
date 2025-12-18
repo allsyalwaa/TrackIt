@@ -4,8 +4,11 @@ import Logo from "../assets/illustration-logo.svg";
 import { useGoogleLogin } from "@react-oauth/google";
 import ButtonGoogle from "../components/ui/ButtonGoogle";
 import Button from "../components/ui/Button";
-import { useUserContext } from "../utils/UserContext";
-import { validatePassword, handleSignup } from "../utils/fetchdata/SignUpService";
+import { useUserContext } from "../utils/UseUser";
+import {
+  validatePassword,
+  handleSignup,
+} from "../utils/fetchdata/SignUpService";
 
 export default function SignUp() {
   const BASE_URL = import.meta.env.VITE_API_URL;

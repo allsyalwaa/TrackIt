@@ -16,8 +16,7 @@ export default function SecNotes() {
   const handleCloseNotePopup = () => {
     setIsNotePopupOpen(false);
   };
-
-  useEffect(() => {
+  const fetchData = () => {
     getNotes().then((data) => {
       const notesWithLastEdited = data.map((note) => ({
         ...note,
@@ -31,6 +30,9 @@ export default function SecNotes() {
       setNotes(notesWithLastEdited);
       setIsLoading(false);
     });
+  };
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const handleDeleteNote = (noteId) => {
@@ -48,11 +50,12 @@ export default function SecNotes() {
           {notes.map((note) => (
             <CardNotes
               key={note.id}
-              text1={note.date}
-              text2={note.name}
+              text1={note.updated_at}
+              text2={note.title}
               text3={note.description}
               id={note.id}
               onDelete={handleDeleteNote}
+              onClose={fetchData}
             />
           ))}
         </div>

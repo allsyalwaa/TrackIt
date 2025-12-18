@@ -14,7 +14,7 @@ export default function DetailTask({ id, onClose }) {
       setIsLoading(true);
       try {
         const data = await fetchTaskDetails(id);
-        setTitle(data.name);
+        setTitle(data.title);
         setDescription(data.description);
       } catch (error) {
         console.error("Error:", error);

@@ -2,7 +2,7 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 
 export async function getTasks() {
   try {
-    const response = await fetch(BASE_URL + "/task");
+    const response = await fetch(BASE_URL + "/tasks");
     const data = await response.json();
     return data;
   } catch (error) {
@@ -12,9 +12,10 @@ export async function getTasks() {
 }
 
 export const postTask = async (taskData) => {
-  const response = await fetch(`${BASE_URL}/task`, {
+  const response = await fetch(`${BASE_URL}/tasks`, {
     method: "POST",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(taskData),
@@ -28,9 +29,10 @@ export const postTask = async (taskData) => {
 };
 
 export const handleDeleteTask = async (id) => {
-  const response = await fetch(`${BASE_URL}/task/${id}`, {
+  const response = await fetch(`${BASE_URL}/tasks/${id}`, {
     method: "DELETE",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
   });
@@ -43,9 +45,10 @@ export const handleDeleteTask = async (id) => {
 };
 
 export const updateTaskStatus = async (id, completed) => {
-  const response = await fetch(`${BASE_URL}/task/${id}`, {
-    method: "PUT",
+  const response = await fetch(`${BASE_URL}/tasks/${id}/status`, {
+    method: "PATCH",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ completed }),
@@ -59,7 +62,7 @@ export const updateTaskStatus = async (id, completed) => {
 };
 
 export const fetchTaskDetails = async (id) => {
-  const response = await fetch(`${BASE_URL}/task/${id}`);
+  const response = await fetch(`${BASE_URL}/tasks/${id}`);
   if (!response.ok) {
     throw new Error("Failed to fetch the task");
   }
@@ -67,7 +70,7 @@ export const fetchTaskDetails = async (id) => {
 };
 
 export const fetchTaskData = async (taskId) => {
-  const response = await fetch(`${BASE_URL}/task/${taskId}`);
+  const response = await fetch(`${BASE_URL}/tasks/${taskId}`);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -75,9 +78,10 @@ export const fetchTaskData = async (taskId) => {
 };
 
 export const updateTaskData = async (taskId, taskData) => {
-  const response = await fetch(`${BASE_URL}/task/${taskId}`, {
+  const response = await fetch(`${BASE_URL}/tasks/${taskId}`, {
     method: "PUT",
     headers: {
+      accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(taskData),

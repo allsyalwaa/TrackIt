@@ -13,6 +13,7 @@ export default function CardTasks({
   text2,
   initialCompleted,
   onDelete,
+  onClose,
 }) {
   const [isTaskPopupOpen, setIsTaskPopupOpen] = useState(false);
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
@@ -26,6 +27,7 @@ export default function CardTasks({
 
   const handleCloseTaskPopup = () => {
     setIsTaskPopupOpen(false);
+    onClose && onClose();
   };
 
   const handleOpenConfirmDeletePopup = () => {
